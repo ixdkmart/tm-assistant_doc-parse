@@ -1,0 +1,170 @@
+[
+  {
+    "source_file": "pdf/pos/Afterpay FAQs - AUS 20211209 v1.0.pdf",
+    "output_file": "pdf-extracted/posAfterpay FAQs - AUS 20211209 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 5505,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Bicycle Assembly - Registers Process AUS 20250701 v1.4.pdf",
+    "output_file": "pdf-extracted/posBicycle Assembly - Registers Process AUS 20250701 v1.4.md",
+    "total_pages": 1,
+    "total_characters": 1893,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen FAQs 20231122 v1.1.pdf",
+    "output_file": "pdf-extracted/posEverseen FAQs 20231122 v1.1.md",
+    "total_pages": 5,
+    "total_characters": 9938,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen Maintenance Tips 20250218 v1.0.pdf",
+    "output_file": "pdf-extracted/posEverseen Maintenance Tips 20250218 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 929,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen SCO Technology Guide 20250715 v7.0.pdf",
+    "output_file": "pdf-extracted/posEverseen SCO Technology Guide 20250715 v7.0.md",
+    "total_pages": 4,
+    "total_characters": 8183,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen SCO Technology Usage Tips 20240805 v2.0.pdf",
+    "output_file": "pdf-extracted/posEverseen SCO Technology Usage Tips 20240805 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1130,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen Scenario  Guidelines 20241023 v2.0.pdf",
+    "output_file": "pdf-extracted/posEverseen Scenario  Guidelines 20241023 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 3002,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen Top Product Switch Keycodes August 2025 20250728 v2.1.pdf",
+    "output_file": "pdf-extracted/posEverseen Top Product Switch Keycodes August 2025 20250728 v2.1.md",
+    "total_pages": 1,
+    "total_characters": 309,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Everseen Top Product Switch Keycodes Sep 2025 20250829 v1.0.pdf",
+    "output_file": "pdf-extracted/posEverseen Top Product Switch Keycodes Sep 2025 20250829 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 313,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/FlexiPOS Airpay Tap TC52 User Guide 20231128 v2.1.pdf",
+    "output_file": "pdf-extracted/posFlexiPOS Airpay Tap TC52 User Guide 20231128 v2.1.md",
+    "total_pages": 29,
+    "total_characters": 26629,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Pensioner Discount Day Cards 20241024 v1.2.pdf",
+    "output_file": "pdf-extracted/posPensioner Discount Day Cards 20241024 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 663,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Receipt Scanner Process Guide 20241114 v6.0.pdf",
+    "output_file": "pdf-extracted/posReceipt Scanner Process Guide 20241114 v6.0.md",
+    "total_pages": 5,
+    "total_characters": 11071,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Register Bags SOH Check 20250904 v3.1.pdf",
+    "output_file": "pdf-extracted/posRegister Bags SOH Check 20250904 v3.1.md",
+    "total_pages": 1,
+    "total_characters": 1224,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Register- Click  Collect Photo Orders display 20240523 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegister- Click  Collect Photo Orders display 20240523 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 922,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers - Correcting Voids Not Actioned Guide 20230522 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegisters - Correcting Voids Not Actioned Guide 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 2650,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers - Deleted Suspended Transactions Guide 20230522 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegisters - Deleted Suspended Transactions Guide 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 904,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers - Error Checklist 20230522 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegisters - Error Checklist 20230522 v1.2.md",
+    "total_pages": 3,
+    "total_characters": 4835,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers - Flybuys Manual 20230522 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegisters - Flybuys Manual 20230522 v1.2.md",
+    "total_pages": 5,
+    "total_characters": 5316,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers - Original Receipt Scanned for Refunds without Barcode Tip 20230522 v1.2.pdf",
+    "output_file": "pdf-extracted/posRegisters - Original Receipt Scanned for Refunds without Barcode Tip 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 807,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/Registers Practice Guide 20231127 v1.1.pdf",
+    "output_file": "pdf-extracted/posRegisters Practice Guide 20231127 v1.1.md",
+    "total_pages": 13,
+    "total_characters": 7924,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/SCO Alerts Guide Reusable Bags  Soda Stream 20230901 v1.2.pdf",
+    "output_file": "pdf-extracted/posSCO Alerts Guide Reusable Bags  Soda Stream 20230901 v1.2.md",
+    "total_pages": 5,
+    "total_characters": 4532,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/SCO Team Member Best Practice Guide 20250918 v4.0.pdf",
+    "output_file": "pdf-extracted/posSCO Team Member Best Practice Guide 20250918 v4.0.md",
+    "total_pages": 3,
+    "total_characters": 7715,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/e-Voucher - Registers Quick Reference Guide 20240219 v1.4.pdf",
+    "output_file": "pdf-extracted/pose-Voucher - Registers Quick Reference Guide 20240219 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 3700,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/pos/e-Voucher - Voiding Transactions Registers Guide 20240219 v1.4.pdf",
+    "output_file": "pdf-extracted/pose-Voucher - Voiding Transactions Registers Guide 20240219 v1.4.md",
+    "total_pages": 1,
+    "total_characters": 1305,
+    "extraction_method": "claude_vision"
+  }
+]
