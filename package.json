@@ -7,7 +7,8 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "dev": "ts-node src/cli.ts"
+    "dev": "ts-node src/cli.ts",
+    "pipeline": "npm run build && node dist/pipeline/run.js"
   },
   "dependencies": {
     "cli-progress": "^3.12.0",
