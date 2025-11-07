@@ -1,3 +1,0 @@
-The document titled "Task Engine - GM Backfill Pick" outlines the procedure for completing GM Backfill Pick tasks within the Task Engine system. The procedure includes filtering tasks by type and world, opening a task, scanning fixture location barcodes and product barcodes, managing quantities based on the "Take" number, and finalising the backfill once all items have been scanned and picked. It also provides troubleshooting guidance for common errors such as invalid barcodes, mismatched fixtures, product recalls, and connectivity issues.
-
-This has been successfully passed through this phase, nothing has been done to it. This is just to test that it is sequentially going through the pipeline.
