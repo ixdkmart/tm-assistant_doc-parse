@@ -1,166 +1,67 @@
----
-
-## Page 1
-
-Waffles and Pancakes  
-Breakfast Guide
-
-Making Waffles and Pancakes  
-Please follow the steps below to make delicious waffles and pancakes
-
-1. Gather all ingredients and equipment needed for waffles and pancakes
-
-2. Prepare the batter according to the recipe
-
-3. Cook waffles and pancakes on the appropriate appliance
-
-Serving and Enjoying
-
-1. Serve waffles and pancakes with your choice of toppings such as syrup, fruit, or whipped cream
-
-2. Enjoy your delicious breakfast!
-
-Waffles and Pancakes - Breakfast Guide                                                                                                                1
-
-## Page 2
-
-Preparing the Batter  
-After gathering ingredients, prepare the batter for waffles and pancakes
-
-1. Mix dry ingredients (flour, sugar, baking powder, salt) in a bowl
-
-2. In another bowl, whisk wet ingredients (milk, eggs, melted butter)
-
-3. Combine wet and dry ingredients until smooth
-
-4. Let the batter rest for a few minutes before cooking
-
-Storing Batter  
-1. If not cooking immediately, cover the batter and refrigerate
-
-2. Stir gently before using
-
-Forgot Ingredients?  
-If you forget an ingredient:  
-1. Check your pantry or fridge for substitutes  
-2. Adjust the recipe accordingly
-
-Waffles and Pancakes - Breakfast Guide                                                                                2
-
-## Page 3
-
-Cooking Appliances Guide
-
-Appliance type and settings: Waffle Maker • Pancake Griddle  
-The temperature setting for cooking: Medium-High Heat
-
-Cooking Steps:
-
-• Preheat the waffle maker or griddle  
-• Lightly grease the cooking surface  
-• Pour batter onto the appliance  
-• Cook until golden brown and cooked through  
-• Remove carefully and serve
-
-Example cooking times:  
-Waffles: 4-5 minutes  
-Pancakes: 2-3 minutes per side
-
-Additional notes:  
-• Use a timer to avoid overcooking  
-• Flip pancakes carefully to prevent breaking  
-• Clean appliances after use
-
-Waffles and Pancakes - Cooking Guide
-
-## Page 4
-
-Making Waffles - Step by Step
-
-5. Preheat the waffle maker until ready indicator lights up
-
-6. Pour the recommended amount of batter onto the center of the waffle maker
-
-7. Close the lid and cook until the waffle is golden brown and crisp
-
-Cooking Tips:
-
-- Use a non-stick spray or brush with butter before pouring batter  
-- Avoid opening the lid too early to prevent tearing  
-- Use a fork or tongs to remove the waffle carefully
-
-[The image shows various steps of waffle making including pouring batter, closing lid, and removing cooked waffles]
-
-Waffles and Pancakes - Breakfast Guide                                                                                                                    4
-
-## Page 5
-
-Making Pancakes - Step by Step
-
-8. Heat a non-stick griddle or frying pan over medium heat
-
-9. Pour batter onto the griddle in small rounds
-
-10. Cook until bubbles form on the surface and edges look set, then flip
-
-11. Cook the other side until golden brown
-
-12. Repeat with remaining batter
-
-13. Serve pancakes warm with your favorite toppings
-
-Serving Suggestions:
-
-- Maple syrup, fresh berries, whipped cream, or nuts  
-- Stack pancakes for a classic presentation
-
-Waffles and Pancakes - Breakfast Guide                                                                                5
-
-## Page 6
-
-Troubleshooting Common Issues
-
-Refer to these tips when troubleshooting common waffle and pancake problems:
-
-Issue - Batter too thick or thin  
-1. Adjust by adding a little milk if too thick  
-2. Add a bit more flour if too thin
-
-Issue - Waffles or pancakes sticking to the appliance  
-1. Ensure the cooking surface is well greased  
-2. Use non-stick spray or brush with butter before cooking
-
-Issue - Uneven cooking or burnt edges  
-1. Adjust the heat to medium or medium-low  
-2. Cook for less time and monitor closely
-
-Issue - Pancakes not flipping easily  
-1. Wait until bubbles form and edges are set before flipping  
-2. Use a thin spatula to gently lift and flip
-
-Waffles and Pancakes - Breakfast Guide                                                                                                                    6
-
-## Page 7
-
-Troubleshooting continued
-
-Refer to these tips when troubleshooting further issues:
-
-Issue - Batter lumps  
-1. Mix batter gently to avoid overmixing  
-2. Use a whisk or fork to break up lumps before cooking
-
-Issue - Waffles or pancakes are dry  
-1. Do not overcook; remove from heat as soon as done  
-2. Add a bit more milk or butter to the batter next time
-
-Issue - Appliance not heating properly  
-1. Check power connection and settings  
-2. Preheat appliance fully before cooking  
-3. If problems persist, consult appliance manual or contact customer support
-
-If issues cannot be resolved after following these tips, please contact your appliance manufacturer or a cooking expert for assistance.
-
-Enjoy your waffles and pancakes!
-
-Waffles and Pancakes - Breakfast Guide                                                                                                               7
+{
+  "focus": { "type": "procedure", "id": "GM Backfill Pick" },
+  "doc": { "name": "Task Engine - GM Backfill Pick", "path": "" },
+  "slice": {
+    "type": "procedure",
+    "title": "GM Backfill Pick",
+    "pseudonyms": [],
+    "keywords": [
+      "task engine",
+      "gm backfill pick",
+      "fixture location",
+      "barcode scanning",
+      "task completion",
+      "product keycode",
+      "take number",
+      "finalise backfill",
+      "troubleshooting"
+    ],
+    "steps": [
+      "To filter tasks by Type select the filter function.",
+      "Select to filter by Task Type to only display GM Backfill Pick tasks. You can also filter by World.",
+      "Tasks shown will now be for Kids World GM Backfill Pick.",
+      "Open a task to complete by selecting the task card.",
+      "Scan the fixture location barcode with the PDT or type in the fixture number by pressing the keyboard icon.",
+      "Once the fixture location has been accepted, scan the barcode of the first item in the location. Work from left to right, top to bottom.",
+      "After scanning the barcode, the \"Take\" number indicates the minimum quantity you should take. If there's less than that in the fixture, take all.",
+      "To continue, scan the barcode of the next item in the fixture location. If the \"Take\" number is 0, this item does not need to be picked and you can scan the next item.",
+      "If the product is scanned into more than one location, enter the quantity you have picked from this location.",
+      "Once each keycode (one of each item) in the fixture location has been scanned and all relevant quantities picked, press \"Finalise Backfill\".",
+      "Before finalising, ensure there are not any keycodes in the fixture location that have been missed.",
+      "Your task is complete and has been removed from the Task Engine home screen. You can now select the next task."
+    ],
+    "examples": [],
+    "bestPractice": [],
+    "caveats": [],
+    "constraints": [],
+    "troubleshooting": [
+      "Error - Invalid fixture barcode on task screen: The barcode scanned is not a fixture location barcode, try scanning the correct one that matches the task you have selected.",
+      "Error - Barcode scanned doesn't match fixture selected on task screen: The scanned fixture location barcode does not match the task you have selected. Ensure you are scanning the correct fixture.",
+      "Error - Fixture already scanned on task screen: The correct fixture location barcode has already been scanned. Proceed with scanning a product keycode.",
+      "Error - Product recall/withdrawal on task screen: This product has been recalled or withdrawn from sale and should not be placed on the shop floor. Ensure this product is moved to the recall bag immediately. After removal delete the product from the fixture.",
+      "Errors - Something went wrong. Please try again or Lost connection. Please make sure you're within network coverage range: Pull down the app to refresh. Ensure you are in network range and have Wi-Fi bars on the PDT. If error message is still displayed, log out and log back in to the Task Engine. If error message is still displayed after logging back in, reboot PDT. If rebooting the PDT does not clear the error message, contact the IT Service Desk.",
+      "Error - lost connection with no tasks displayed on home screen: Pull down the app to refresh. Ensure you are in network range and have Wi-Fi bars on the PDT. If error message is still displayed, log out and log back in to the Task Engine."
+    ],
+    "metrics": []
+  },
+  "evidence": [
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "To filter tasks by Type select the filter function" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Here you can select to filter by Task Type to only display GM Backfill Pick tasks. You can also filter by World." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Tasks shown will now be for Kids World GM Backfill Pick." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Open a task to complete by selecting the task card" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Scan the fixture location barcode with the PDT or type in the fixture number by pressing the keyboard icon." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Once the fixture location has been accepted, scan the barcode of the first item in the location. Work from left to right, top to bottom." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "After scanning the barcode, the \"Take\" number indicates the minimum quantity you should take. If there's less than that in the fixture, take all." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "To continue, scan the barcode of the next item in the fixture location. If the \"Take\" number is 0, this item does not need to be picked and you can scan the next item." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "If the product is scanned into more than one location, enter the quantity you have picked from this location." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Once each keycode (one of each item) in the fixture location has been scanned and all relevant quantities picked, press \"Finalise Backfill\"." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Before finalising, ensure there are not any keycodes in the fixture location that have been missed." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Your task is complete and has been removed from the Task Engine home screen. You can now select the next task." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Invalid fixture barcode on task screen\n1. The barcode scanned is not a fixture location barcode, try scanning the correct one that matches the task you have selected." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Barcode scanned doesn't match fixture selected on task screen\n1. The scanned fixture location barcode does not match the task you have selected. Ensure you are scanning the correct fixture." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Fixture already scanned on task screen\n1. The correct fixture location barcode has already been scanned. Proceed with scanning a product keycode." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Product recall/withdrawal on task screen\n1. This product has been recalled or withdrawn from sale and should not be placed on the shop floor.\n2. Ensure this product is moved to the recall bag immediately.\n3. After removal delete the product from the fixture." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Errors- Something went wrong. Please try again\nor\nLost connection. Please make sure you're within network coverage range\n\n1. Pull down the app to refresh\n2. Ensure you are in network range and have Wi-Fi bars on the PDT\n3. If error message is still displayed, log out and log back in to the Task Engine\n4. If error message is still displayed after logging back in, reboot PDT\n5. If rebooting the PDT does not clear the error message, contact the IT Service Desk" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - lost connection with no tasks displayed on home screen\n\n1. Pull down the app to refresh\n2. Ensure you are in network range and have Wi-Fi bars on the PDT\n3. If error message is still displayed, log out and log back in to the Task Engine" }
+  ]
+}

@@ -8,7 +8,10 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "ts-node src/cli.ts",
-    "pipeline": "npm run build && node dist/pipeline/run.js"
+    "pipeline": "npm run build && node dist/pipeline/run.js",
+    "clean:processing:build": "tsc -p .",
+    "clean:processing:dry": "node dist/tools/cleanProcessing.js --dry-run",
+    "clean:processing": "node dist/tools/cleanProcessing.js --confirm"
   },
   "dependencies": {
     "cli-progress": "^3.12.0",

@@ -1,191 +1,65 @@
----
-
-## Page 1
-
-Waffle and Pancake Guide  
-Breakfast Preparation  
-Learning Guide  
-
-Logging in  
-Please follow the steps below to start your breakfast preparation session  
-
-1. Select the Waffle and Pancake application from the kitchen home screen  
-
-2. Enter your employee number followed by @breakfast.com  
-
-3. Enter your password  
-
-Logging out  
-
-1. Select initials from the top right and then select 'Log out'  
-
-2. Screen showing all breakfast tasks are complete  
-
-[Breakfast logo appears at bottom of page]  
-Waffle and Pancake Guide                                                                                     1  
-
-## Page 2
-
-Creating a PIN code  
-After your first log in each day a 4-digit PIN code can be created that will last for 24 hours  
-
-1. Create and enter a 4 digit PIN  
-If the application is idle your PIN can be used to re-access the Waffle and Pancake Guide.  
-
-2. Press 'Confirm'  
-
-3. Main screen showing your PIN has been accepted  
-
-Log out previous user  
-
-1. Select 'logout' to log out the current user. This will enable you to log in with your employee number followed by @breakfast.com  
-
-Forgot PIN (PIN reset)  
-
-To reset your pin:  
-1. Select 'I forgot my PIN'  
-2. Log back in with your employee number followed by @breakfast.com  
-3. You can then create a new PIN.  
-
-Waffle and Pancake Guide                                                                                     2  
-
-## Page 3
-
-Main screen guide  
-
-Kitchen station number and today's date: Station 5 • Friday, 8 Dec  
-The initials of the user logged in: AB  
-
-Task Type and Filter (Filter button shown)  
-
-Showing 4 of 24 breakfast tasks  
-
-Task card showing:  
-• Task description  
-• Station Number  
-• Most common breakfast item in this station  
-• Total orders for this station  
-• Most common ingredient used  
-
-Example task cards shown:  
-Make Waffles  
-BREAKFAST  
-Station 5 - 14 orders  
-Maple Syrup - 47 servings  
-[Status: To do]  
-
-Make Pancakes  
-BREAKFAST  
-Station 6 - 37 orders  
-Blueberries - 47 servings  
-[Status: To do]  
-
-Additional notes:  
-• Swipe/pull down to refresh the application if no tasks are shown  
-• The app fetches new data every 30 seconds  
-
-Waffle and Pancake Guide - completing a task  
-
-1. To filter tasks by Type select the filter function  
-
-2. Here you can select to filter by Task Type to only display Waffle or Pancake tasks. You can also filter by ingredient.  
-
-3. Tasks shown will now be for Waffle or Pancake preparation.  
-
-Waffle and Pancake Guide [Page 3]  
-
-## Page 4
-
-Waffle and Pancake Guide - completing a task  
-
-5. Open a task to complete by selecting the task card  
-
-6. Scan the station location barcode with the device or type in the station number by pressing the keyboard icon.  
-
-7. Once the station location has been accepted, scan the barcode of the first ingredient in the location. Work from left to right, top to bottom.  
-
-Scanned Ingredient Information:  
-
-- Station location currently in progress  
-- The "In Progress" tab shows the most recently scanned ingredient info  
-- The "Take" number is the minimum quantity that should be used of this ingredient. If 0, scan the next item.  
-- The location/s that this ingredient is scanned into on the kitchen shelf and in the storage room  
-- Keyboard to type in an ingredient code if the barcode cannot be scanned  
-- If you are using the last of this ingredient, ensure this is selected to also scan this ingredient out of this station location  
-
-[The image shows various screenshots of the Waffle and Pancake Guide interface demonstrating these steps, including station scanning, ingredient scanning, and ingredient information displays]  
-
-Waffle and Pancake Guide                                                                                                                    4  
-
-## Page 5
-
-Waffle and Pancake Guide - completing a task continued  
-
-8. After scanning the barcode, the "Take" number indicates the minimum quantity you should use. If there's less than that in the station, use all.  
-
-9. To continue, scan the barcode of the next ingredient in the station location.  
-If the "Take" number is 0, this ingredient does not need to be used and you can scan the next item.  
-
-10. If the ingredient is used in more than one location, enter the quantity you have taken from this location.  
-
-11. Once each ingredient (one of each item) in the station location has been scanned and all relevant quantities used, press "Finalise Preparation".  
-
-12. Before finalising, ensure there are not any ingredients in the station location that have been missed.  
-
-13. Your task is complete and has been removed from the app home screen.  
-You can now select the next task.  
-
-Waffle and Pancake Guide                                                                                     5  
-
-## Page 6
-
-Troubleshooting  
-
-Refer to these steps when troubleshooting the following error messages:  
-
-Error - Invalid station barcode on task screen  
-1. The barcode scanned is not a station location barcode, try scanning the correct one that matches the task you have selected.  
-
-Error - Barcode scanned doesn't match station selected on task screen  
-1. The scanned station location barcode does not match the task you have selected. Ensure you are scanning the correct station.  
-
-Error - Station already scanned on task screen  
-1. The correct station location barcode has already been scanned. Proceed with scanning an ingredient code.  
-
-Error - Ingredient recall/withdrawal on task screen  
-1. This ingredient has been recalled or withdrawn from use and should not be used in preparation.  
-2. Ensure this ingredient is moved to the recall bin immediately.  
-3. After removal delete the ingredient from the station.  
-
-Waffle and Pancake Guide                                                                                                                6  
-
-## Page 7
-
-Troubleshooting continued  
-
-Refer to these steps when troubleshooting the following error messages:  
-
-Errors- Something went wrong. Please try again  
-or  
-Lost connection. Please make sure you're within network coverage range  
-
-1. Pull down the app to refresh  
-2. Ensure you are in network range and have Wi-Fi bars on the device  
-3. If error message is still displayed, log out and log back into the app  
-4. If error message is still displayed after logging back in, reboot device  
-5. If rebooting the device does not clear the error message, contact the IT Service Desk  
-
-Error - lost connection with no tasks displayed on home screen  
-
-1. Pull down the app to refresh  
-2. Ensure you are in network range and have Wi-Fi bars on the device  
-3. If error message is still displayed, log out and log back in to the app  
-
-If the issue is unable to be resolved after following the troubleshooting steps, please contact the IT Service Desk on:  
-
-• Australia: 1800 033 534  
-• New Zealand: 0800 945 995  
-
-To reset your Microsoft AD password, visit https://portal.office.com on a PC  
-
-Waffle and Pancake Guide                                                                                                    7
+{
+  "focus": { "type": "procedure", "id": "GM Backfill Pick" },
+  "doc":   { "name": "Task Engine - GM Backfill Pick", "path": "" },
+  "slice": {
+    "type": "procedure",
+    "title": "GM Backfill Pick",
+    "pseudonyms": [],
+    "keywords": [
+      "task engine",
+      "gm backfill pick",
+      "fixture location",
+      "barcode scanning",
+      "product scanning",
+      "task completion",
+      "troubleshooting"
+    ],
+    "steps": [
+      "To filter tasks by Type select the filter function.",
+      "Select to filter by Task Type to only display GM Backfill Pick tasks. You can also filter by World.",
+      "Tasks shown will now be for Kids World GM Backfill Pick.",
+      "Open a task to complete by selecting the task card.",
+      "Scan the fixture location barcode with the PDT or type in the fixture number by pressing the keyboard icon.",
+      "Once the fixture location has been accepted, scan the barcode of the first item in the location. Work from left to right, top to bottom.",
+      "After scanning the barcode, the \"Take\" number indicates the minimum quantity you should take. If there's less than that in the fixture, take all.",
+      "To continue, scan the barcode of the next item in the fixture location. If the \"Take\" number is 0, this item does not need to be picked and you can scan the next item.",
+      "If the product is scanned into more than one location, enter the quantity you have picked from this location.",
+      "Once each keycode (one of each item) in the fixture location has been scanned and all relevant quantities picked, press \"Finalise Backfill\".",
+      "Before finalising, ensure there are not any keycodes in the fixture location that have been missed.",
+      "Your task is complete and has been removed from the Task Engine home screen. You can now select the next task."
+    ],
+    "examples": [],
+    "bestPractice": [],
+    "caveats": [],
+    "constraints": [],
+    "troubleshooting": [
+      "Error - Invalid fixture barcode on task screen: The barcode scanned is not a fixture location barcode, try scanning the correct one that matches the task you have selected.",
+      "Error - Barcode scanned doesn't match fixture selected on task screen: The scanned fixture location barcode does not match the task you have selected. Ensure you are scanning the correct fixture.",
+      "Error - Fixture already scanned on task screen: The correct fixture location barcode has already been scanned. Proceed with scanning a product keycode.",
+      "Error - Product recall/withdrawal on task screen: This product has been recalled or withdrawn from sale and should not be placed on the shop floor. Ensure this product is moved to the recall bag immediately. After removal delete the product from the fixture.",
+      "Errors- Something went wrong. Please try again or Lost connection. Please make sure you're within network coverage range: Pull down the app to refresh. Ensure you are in network range and have Wi-Fi bars on the PDT. If error message is still displayed, log out and log back into the Task Engine. If error message is still displayed after logging back in, reboot PDT. If rebooting the PDT does not clear the error message, contact the IT Service Desk.",
+      "Error - lost connection with no tasks displayed on home screen: Pull down the app to refresh. Ensure you are in network range and have Wi-Fi bars on the PDT. If error message is still displayed, log out and log back in to the Task Engine."
+    ],
+    "metrics": []
+  },
+  "evidence": [
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "1. To filter tasks by Type select the filter function" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "2. Here you can select to filter by Task Type to only display GM Backfill Pick tasks. You can also filter by World." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "3. Tasks shown will now be for Kids World GM Backfill Pick." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "5. Open a task to complete by selecting the task card" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "6. Scan the fixture location barcode with the PDT or type in the fixture number by pressing the keyboard icon." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "7. Once the fixture location has been accepted, scan the barcode of the first item in the location. Work from left to right, top to bottom." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "8. After scanning the barcode, the \"Take\" number indicates the minimum quantity you should take. If there's less than that in the fixture, take all." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "9. To continue, scan the barcode of the next item in the fixture location. If the \"Take\" number is 0, this item does not need to be picked and you can scan the next item." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "10. If the product is scanned into more than one location, enter the quantity you have picked from this location." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "11. Once each keycode (one of each item) in the fixture location has been scanned and all relevant quantities picked, press \"Finalise Backfill\"." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "12. Before finalising, ensure there are not any keycodes in the fixture location that have been missed." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "13. Your task is complete and has been removed from the Task Engine home screen. You can now select the next task." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Invalid fixture barcode on task screen\n1. The barcode scanned is not a fixture location barcode, try scanning the correct one that matches the task you have selected." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Barcode scanned doesn't match fixture selected on task screen\n1. The scanned fixture location barcode does not match the task you have selected. Ensure you are scanning the correct fixture." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Fixture already scanned on task screen\n1. The correct fixture location barcode has already been scanned. Proceed with scanning a product keycode." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - Product recall/withdrawal on task screen\n1. This product has been recalled or withdrawn from sale and should not be placed on the shop floor.\n2. Ensure this product is moved to the recall bag immediately.\n3. After removal delete the product from the fixture." },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Errors- Something went wrong. Please try again\nor\nLost connection. Please make sure you're within network coverage range\n\n1. Pull down the app to refresh\n2. Ensure you are in network range and have Wi-Fi bars on the PDT\n3. If error message is still displayed, log out and log back into the Task Engine\n4. If error message is still displayed after logging back in, reboot PDT\n5. If rebooting the PDT does not clear the error message, contact the IT Service Desk" },
+    { "doc": "Task Engine - GM Backfill Pick", "quote": "Error - lost connection with no tasks displayed on home screen\n\n1. Pull down the app to refresh\n2. Ensure you are in network range and have Wi-Fi bars on the PDT\n3. If error message is still displayed, log out and log back in to the Task Engine" }
+  ]
+}
