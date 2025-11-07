@@ -1,19 +1,11 @@
 {
   "object": {
     "type": "procedure",
-    "title": "The Role of a Buddy",
-    "pseudonyms": [],
-    "keywords": [
-      "buddy",
-      "new starter",
-      "team",
-      "support",
-      "communication",
-      "culture",
-      "information",
-      "integration",
-      "organisation"
+    "title": "Digital Wallet Refunds",
+    "pseudonyms": [
+      "Digital Wallet Refunds Guide"
     ],
+    "keywords": [],
     "steps": [],
     "examples": [],
     "bestPractice": [],
