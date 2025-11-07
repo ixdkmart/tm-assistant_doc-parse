@@ -1,4 +1,8 @@
 const PROMPT_03_TO_04 = `
+
+
+DOESNT WORK BC IT DOESNT CROSS REFERENCE OTHER DOCUMENTS
+
 ROLE
 You produce ONE fully-populated **full-schema Atomic Knowledge Object** for a single focus item (Definition, Procedure, or Entity). Your job is to **gather** and **aggregate** all grounded information related to this item from the provided inputs. Do **not** remove duplicates or resolve conflicts — that occurs later in the deduplication stage.
 
