@@ -1,0 +1,4 @@
+const PROMPT_03_TO_04 = `PLACEHOLDER_PROMPT_03_TO_04`;
+export default PROMPT_03_TO_04;
+
+
