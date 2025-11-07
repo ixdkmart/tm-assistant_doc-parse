@@ -1,52 +1,36 @@
+```json
 {
   "object": {
     "type": "procedure",
     "title": "Bicycle Assembly Process Registers",
     "pseudonyms": [],
     "keywords": [
-      "bicycle assembly",
-      "assembly fee",
-      "customer service operator",
-      "hunter service assembly checklist",
+      "bicycle",
+      "assembly",
+      "process",
       "register",
-      "purchase",
-      "filing",
-      "warranty",
-      "repair"
+      "checklist",
+      "fee",
+      "sale",
+      "customer",
+      "service",
+      "operator"
     ],
     "steps": [
-      "Customer presents assembled bicycle at front end or internal register for purchase.",
-      "Customer Service Operator removes Hunter Service Assembly Checklist from all assembled bicycles sold.",
-      "Customer Service Operator completes the following information on the store copy of the Hunter Service Assembly Checklist using a medium black pen: purchaser's name, purchaser's address, phone number, purchase date, store number.",
-      "The store portion of the checklist is retained and placed in the register drawer and forwarded to the Cash Office for filing.",
-      "Process the $16.50 assembly fee through the register as non-merchandise code 2-repair sale unless advised otherwise.",
-      "Charge customers the assembly fee when specifically requesting to purchase a display model or requesting to have a model assembled by the Hunter Service representative.",
-      "Do not charge customers for any bicycle repair covered by the warranty conditions.",
-      "Do not sell an assembled bicycle that does not have an assembly checklist completed by the Hunter Service representative attached."
-    ],
-    "metrics": [
-      "Assembly fee is $16.50."
+      "Complete the Hunter Service Assembly Checklist attached to the assembled bicycle by the Hunter Service representative.",
+      "Charge the customer an assembly fee of $16.50 through the register as a non-merchandise code 2-repair sale.",
+      "Remove the Hunter Service Assembly Checklist from the assembled bicycle upon sale by the Customer Service Operator.",
+      "Complete purchaser information on the Hunter Service Assembly Checklist by the Customer Service Operator.",
+      "Place the store portion of the Hunter Service Assembly Checklist in the register drawer.",
+      "File the store portion of the Hunter Service Assembly Checklist in the Cash Office."
     ]
   },
   "dedupe_report": {
-    "removed_exact": [
-      {
-        "field": "metrics",
-        "value": "All assembled bicycles sold have the Hunter Service Assembly Checklist removed by Customer Service Operator."
-      },
-      {
-        "field": "metrics",
-        "value": "Store copy of the checklist is completed by the Customer Service Operator."
-      },
-      {
-        "field": "metrics",
-        "value": "Store portion of the checklist is retained and forwarded to the Cash Office for filing."
-      }
-    ],
+    "removed_exact": [],
     "merged_similar": [],
     "notes": [
-      "Removed redundant metric statements that duplicate step details.",
-      "Keywords were already lowercase and distinct; no changes made."
+      "No duplicates or near-duplicates found; keywords are already lowercase and singular where sensible."
     ]
   }
 }
+```

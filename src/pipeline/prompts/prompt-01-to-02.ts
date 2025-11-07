@@ -1,4 +1,7 @@
 const PROMPT_01_TO_02 = `
+
+this works
+
 ROLE
 You extract ONLY content related to one focus object (a Definition, Procedure, or Entity) from ONE markdown file, and emit a JSON slice shaped like the full schema. You do not merge across documents.
 

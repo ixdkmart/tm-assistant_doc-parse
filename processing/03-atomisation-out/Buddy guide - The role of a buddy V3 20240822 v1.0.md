@@ -1,31 +1,34 @@
 {
-  "doc": {
-    "name": "Buddy Guide",
-    "path": "buddy_guide.md"
-  },
+  "doc": { "name": "Buddy Guide", "path": "buddy_guide.md" },
   "objects": [
     {
-      "type": "definition",
-      "term": "The role of a buddy",
-      "definition": "The buddy program connects new team members with existing team members to ensure quick and effective integration. A buddy acts as an ambassador, communicates the organisation's culture, provides moral support, introduces the new starter to team members, and helps them feel welcome and included. The buddy relationship is supportive and friendly, distinct from a managerial role.",
-      "pseudonyms": [],
-      "keywords": [
-        "buddy",
-        "new starter",
-        "support",
-        "induction",
-        "integration",
-        "team",
-        "ambassador",
-        "culture",
-        "moral support",
-        "introduction"
-      ],
-      "examples": [],
-      "caveats": [
-        "A buddy should be accessible and not on leave during the first critical weeks to avoid leaving the new hire feeling stranded.",
-        "The buddy is not a line manager, direct report, professional counsellor, or career mentor."
-      ]
+      "type": "procedure",
+      "title": "The role of a buddy",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Buddy program",
+      "description": "A program that connects new team members with existing team members to ensure quick and effective integration into their new team.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Buddy",
+      "description": "An ambassador for a new team member who communicates the organisation's culture and provides job and non-job specific information and support.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "New starter",
+      "description": "A newly hired team member who is being supported and integrated into the team through the buddy program.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Our Learning Hub",
+      "description": "A learning management system used to support new starters.",
+      "pseudonyms": ["LMS"]
     }
   ]
 }

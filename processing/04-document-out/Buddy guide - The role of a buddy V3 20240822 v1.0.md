@@ -1,22 +1,23 @@
 {
-  "type": "definition",
-  "term": "The role of a buddy",
-  "definition": "The buddy program connects new team members with existing team members to ensure quick and effective integration. A buddy acts as an ambassador, communicates the organisation's culture, provides moral support, introduces the new starter to team members, and helps them feel welcome and included. The buddy relationship is supportive and friendly, distinct from a managerial role.",
+  "type": "procedure",
+  "title": "The Role of a Buddy",
   "pseudonyms": [],
   "keywords": [
     "buddy",
     "new starter",
-    "support",
-    "induction",
-    "integration",
     "team",
-    "ambassador",
+    "support",
+    "communication",
     "culture",
-    "moral support",
-    "introduction"
+    "information",
+    "integration",
+    "organisation"
   ],
-  "caveats": [
-    "A buddy should be accessible and not on leave during the first critical weeks to avoid leaving the new hire feeling stranded.",
-    "The buddy is not a line manager, direct report, professional counsellor, or career mentor."
-  ]
+  "steps": [],
+  "examples": [],
+  "bestPractice": [],
+  "caveats": [],
+  "constraints": [],
+  "troubleshooting": [],
+  "metrics": []
 }

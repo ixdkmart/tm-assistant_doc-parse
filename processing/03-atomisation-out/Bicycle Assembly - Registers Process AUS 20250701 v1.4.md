@@ -7,39 +7,49 @@
     {
       "type": "procedure",
       "title": "Bicycle Assembly Process Registers",
-      "pseudonyms": [],
-      "keywords": [
-        "bicycle assembly",
-        "assembly fee",
-        "customer service operator",
-        "hunter service assembly checklist",
-        "register",
-        "purchase",
-        "filing",
-        "warranty",
-        "repair"
-      ],
-      "steps": [
-        "Customer presents assembled bicycle at front end or internal register for purchase.",
-        "Customer Service Operator removes Hunter Service Assembly Checklist from all assembled bicycles sold.",
-        "Customer Service Operator completes the following information on the store copy of the Hunter Service Assembly Checklist using a medium black pen: purchaser's name, purchaser's address, phone number, purchase date, store number.",
-        "The store portion of the checklist is retained and placed in the register drawer and forwarded to the Cash Office for filing.",
-        "Process the $16.50 assembly fee through the register as non-merchandise code 2-repair sale unless advised otherwise.",
-        "Charge customers the assembly fee when specifically requesting to purchase a display model or requesting to have a model assembled by the Hunter Service representative.",
-        "Do not charge customers for any bicycle repair covered by the warranty conditions.",
-        "Do not sell an assembled bicycle that does not have an assembly checklist completed by the Hunter Service representative attached."
-      ],
-      "examples": [],
-      "bestPractice": [],
-      "caveats": [],
-      "constraints": [],
-      "troubleshooting": [],
-      "metrics": [
-        "Assembly fee is $16.50.",
-        "All assembled bicycles sold have the Hunter Service Assembly Checklist removed by Customer Service Operator.",
-        "Store copy of the checklist is completed by the Customer Service Operator.",
-        "Store portion of the checklist is retained and forwarded to the Cash Office for filing."
-      ]
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Customer Service Operator",
+      "description": "The role responsible for removing the Hunter Service Assembly Checklist from all assembled bicycles sold and completing purchaser information on the checklist.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Hunter Service Assembly Checklist",
+      "description": "A checklist attached to assembled bicycles that must be completed by the Hunter Service representative and removed by the Customer Service Operator upon sale.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Hunter Service representative",
+      "description": "The person responsible for completing the assembly checklist attached to assembled bicycles.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Cash Office",
+      "description": "The office where the store portion of the Hunter Service Assembly Checklist is filed after being placed in the register drawer.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Assembly fee",
+      "description": "A fee of $16.50 charged to customers for assembled bicycles, processed through the register as non-merchandise code 2-repair sale.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Register",
+      "description": "The system used to process the assembly fee as a non-merchandise code 2-repair sale.",
+      "pseudonyms": []
+    },
+    {
+      "type": "entity",
+      "name": "Warranty conditions",
+      "description": "Conditions under which customers are not charged for bicycle repairs.",
+      "pseudonyms": []
     }
   ]
 }
