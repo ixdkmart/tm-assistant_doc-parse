@@ -21,7 +21,7 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
     const stepsConfig = [
         { step: 1, input: "01-source", output: "02-clean-out", prompt: PROMPT_01_TO_02 },
         { step: 2, input: "02-clean-out", output: "03-atomisation-out", prompt: PROMPT_02_TO_03 },
-        //{ step: 3, input: "03-atomisation-out", output: "04-document-out", prompt: PROMPT_03_TO_04 },
+        { step: 3, input: "03-atomisation-out", output: "04-document-out", prompt: PROMPT_03_TO_04 },
         //{ step: 4, input: "04-document-out", output: "05-dedupe-out", prompt: PROMPT_04_TO_05 },
         ///{ step: 5, input: "05-dedupe-out", output: "06-remove-contradictions-out", prompt: PROMPT_05_TO_06 },
     ];
