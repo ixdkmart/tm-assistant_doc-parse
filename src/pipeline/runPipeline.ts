@@ -1,4 +1,6 @@
 import path from "node:path";
+// @ts-ignore
+import cliProgress from "cli-progress";
 import { processStep } from "./processStep.js";
 import PROMPT_01_TO_02 from "./prompts/prompt-01-to-02.js";
 import PROMPT_02_TO_03 from "./prompts/prompt-02-to-03.js";
@@ -27,10 +29,16 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
     ];
 
     const results: PipelineResult = { steps: [] };
+    const stepsBar = new cliProgress.SingleBar(
+        { format: "Pipeline {bar} {value}/{total} | Step: {step}", hideCursor: true },
+        cliProgress.Presets.shades_classic
+    );
+    stepsBar.start(stepsConfig.length, 0, { step: "" });
 
     for (const cfg of stepsConfig) {
         const inputFolder = path.resolve(basePath, cfg.input);
         const outputFolder = path.resolve(basePath, cfg.output);
+        stepsBar.update({ step: `${cfg.step}: ${cfg.input} → ${cfg.output}` });
         console.log(`\n▶️  Step ${cfg.step}: ${cfg.input} → ${cfg.output}`);
         const res = await processStep(inputFolder, outputFolder, cfg.prompt);
         console.log(`   - Processed: ${res.processed} | Skipped: ${res.skipped} | Errors: ${res.errors.length}`);
@@ -42,8 +50,9 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
             skipped: res.skipped,
             errors: res.errors,
         });
+        stepsBar.increment();
     }
-
+    stepsBar.stop();
     return results;
 }
 
