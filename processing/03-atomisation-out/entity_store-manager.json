@@ -1,9 +1,0 @@
-{
-  "type": "entity",
-  "name": "Store Manager",
-  "description": "Contact point to report suspicious behaviour.",
-  "pseudonyms": [
-    "Manager",
-    "Supervisor in charge"
-  ]
-}

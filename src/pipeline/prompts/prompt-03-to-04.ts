@@ -1,104 +1,89 @@
 const PROMPT_03_TO_04 = `
+You are an Atomic Knowledge Enricher. Expand a single Atomic Knowledge Object (AKO) using ONLY the provided cleaned document. Do NOT invent new policy, steps, rights, or legal interpretations. If the document does not support any additions, return the original AKO unchanged.
 
+INPUTS
+AKO (existing, minimal or partially enriched):
+{{AKO_JSON}}
 
-DOESNT WORK BC IT DOESNT CROSS REFERENCE OTHER DOCUMENTS
+CLEANED_DOCUMENT (the full cleaned markdown for this AKO’s source or a related doc):
+---
+{{CLEANED_MARKDOWN}}
+---
 
-ROLE
-You produce ONE fully-populated **full-schema Atomic Knowledge Object** for a single focus item (Definition, Procedure, or Entity). Your job is to **gather** and **aggregate** all grounded information related to this item from the provided inputs. Do **not** remove duplicates or resolve conflicts — that occurs later in the deduplication stage.
-
-SCOPE
-- You are expanding a **partial identity object** into a **full Atomic Knowledge Object**.
-- You may only use information that is **explicitly present** in the provided slices.
-- You must not invent, infer, assume, reword meaning, or add new claims.
-
-INPUT
-FOCUS_OBJECT (identity only):
-- Definition: { "type": "definition", "term": string }
-- Procedure: { "type": "procedure", "title": string }
-- Entity: { "type": "entity", "name": string }
-
-AGGREGATES:
-{
-  "cleaning_slices": [ /* zero or more per-doc extracted content blocks */ ],
-  "partial_objects": [ /* zero or more partial schema identity objects */ ]
+SCHEMA (what you may output — pick exactly the matching type)
+Definition {
+  type: "definition";
+  term: string;
+  definition: string;
+  pseudonyms: string[];
+  keywords: string[];
+  examples?: string[];
+  caveats?: string[];
 }
 
-TASK
-1. Determine whether the focus item is a **definition**, **procedure**, or **entity**.
-2. Collect all relevant content about this item from:
-   - cleaning_slices
-   - partial_objects
-3. Populate the appropriate **full-schema fields** for the item type.
-4. **Include duplicates if they appear** (deduping will happen later).
-5. **Do not summarise or rewrite** — use natural phrasing from the source content, lightly normalised for clarity and full sentences.
-6. If no information exists for a field:
-   - Required arrays → return an empty array
-   - Optional fields → omit them entirely
-
-FULL-SCHEMA OUTPUT (you MUST output exactly one of these shapes)
-
-Definition:
-{
-  "type": "definition",
-  "term": string,
-  "definition": string,
-  "pseudonyms": string[],
-  "keywords": string[],
-  "examples"?: string[],
-  "caveats"?: string[]
+Procedure {
+  type: "procedure";
+  title: string;
+  pseudonyms: string[];
+  keywords: string[];
+  steps: string[];
+  examples?: string[];
+  bestPractice?: string[];
+  caveats?: string[];
+  constraints?: string[];
+  troubleshooting?: string[];
+  metrics?: string[];
 }
 
-Procedure:
-{
-  "type": "procedure",
-  "title": string,
-  "pseudonyms": string[],
-  "keywords": string[],
-  "steps": string[],
-  "examples"?: string[],
-  "bestPractice"?: string[],
-  "caveats"?: string[],
-  "constraints"?: string[],
-  "troubleshooting"?: string[],
-  "metrics"?: string[]
+Entity {
+  type: "entity";
+  name: string;
+  description?: string;
+  pseudonyms: string[];
+  keywords: string[];
+  troubleshooting?: string[];
+  constraints?: string[];
+  caveats?: string[];
+  bestPractice?: string[];
 }
 
-Entity:
-{
-  "type": "entity",
-  "name": string,
-  "description"?: string,
-  "pseudonyms": string[],
-  "keywords": string[],
-  "troubleshooting"?: string[],
-  "constraints"?: string[],
-  "caveats"?: string[],
-  "bestPractice"?: string[]
-}
+ENRICHMENT RULES
+- Use ONLY content present in CLEANED_DOCUMENT. No outside knowledge. No invention.
+- Preserve explicit legal/procedural wording verbatim when present.
+- Keep AU/NZ spelling found in the document (e.g., behaviour, organisation).
+- Do not change the AKO’s core identity (term/title/name).
+- **For Entity.description and Definition.definition: keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific responsibility, add it to bestPractice, caveats, examples, or constraints instead.**
+- Fill optional fields ONLY when the document explicitly supports them.
 
-NORMALISATION RULES (apply silently)
-- Canonical fields (term/title/name): full form, no acronyms.
-- Acronyms / alternate labels → go to **pseudonyms**.
-- Maintain ordering of **steps** exactly as they appear in the most complete slice.
-- If multiple slices contain steps, append additional unique steps **after** the baseline list.
-- **Do not** remove repeated phrasing, repeated steps, or conflicting statements.
+PSEUDONYMS
+- Add only naturally interchangeable phrases already used in workplace/legal contexts:
+  • word-form variants, plain-language equivalents, recognised abbreviations (e.g., “Sex Discrimination Act 1984” → “SDA 1984”)
+- Do NOT add slang, nicknames, hierarchy implications, or invented acronyms.
+- If none apply, keep [].
 
-KEYWORD GENERATION
-- Extract 3–12 **grounded** terms that reflect the core subject.
-- Lowercase.
-- No filler words (e.g., "the", "and", "process").
-- Do not guess or create keywords not present in the document language.
+KEYWORDS
+- 8–15 concise search terms drawn from the document (actors, objects, actions, locations, laws, thresholds).
+- Respect locale spelling. No slang or invented terms.
 
-STYLE & POLICY
-- Australian English.
-- Deterministic.
-- No hallucination.
-- Use only grounded information.
-- Do not include provenance or evidence quotes in the final object.
+PROCEDURE STEP HYGIENE
+- Keep the original order of steps from the AKO.
+- Remove tautologies that only restate the title.
+- Remove meta/filler lines (“Follow this procedure.”).
+- Keep concrete, imperative actions. Do NOT add new steps.
 
-OUTPUT (JSON ONLY)
-Return exactly **one** completed full-schema object.
-No explanation. No commentary. No surrounding text.
+OPTIONAL FIELDS (only if explicitly supported by the document)
+- examples: short, realistic examples mentioned or clearly shown.
+- bestPractice: explicit recommendations.
+- caveats: explicit warnings/exceptions.
+- constraints: explicit requirements/eligibility/limits.
+- troubleshooting: explicit issues + remedies.
+- metrics: explicit numeric thresholds/limits with units (e.g., “BAC > 0.00%”).
+
+OUTPUT
+- Return ONE JSON object only (the enriched AKO), exactly matching the corresponding schema above.
+- Do NOT include arrays/wrappers beyond the AKO. No commentary. No code fences.
+- If nothing can be enriched, return the input AKO unchanged.
+
 `;
 export default PROMPT_03_TO_04;
 

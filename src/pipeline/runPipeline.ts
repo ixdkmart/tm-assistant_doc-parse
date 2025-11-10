@@ -7,6 +7,7 @@ import PROMPT_02_TO_03 from "./prompts/prompt-02-to-03.js";
 import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
 import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
 import PROMPT_05_TO_06 from "./prompts/prompt-05-to-06.js";
+import { runAko03to04 } from "./runAko03to04.js";
 
 export interface PipelineResult {
     steps: Array<{
@@ -23,9 +24,6 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
     const stepsConfig = [
         { step: 1, input: "01-source", output: "02-clean-out", prompt: PROMPT_01_TO_02, outputMode: "single" as const },
         { step: 2, input: "02-clean-out", output: "03-atomisation-out", prompt: PROMPT_02_TO_03, outputMode: "objects" as const },
-        //{ step: 3, input: "03-atomisation-out", output: "04-document-out", prompt: PROMPT_03_TO_04 },
-        //{ step: 4, input: "04-document-out", output: "05-dedupe-out", prompt: PROMPT_04_TO_05 },
-        ///{ step: 5, input: "05-dedupe-out", output: "06-remove-contradictions-out", prompt: PROMPT_05_TO_06 },
     ];
 
     const results: PipelineResult = { steps: [] };
@@ -33,7 +31,7 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
         { format: "Pipeline {bar} {value}/{total} | Step: {step}", hideCursor: true },
         cliProgress.Presets.shades_classic
     );
-    stepsBar.start(stepsConfig.length, 0, { step: "" });
+    stepsBar.start(stepsConfig.length + 1, 0, { step: "" });
 
     for (const cfg of stepsConfig) {
         const inputFolder = path.resolve(basePath, cfg.input);
@@ -52,6 +50,24 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
         });
         stepsBar.increment();
     }
+    // Step 3: AKO-first enrichment 03 → 04
+    const step3 = { step: 3, input: "03-atomisation-out", output: "04-document-out", prompt: PROMPT_03_TO_04 };
+    const step3Input = path.resolve(basePath, step3.input);
+    const step3Docs = path.resolve(basePath, "02-clean-out");
+    const step3Output = path.resolve(basePath, step3.output);
+    stepsBar.update({ step: `${step3.step}: ${step3.input} + 02-clean-out → ${step3.output}` });
+    console.log(`\n▶️  Step ${step3.step}: ${step3.input} + 02-clean-out → ${step3.output}`);
+    const res3 = await runAko03to04(step3Input, step3Docs, step3Output, "AU");
+    console.log(`   - Processed: ${res3.processed} | Skipped: ${res3.skipped} | Errors: ${res3.errors.length}`);
+    results.steps.push({
+        step: step3.step,
+        input: `${step3Input} + ${step3Docs}`,
+        output: step3Output,
+        processed: res3.processed,
+        skipped: res3.skipped,
+        errors: res3.errors,
+    });
+    stepsBar.increment();
     stepsBar.stop();
     return results;
 }
