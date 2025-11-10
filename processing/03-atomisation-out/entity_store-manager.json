@@ -1,0 +1,9 @@
+{
+  "type": "entity",
+  "name": "Store Manager",
+  "description": "Responsible for providing guidance when team members are uncertain.",
+  "pseudonyms": [
+    "Manager",
+    "Supervisor in charge"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "type": "entity",
+  "name": "Kmart",
+  "description": "Organisation with stores where the No Apprehension Policy applies to all Kmart Team Members in Australia and New Zealand.",
+  "pseudonyms": [
+    "Kmart Group"
+  ],
+  "keywords": [
+    "breastfeeding",
+    "express milk",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discriminate",
+    "women's right",
+    "our stores",
+    "Store Manager",
+    "team member",
+    "fitting rooms",
+    "shop floor",
+    "complaint",
+    "customer",
+    "Health, Safety & Wellbeing"
+  ],
+  "troubleshooting": [
+    "Sometimes, other customers will take offence to seeing a mother breastfeeding or expressing in one of our stores.",
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ],
+  "constraints": [
+    "In Australian Federal Law, breastfeeding is a right, not a privilege.",
+    "Under the federal Sex Discrimination Act 1984 it is illegal in Australia to discriminate against a person either directly or indirectly on the grounds of breastfeeding.",
+    "This means, a woman has the right to breastfeed, or express milk, anywhere she chooses.",
+    "This includes our stores.",
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor."
+  ],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure.",
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ]
+}

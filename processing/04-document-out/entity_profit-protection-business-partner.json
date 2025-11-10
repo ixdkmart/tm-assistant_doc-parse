@@ -1,0 +1,30 @@
+{
+  "type": "entity",
+  "name": "Profit Protection Business Partner",
+  "pseudonyms": [
+    "Profit Protection Business Partners"
+  ],
+  "keywords": [
+    "No Apprehension Policy",
+    "external theft",
+    "shop stealing",
+    "shop steal matters",
+    "incident reports",
+    "non-compliance",
+    "recommendations",
+    "action plans",
+    "Store Managers",
+    "Line Managers",
+    "Zone Managers",
+    "SOM's",
+    "National Shrink Control Manager",
+    "Solvsafety Profit Protection incident report form"
+  ],
+  "constraints": [
+    "All Profit Protection Business Partners must strictly adhere to this policy.",
+    "All Profit Protection Business Partners must review all incident reports pertaining to external theft and shop steal matters, providing recommendations on and implement measures where appropriate.",
+    "All Profit Protection Business Partners must investigate incidents on non-compliance and provide feedback on results to Zone Managers/SOM's and the National Shrink Control Manager.",
+    "Store Managers and Line Managers must request assistance from the Profit Protection Business Partner to formulate action plans to address external theft or shop stealing in the store.",
+    "All Zone Managers / SOM's must request assistance from the Profit Protection Business Partner to formulate action plans to address external theft or shop stealing within their zone."
+  ]
+}

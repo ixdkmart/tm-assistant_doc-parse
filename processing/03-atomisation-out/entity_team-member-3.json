@@ -1,0 +1,10 @@
+{
+  "type": "entity",
+  "name": "Team Member",
+  "description": "Store employee participating in the Take Care Talk and handling fitness weights.",
+  "pseudonyms": [
+    "Staff member",
+    "Employee",
+    "Team Members"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "entity",
+  "name": "Team Member",
+  "pseudonyms": [
+    "Team Members"
+  ],
+  "keywords": [
+    "breastfeeding",
+    "express milk",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discriminate",
+    "Store Manager",
+    "customer complaint",
+    "fitting rooms",
+    "shop floor",
+    "our stores",
+    "women's right",
+    "Health, Safety & Wellbeing"
+  ],
+  "troubleshooting": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ],
+  "constraints": [
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor."
+  ],
+  "caveats": [
+    "I also understand that if I breach the Kmart No Apprehension Policy, that this may result in disciplinary proceedings that may include the termination of my employment."
+  ],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure."
+  ]
+}

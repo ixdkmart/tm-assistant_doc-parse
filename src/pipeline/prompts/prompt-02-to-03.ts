@@ -54,9 +54,16 @@ Examples of INVALID pseudonyms:
 - "What to do" → ["Procedure A"]                               ← invented label
 
 PROCEDURE RULES
-1) Only create a Procedure if **the text provides real action steps**.
+1) Only create a Procedure if the text provides real action steps.
 2) Steps must be short, imperative, ordered, and taken directly from the document.
 3) Do not add, infer, reorder, or interpret steps.
+
+TITLE CONTEXT RULE:
+If the procedure heading is generic (e.g., "What to do", "Next steps", "Procedure", "Process"), append the smallest necessary context phrase from the surrounding section or overall document topic so the title becomes uniquely meaningful.
+Example:
+- "What to do" → "What to do when unsure about breastfeeding in store"
+- "Next steps" → "Next steps after drug testing"
+Do NOT invent new meaning. Only use context explicitly present in the document.
 
 ENTITY RULES
 Create Entities *only* for:

@@ -1,0 +1,8 @@
+{
+  "type": "entity",
+  "name": "Team Member",
+  "description": "In-store staff who interact with customers.",
+  "pseudonyms": [
+    "Staff member"
+  ]
+}

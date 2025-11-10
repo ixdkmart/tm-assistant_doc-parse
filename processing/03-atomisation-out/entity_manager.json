@@ -1,0 +1,8 @@
+{
+  "type": "entity",
+  "name": "Manager",
+  "description": "Leads or facilitates the Take Care Talk at the start of the team huddle.",
+  "pseudonyms": [
+    "Supervisor"
+  ]
+}

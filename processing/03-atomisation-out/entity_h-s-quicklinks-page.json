@@ -1,0 +1,9 @@
+{
+  "type": "entity",
+  "name": "H&S Quicklinks page",
+  "description": "Internal page used to record completion of safety activities.",
+  "pseudonyms": [
+    "Health & Safety Quicklinks page",
+    "H&S Quick Links page"
+  ]
+}

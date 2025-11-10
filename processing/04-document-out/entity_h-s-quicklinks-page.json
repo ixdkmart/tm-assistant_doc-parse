@@ -1,0 +1,26 @@
+{
+  "type": "entity",
+  "name": "H&S Quicklinks page",
+  "description": "Internal page used to record completion of safety activities.",
+  "pseudonyms": [
+    "Health & Safety Quicklinks page",
+    "H&S Quick Links page"
+  ],
+  "keywords": [
+    "Take Care Talk",
+    "safety activity",
+    "record completion",
+    "H&S Quicklinks",
+    "QR code",
+    "Huddle",
+    "fitness weights",
+    "merchandising",
+    "decant",
+    "H-Cage",
+    "planograms",
+    "K hubs"
+  ],
+  "bestPractice": [
+    "If this Take Care Talk is being completed as part of a safety activity, please record completion via the H&S Quicklinks page or scan the QR code."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "type": "entity",
+  "name": "Team Member",
+  "description": "Store employee participating in the Take Care Talk and handling fitness weights.",
+  "pseudonyms": [
+    "Staff member",
+    "Employee",
+    "Team Members"
+  ],
+  "keywords": [
+    "breastfeeding",
+    "express milk",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discrimination",
+    "complaint",
+    "Store Manager",
+    "fitting rooms",
+    "shop floor",
+    "customers",
+    "women's right",
+    "inclusion"
+  ],
+  "troubleshooting": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ],
+  "constraints": [
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor.",
+    "This means, a woman has the right to breastfeed, or express milk, anywhere she chooses.",
+    "This includes our stores."
+  ],
+  "caveats": [
+    "Policy application: This policy applies to all Kmart Team Members.",
+    "Country application: Australia and New Zealand."
+  ],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure."
+  ]
+}
