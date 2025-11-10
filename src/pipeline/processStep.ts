@@ -1,4 +1,5 @@
 import path from "node:path";
+import fs from "node:fs/promises";
 // @ts-ignore
 import cliProgress from "cli-progress";
 import { getFilesInFolder, readFile as readTextFile, saveFile } from "../lib/fileUtils.js";
@@ -10,9 +11,67 @@ export interface ProcessResult {
     errors: Array<{ file: string; error: string }>;
 }
 
-export interface ProcessStepOptions {
-    outputMode?: "single" | "objects";
-    perDocSubfolder?: boolean;
+type OutputMode = "single" | "objects";
+
+function slugify(input: string): string {
+    return input
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+function jsonEscape(value: string): string {
+    // Return JSON-escaped content without surrounding quotes
+    const escaped = JSON.stringify(value);
+    return escaped.slice(1, escaped.length - 1);
+}
+
+function fillPromptTemplate(
+    template: string,
+    data: { docName: string; docPath: string; text: string }
+): string {
+    return template
+        .replaceAll("{{DOC_NAME}}", jsonEscape(data.docName))
+        .replaceAll("{{DOC_PATH}}", jsonEscape(data.docPath))
+        .replaceAll("{{RAW_MARKDOWN_TEXT}}", jsonEscape(data.text));
+}
+
+function extractJsonObjectBlock(text: string): string {
+    const trimmed = text.trim();
+    // Handle fenced code blocks ```json ... ```
+    const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+    if (fenceMatch && fenceMatch[1]) {
+        return fenceMatch[1].trim();
+    }
+    // Fallback: take substring from first { to last }
+    const first = trimmed.indexOf("{");
+    const last = trimmed.lastIndexOf("}");
+    if (first !== -1 && last !== -1 && last > first) {
+        return trimmed.slice(first, last + 1);
+    }
+    // As a last resort, return original (will fail parse upstream with helpful error)
+    return trimmed;
+}
+
+async function generateUniqueFileName(
+    folderPath: string,
+    baseName: string
+): Promise<string> {
+    let name = baseName;
+    let counter = 2;
+    while (true) {
+        try {
+            await fs.access(path.join(folderPath, name));
+            // exists → try next suffix
+            const parts = baseName.split(".json");
+            const stem = parts[0] ?? baseName.replace(/\.json$/i, "");
+            name = `${stem}-${counter}.json`;
+            counter += 1;
+        } catch {
+            // does not exist → good to use
+            return name;
+        }
+    }
 }
 
 /**
@@ -23,7 +82,7 @@ export async function processStep(
     inputFolder: string,
     outputFolder: string,
     prompt: string,
-    options?: ProcessStepOptions
+    options?: { outputMode?: OutputMode }
 ): Promise<ProcessResult> {
     const files = await getFilesInFolder(inputFolder, "**/*.md");
     const bar = new cliProgress.SingleBar(
@@ -45,22 +104,81 @@ export async function processStep(
                 bar.increment();
                 continue;
             }
-            const result = await processFileWithOpenAI(content, prompt);
+            let result: string;
             if (options?.outputMode === "objects") {
-                const jsonText = extractJsonText(result);
-                let parsed: any;
-                try {
-                    parsed = JSON.parse(jsonText);
-                } catch (err: any) {
-                    throw new Error(`Invalid JSON from model for ${fileName}: ${err?.message ?? String(err)}`);
+                const fileBaseName = path.basename(file, path.extname(file));
+                const filled = fillPromptTemplate(prompt, {
+                    docName: fileBaseName,
+                    docPath: file,
+                    text: content,
+                });
+                // We already embedded the text into the prompt; pass empty content to avoid duplication.
+                result = await processFileWithOpenAI("", filled);
+            } else {
+                result = await processFileWithOpenAI(content, prompt);
+            }
+            if (options?.outputMode === "objects") {
+                // Accept NDJSON (one JSON object per line), JSON array, or { objects: [...] }
+                const objects: any[] = [];
+                const raw = result.trim();
+                let parsedSuccessfully = false;
+                // Try NDJSON
+                const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.length > 0);
+                if (lines.length > 1) {
+                    try {
+                        for (const line of lines) {
+                            const obj = JSON.parse(line);
+                            if (obj && typeof obj === "object") {
+                                objects.push(obj);
+                            }
+                        }
+                        if (objects.length > 0) parsedSuccessfully = true;
+                    } catch {
+                        // fall through
+                        objects.length = 0;
+                    }
                 }
-                if (!parsed || !Array.isArray(parsed.objects)) {
-                    throw new Error(`Model output missing 'objects' array for ${fileName}.`);
+                // Try fenced/wrapper parse if NDJSON didn't work
+                if (!parsedSuccessfully) {
+                    try {
+                        const jsonBlock = extractJsonObjectBlock(raw);
+                        const parsed = JSON.parse(jsonBlock);
+                        if (Array.isArray(parsed)) {
+                            objects.push(...parsed);
+                            parsedSuccessfully = true;
+                        } else if (parsed && Array.isArray(parsed.objects)) {
+                            objects.push(...parsed.objects);
+                            parsedSuccessfully = true;
+                        } else if (parsed && typeof parsed === "object") {
+                            objects.push(parsed);
+                            parsedSuccessfully = true;
+                        }
+                    } catch {
+                        // ignore; handled below
+                    }
                 }
-                for (const [idx, obj] of (parsed.objects as any[]).entries()) {
-                    const fileBase = makeObjectFilenameBase(obj);
-                    const outName = `${fileBase}.json`;
-                    await saveFile(outputFolder, outName, JSON.stringify(obj, null, 2));
+                if (!parsedSuccessfully || objects.length === 0) {
+                    // Save raw output for debugging
+                    const base = path.basename(file, path.extname(file));
+                    const errorName = await generateUniqueFileName(path.join(outputFolder, "_errors"), `${base}--raw.txt`);
+                    await saveFile(path.join(outputFolder, "_errors"), errorName, raw);
+                    throw new Error("Failed to parse model output into objects (saved raw to _errors).");
+                }
+                for (let i = 0; i < objects.length; i++) {
+                    const obj = objects[i];
+                    const type = obj?.type;
+                    const nameField =
+                        type === "definition" ? obj?.term :
+                        type === "procedure" ? obj?.title :
+                        type === "entity" ? obj?.name : undefined;
+                    if (!type || !nameField || typeof nameField !== "string") {
+                        errors.push({ file: fileName, error: `Invalid object at index ${i}: missing type or name field.` });
+                        continue;
+                    }
+                    const slug = slugify(nameField);
+                    const desired = `${type}_${slug}.json`;
+                    const finalName = await generateUniqueFileName(outputFolder, desired);
+                    await saveFile(outputFolder, finalName, JSON.stringify(obj, null, 2));
                     processed += 1;
                 }
             } else {
@@ -74,40 +192,6 @@ export async function processStep(
     }
     bar.stop();
     return { processed, skipped, errors };
-}
-
-function extractJsonText(s: string): string {
-    const trimmed = s.trim();
-    if (trimmed.startsWith("```")) {
-        const first = trimmed.indexOf("```");
-        const last = trimmed.lastIndexOf("```");
-        if (last > first) {
-            // remove optional language hint after opening fence
-            const inner = trimmed.slice(first + 3, last).replace(/^[a-zA-Z0-9_-]*\n/, "");
-            return inner.trim();
-        }
-    }
-    return trimmed;
-}
-
-function slugify(value: string): string {
-    return value
-        .toLowerCase()
-        .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, "_")
-        .replace(/^_+|_+$/g, "")
-        .replace(/_+/g, "_");
-}
-
-function makeObjectFilenameBase(obj: any): string {
-    const type = typeof obj?.type === "string" ? obj.type.toLowerCase() : "object";
-    let nameSource = "";
-    if (type === "definition") nameSource = obj?.term ?? "";
-    else if (type === "procedure") nameSource = obj?.title ?? "";
-    else if (type === "entity") nameSource = obj?.name ?? "";
-    const slug = slugify(String(nameSource || "item"));
-    return `${type}_${slug}`;
 }
 
 

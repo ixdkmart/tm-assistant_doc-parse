@@ -1,74 +1,117 @@
 const PROMPT_02_TO_03 = `
 ROLE
-You read ONE cleaned markdown document and identify all distinct **Definitions**, **Procedures**, and **Entities** that are clearly described. Your job is to output **identity-only** knowledge objects using the **PARTIAL AtomicKnowledgeObject** schema. You are not extracting steps or details here — only the existence and naming of the objects.
+You read ONE cleaned markdown document and identify all distinct Definitions, Procedures, and Entities that are clearly described. Output ONE JSON object per line (NDJSON). No arrays. No wrapper objects. No code fences. No commentary.
 
-GOAL
-Produce a clean list of the objects this document refers to. These objects will be fully expanded later during Overdocumenting. This step is **about identity, not content**.
+SCHEMAS (exact keys only)
 
-PRINCIPLES
-1) Read the document carefully.
-2) Identify each **clearly named** Procedure, Definition, or Entity.
-3) Emit **one object per identified item**, using the partial schema.
-4) Use the **full, canonical name** for 'term/title/name' (no acronyms or shorthand).
-5) Place acronyms, abbreviations, informal names, nicknames, or shorthand forms in **pseudonyms**.
-6) If the document clearly describes the role or system in a sentence, you may include a **one-sentence description** (Entities only).
-7) Do **not** invent or assume; only include objects that clearly appear in the text.
+Definition:
+{
+  "type": "definition",
+  "term": string,
+  "definition": string
+}
 
-PARTIAL SCHEMA (your output MUST match exactly)
-- Definition:
-  {
-    "type": "definition",
-    "term": string,
-    "definition": string
-  }
+Procedure:
+{
+  "type": "procedure",
+  "title": string,
+  "pseudonyms": string[],
+  "steps": string[]
+}
 
-- Procedure:
-  {
-    "type": "procedure",
-    "title": string,
-    "pseudonyms": string[]
-  }
+Entity:
+{
+  "type": "entity",
+  "name": string,
+  "description"?: string,
+  "pseudonyms": string[]
+}
 
-- Entity:
-  {
-    "type": "entity",
-    "name": string,
-    "description"?: string,
-    "pseudonyms": string[]
-  }
+PSEUDONYM RULES (critical)
+For both Procedures & Entities:
+- Generate only **naturally interchangeable workplace language**, NOT new meanings.
+- Allowed pseudonyms:
+  • singular/plural variations
+  • plain-language equivalents
+  • commonly used alternative job/role titles
+  • abbreviations that are already widely recognized (e.g., "Sex Discrimination Act 1984" → "SDA 1984")
+- Do NOT create:
+  • slang
+  • internal org hierarchy
+  • made-up acronyms
+  • nicknames
+  • synonyms that change meaning
+If no true synonyms exist → use: "pseudonyms": [].
+
+Examples of correct pseudonyms:
+- "Store Manager" → ["Manager", "Supervisor in charge"]
+- "Sex Discrimination Act 1984" → ["SDA 1984"]
+- "What to do if you receive a complaint" → ["Responding to a complaint", "Handling breastfeeding complaints"]
+
+Examples of INVALID pseudonyms:
+- "Store Manager" → ["Boss", "Leader", "Upper management"]   ← too vague
+- "Breastfeeding Rights" → ["Mom power"]                       ← slang (reject)
+- "What to do" → ["Procedure A"]                               ← invented label
+
+PROCEDURE RULES
+1) Only create a Procedure if **the text provides real action steps**.
+2) Steps must be short, imperative, ordered, and taken directly from the document.
+3) Do not add, infer, reorder, or interpret steps.
+
+ENTITY RULES
+Create Entities *only* for:
+- people roles (Store Manager, Team Member, Contractor)
+- real organisations (Australian Breastfeeding Association)
+- real laws/standards (Sex Discrimination Act 1984)
+- real systems or named service providers
+Do NOT create Entities for section headings ("What to do", "Introduction").
+
+DEFINITION RULES
+Create Definitions only when the document **defines what something is**.
+
+GOOD OUTPUT EXAMPLES
+
+{
+  "type": "procedure",
+  "title": "What to do",
+  "pseudonyms": ["Responding when unsure"],
+  "steps": [
+    "Seek help from the Store Manager if you are unsure.",
+    "Do not ask the person to stop breastfeeding.",
+    "Do not ask them to cover themselves.",
+    "Do not ask them to move."
+  ]
+}
+
+{
+  "type": "entity",
+  "name": "Store Manager",
+  "description": "Responsible for providing guidance when team members are uncertain.",
+  "pseudonyms": ["Manager", "Supervisor in charge"]
+}
+
+{
+  "type": "definition",
+  "term": "Breastfeeding Rights",
+  "definition": "The legal right to breastfeed or express milk anywhere under the Sex Discrimination Act 1984."
+}
+
+BAD OUTPUT EXAMPLES (DO NOT PRODUCE)
+
+{"type":"entity","name":"What to do"}   ← heading, not an entity
+{"type":"procedure","title":"What to do"}   ← no steps = reject
+{"type":"entity","name":"General Safety Policy"}   ← invented
+{"type":"definition","term":"Breastfeeding","definition":"Feeding a baby with care"}   ← paraphrased = wrong
 
 INPUT
-{
-  "doc_name": "{{DOC_NAME}}",
-  "doc_path": "{{DOC_PATH}}",
-  "text": "{{RAW_MARKDOWN_TEXT}}"
-}
+--------------------------------
+{{RAW_MARKDOWN_TEXT}}
+--------------------------------
 
-DISCOVERY GUIDANCE
-- **Procedures** are workflows or roles with ongoing actions or responsibilities (e.g., “The role of a buddy”, “How to process returns”).
-- **Definitions** are named policies or guarantees where the document states what the term means.
-- **Entities** include:
-  - Tools / systems (e.g., “Our Learning Hub” → pseudonyms: ["LMS"])
-  - Roles (e.g., “Buddy”, “New Starter”)
-  - Organisational programs or named artefacts.
-
-INCLUSION RULE
-If the document **names** something and provides at least **one meaningful statement** about it, **include it** as an object. This is an **inclusive** step — filtering and consolidation happen later.
-
-OUTPUT (JSON ONLY)
-Return exactly:
-{
-  "doc": { "name": "{{DOC_NAME}}", "path": "{{DOC_PATH}}" },
-  "objects": [ /* list of PARTIAL AtomicKnowledgeObject items */ ]
-}
-
-QUALITY CHECK (silent)
-- No fields beyond the partial schema.
-- Canonical names use full form; acronyms go to pseudonyms.
-- JSON valid, double quotes only, no trailing commas, Australian English.
-
-RESPONSE RULE
-Return ONLY the JSON object.
+OUTPUT FORMAT
+- NDJSON: one JSON object per line
+- No code fences
+- No commentary
 `;
 export default PROMPT_02_TO_03;
 

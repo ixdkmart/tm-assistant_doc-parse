@@ -1,0 +1,9 @@
+{
+  "type": "entity",
+  "name": "Line Manager",
+  "description": "Contact point to report suspicious behaviour.",
+  "pseudonyms": [
+    "Direct manager",
+    "Immediate supervisor"
+  ]
+}

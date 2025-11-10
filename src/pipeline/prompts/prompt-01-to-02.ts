@@ -17,6 +17,7 @@ OUTPUT RULES:
 7. If the same statement repeats, keep the clearest one and remove duplicates.
 8. Do not add interpretation, new claims, or examples not found in the source.
 9. Output only the cleaned markdown, in one single code block, no explanation.
+10. Correct all spelling mistakes.
 
 INPUT DOCUMENT (verbatim):
 --------------------------------
