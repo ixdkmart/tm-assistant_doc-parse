@@ -1,83 +1,31 @@
 const PROMPT_01_TO_02 = `
+You are a semantic knowledge base cleaner. Your task is to convert a raw policy/procedure document into clear, GPT-friendly markdown that is ready for atomisation.
 
-this works
+Preserve original section order.
 
-ROLE
-You extract ONLY content related to one focus object (a Definition, Procedure, or Entity) from ONE markdown file, and emit a JSON slice shaped like the full schema. You do not merge across documents.
+OUTPUT RULES:
+1. Do not use bold, italics, emojis, colours, tables, or decorative formatting.
+2. Use only markdown headings (#, ##) and short plain sentences on separate lines.
+3. Maintain the meaning and sequencing of the original document. Do not reorder sections.
+4. Keep legally or operationally critical wording exactly as written (e.g., “No one should ever…”, defined thresholds, disciplinary outcomes, names of roles, names of laws, standards, and policy titles).
+5. Remove all noise:
+   - Logos, branding lines, marketing slogans, page numbers, decorative headers/footers.
+   - Remove corporate *mission*, *vision*, *values*, inspirational messaging, or cultural positioning **unless it directly describes a required action or workplace expectation.**
+   - Remove filler “we love families”, “we are committed to…” statements that do not instruct behaviour.
+   - URLs unless required as a referenced resource.
+6. Use plain sentences instead of bullet points. Only use numbered steps when the source clearly describes a sequence of actions.
+7. If the same statement repeats, keep the clearest one and remove duplicates.
+8. Do not add interpretation, new claims, or examples not found in the source.
+9. Output only the cleaned markdown, in one single code block, no explanation.
 
-PRINCIPLE (must follow exactly)
-1) For each input definition/process/entity, import it and store the item we're assessing (the "focus object").
-2) For each input markdown file, read it and extract everything that relates to the focus object.
-3) Process files one at a time.
-4) Output a new JSON file using the full-schema fields with all content found for this doc+focus.
-5) Fill keywords and other fields as available.
-6) Repeat for the next definition/process/entity.
+INPUT DOCUMENT (verbatim):
+--------------------------------
+PASTE DOCUMENT TEXT HERE
+--------------------------------
 
-INPUT
-FOCUS_OBJECT_JSON — exactly one of:
-{ "type": "definition", "term": "{{TERM}}" }
-{ "type": "procedure", "title": "{{TITLE}}" }
-{ "type": "entity", "name": "{{NAME}}" }
-
-SOURCE_DOC:
-{
-  "doc_name": "{{DOC_NAME}}",
-  "doc_path": "{{DOC_PATH}}",
-  "text": "{{RAW_MARKDOWN_TEXT}}"
-}
-
-EXTRACTION RULES
-- Use the canonical full term/title/name for the focus (no acronyms in the canonical field). Acronyms/aliases go into pseudonyms.
-- Find relevant spans by case-insensitive match of the canonical string and simple variants (pluralisation, hyphenation). Allow small typos (Levenshtein ≤2).
-- Classify matched content into the appropriate full-schema fields:
-  Definition → definition, pseudonyms, keywords, examples?, caveats?
-  Procedure → steps (ordered, imperative), pseudonyms, keywords, examples?, bestPractice?, caveats?, constraints?, troubleshooting?, metrics?
-  Entity → description, pseudonyms, keywords, troubleshooting?, constraints?, caveats?, bestPractice?
-- Convert obviously listed instructions under “How to…/Return/Steps/Checklist” into procedure steps where applicable.
-- Turn explicit limits/times into metrics (natural language, units inline).
-- Prefer empty over guessing. Do not invent facts.
-
-KEYWORDS
-- 3–12 concise, lowercase, deduped terms drawn from extracted content.
-
-EVIDENCE
-- Include an array of short verbatim quotes that support populated fields.
-- Shape: { "doc": "{{DOC_NAME}}", "quote": "..." }.
-- Quotes must be substrings of SOURCE_DOC.text.
-
-OUTPUT (JSON ONLY)
-{
-  "focus": { "type": "...", "id": "{{TERM|TITLE|NAME}}" },
-  "doc":   { "name": "{{DOC_NAME}}", "path": "{{DOC_PATH}}" },
-  "slice": {
-    "type": "definition|procedure|entity",
-    "term|title|name": "...",
-    "definition|description": "",
-    "pseudonyms": [],
-    "keywords": [],
-    "steps": [],
-    "examples": [],
-    "bestPractice": [],
-    "caveats": [],
-    "constraints": [],
-    "troubleshooting": [],
-    "metrics": []
-  },
-  "evidence": [
-    { "doc": "{{DOC_NAME}}", "quote": "..." }
-  ]
-}
-
-QUALITY CHECK (do silently before emitting)
-- All non-empty fields have supporting evidence quotes.
-- Steps are imperative and ordered.
-- Canonical name is full form; acronyms in pseudonyms.
-- Keywords 3–12, lowercase, deduped.
-- Valid JSON; no comments or trailing commas.
-
-RESPONSE RULE
-Return ONLY the final JSON object.
-
+DELIVERABLE:
+Return the cleaned document in markdown format, preserving original section order and meaning, following all rules above.
+Return only the cleaned markdown inside a single code block. Do not provide commentary.
 `;
 export default PROMPT_01_TO_02;
 

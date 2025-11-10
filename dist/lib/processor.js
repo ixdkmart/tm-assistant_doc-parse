@@ -19,15 +19,24 @@ export async function processFileWithOpenAI(content, prompt, systemPrompt) {
     await enforceRateAndBudget({ approxTokens });
     // Default system prompt if not provided
     const defaultSystemPrompt = systemPrompt ?? "You are a helpful assistant that processes and transforms content according to user instructions.";
-    // Call OpenAI API
-    const resp = await client.chat.completions.create({
-        model,
-        messages: [
-            { role: "system", content: defaultSystemPrompt },
-            { role: "user", content: fullPrompt },
-        ],
-        temperature: 0.2,
-    });
+    // Call OpenAI API (gpt-5: do not send temperature; defaults are enforced)
+    let resp;
+    try {
+        resp = await client.chat.completions.create({
+            model,
+            messages: [
+                { role: "system", content: defaultSystemPrompt },
+                { role: "user", content: fullPrompt },
+            ],
+        });
+    }
+    catch (err) {
+        const msg = err?.message ?? String(err);
+        if (typeof msg === "string" && (msg.includes("Unsupported value") || msg.toLowerCase().includes("temperature"))) {
+            throw new Error(`${msg} Hint: This model enforces default sampling and does not accept 'temperature'.`);
+        }
+        throw err;
+    }
     const processedContent = resp.choices[0]?.message?.content ?? "";
     return processedContent;
 }

@@ -1,0 +1,6 @@
+{
+  "type": "entity",
+  "name": "Store Manager",
+  "description": "The manager of a store who can provide assistance when team members are unsure or when complaints escalate.",
+  "pseudonyms": []
+}

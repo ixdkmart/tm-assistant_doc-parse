@@ -1,0 +1,6 @@
+{
+  "type": "entity",
+  "name": "Customer",
+  "description": "A person in the store who may lodge a complaint about breastfeeding or expressing.",
+  "pseudonyms": []
+}
