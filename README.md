@@ -12,7 +12,9 @@ KNOWN ISSUES
 Currently 1m 20s per AKO
 ```
 
-1. Atomising duplicates
+
+
+2. Atomising duplicates
     1. pulls out AKOs per specific document
 
 ```jsx
@@ -40,7 +42,9 @@ Currently 1m 20s per AKO
 }
 ```
 
-1. Tunnel vision description
+
+
+3. Tunnel vision description
     1. Takes in the first definition of an object that may not be the it’s general meaning 
 
 ```json
