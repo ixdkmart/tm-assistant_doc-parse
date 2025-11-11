@@ -8,6 +8,7 @@ import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
 import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
 import PROMPT_05_TO_06 from "./prompts/prompt-05-to-06.js";
 import { runAko03to04 } from "./runAko03to04.js";
+import { runAko04to05 } from "./runAko04to05.js";
 
 export interface PipelineResult {
     steps: Array<{
@@ -31,7 +32,7 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
         { format: "Pipeline {bar} {value}/{total} | Step: {step}", hideCursor: true },
         cliProgress.Presets.shades_classic
     );
-    stepsBar.start(stepsConfig.length + 1, 0, { step: "" });
+    stepsBar.start(stepsConfig.length + 2, 0, { step: "" });
 
     for (const cfg of stepsConfig) {
         const inputFolder = path.resolve(basePath, cfg.input);
@@ -50,13 +51,13 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
         });
         stepsBar.increment();
     }
-    // Step 3: AKO-first enrichment 03 → 04
-    const step3 = { step: 3, input: "03-atomisation-out", output: "04-document-out", prompt: PROMPT_03_TO_04 };
+    // Step 3: MERGE 03 → 04 (from NDJSON to merged AKOs)
+    const step3 = { step: 3, input: "03-atomisation-out", output: "04-merge-out", prompt: PROMPT_03_TO_04 };
     const step3Input = path.resolve(basePath, step3.input);
     const step3Docs = path.resolve(basePath, "02-clean-out");
     const step3Output = path.resolve(basePath, step3.output);
-    stepsBar.update({ step: `${step3.step}: ${step3.input} + 02-clean-out → ${step3.output}` });
-    console.log(`\n▶️  Step ${step3.step}: ${step3.input} + 02-clean-out → ${step3.output}`);
+    stepsBar.update({ step: `${step3.step}: MERGE ${step3.input} → ${step3.output}` });
+    console.log(`\n▶️  Step ${step3.step}: MERGE ${step3.input} → ${step3.output}`);
     const res3 = await runAko03to04(step3Input, step3Docs, step3Output, "AU");
     console.log(`   - Processed: ${res3.processed} | Skipped: ${res3.skipped} | Errors: ${res3.errors.length}`);
     results.steps.push({
@@ -66,6 +67,24 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
         processed: res3.processed,
         skipped: res3.skipped,
         errors: res3.errors,
+    });
+    stepsBar.increment();
+    // Step 4: ENRICH 04 → 05 (each AKO across all cleaned docs)
+    const step4 = { step: 4, input: "04-merge-out", docs: "02-clean-out", output: "05-enrich-out" };
+    const step4Input = path.resolve(basePath, step4.input);
+    const step4Docs = path.resolve(basePath, step4.docs);
+    const step4Output = path.resolve(basePath, step4.output);
+    stepsBar.update({ step: `${step4.step}: ENRICH ${step4.input} + ${step4.docs} → ${step4.output}` });
+    console.log(`\n▶️  Step ${step4.step}: ENRICH ${step4.input} + ${step4.docs} → ${step4.output}`);
+    const res4 = await runAko04to05(step4Input, step4Docs, step4Output);
+    console.log(`   - Processed: ${res4.processed} | Skipped: ${res4.skipped} | Errors: ${res4.errors.length}`);
+    results.steps.push({
+        step: step4.step,
+        input: `${step4Input} + ${step4Docs}`,
+        output: step4Output,
+        processed: res4.processed,
+        skipped: res4.skipped,
+        errors: res4.errors,
     });
     stepsBar.increment();
     stepsBar.stop();

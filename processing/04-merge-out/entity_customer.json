@@ -1,0 +1,12 @@
+{
+  "type": "entity",
+  "name": "customer",
+  "pseudonyms": [
+    "customers"
+  ],
+  "keywords": [],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": []
+}

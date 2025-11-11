@@ -1,0 +1,19 @@
+{
+  "type": "procedure",
+  "title": "Entry - Customer Service Standards",
+  "pseudonyms": [],
+  "keywords": [],
+  "steps": [
+    "Welcome each customer as they enter the store with a greeting and a smile.",
+    "Assist customers with enquiries such as product locations and direct customers for refunds or exchanges to the Service Desk, and alert the team via P2T.",
+    "Report suspicious behaviour discreetly using P2T whilst adhering to the Managing Threatening Situations - 4Ds Poster.",
+    "Manage visitors and contractors who arrive at the store by informing the management team, ensuring they scan in attendance using the Verified QR code, and applying checkseal on Team Member, visitor, or contractor goods.",
+    "Monitor trolley and basket availability and use P2T to notify a manager if replenishment is required."
+  ],
+  "examples": [],
+  "bestPractice": [],
+  "caveats": [],
+  "constraints": [],
+  "troubleshooting": [],
+  "metrics": []
+}

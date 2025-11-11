@@ -1,49 +1,89 @@
 const PROMPT_04_TO_05 = `
-ROLE
-You receive ONE full JSON object (already in the full Atomic Knowledge Object schema). Your job is to remove redundant information and merge near-duplicates **within that single object only** while preserving meaning, order, and canonical phrasing. Do not invent facts. Do not add new content.
+You are an Atomic Knowledge Enricher. Expand a single Atomic Knowledge Object (AKO) using ONLY the provided cleaned document. Do NOT invent new policy, steps, rights, or legal interpretations. If the document does not support any additions, return the original AKO unchanged.
 
-INPUT
-Provide exactly one object in the FULL schema (Definition | Procedure | Entity). Example keys:
-- Definition: { type, term, definition, pseudonyms, keywords, examples?, caveats? }
-- Procedure: { type, title, pseudonyms, keywords, steps, examples?, bestPractice?, caveats?, constraints?, troubleshooting?, metrics? }
-- Entity: { type, name, description?, pseudonyms, keywords, troubleshooting?, constraints?, caveats?, bestPractice? }
+INPUTS
+AKO (existing, minimal or partially enriched):
+{{AKO_JSON}}
 
-GOAL
-Return the **same object type** with duplicates removed and near-duplicates merged, plus a concise report of what changed.
+CLEANED_DOCUMENT (the full cleaned markdown for this AKO’s source or a related doc):
+---
+{{CLEANED_MARKDOWN}}
+---
 
-DEDUPLICATION RULES (apply silently)
-1) **Exact duplicates**: case-insensitive + trimmed string equality → keep one.
-2) **Near-duplicates**: if Levenshtein distance ≤ 2 OR one string is a strict prefix of the other OR they differ only by punctuation/plurals → keep the clearer, longer one.
-3) **Boilerplate repeats** (e.g., repeated pop-up confirmations / success messages in steps): merge into a single representative step or remove repetitions if they add no execution detail.
-4) **Ordering**:
-   - Preserve the original order of \`steps\`.
-   - When merging step-like near-duplicates, replace the earliest duplicate with the chosen canonical phrasing and remove the later duplicates.
-5) **Field-specific guidance**:
-   - \`keywords\`: lowercase, trim, singularise when sensible, and dedupe.
-   - \`pseudonyms\`: keep distinct, meaningful variants only (drop casing-only differences).
-   - \`metrics\`: merge identical values; keep units inline; retain distinct limits/benchmarks.
-   - \`bestPractice\`, \`caveats\`, \`constraints\`, \`troubleshooting\`: dedupe per rules (1)–(2); do **not** collapse distinct safety/compliance statements.
-6) If a list becomes empty after dedupe, keep it as an empty array (do not remove required keys).
-7) Do not cross-check with other objects or documents; scope is **within this one object**.
-
-OUTPUT (JSON ONLY)
-{
-  "object": { /* the deduped full AKO object, same type as input */ },
-  "dedupe_report": {
-    "removed_exact": [ { "field": "keywords", "value": "..." } ],
-    "merged_similar": [ { "field": "steps", "from": ["A", "A."], "to": "A" } ],
-    "notes": [ "Lowercased and trimmed keywords; unified punctuation." ]
-  }
+SCHEMA (what you may output — pick exactly the matching type)
+Definition {
+  type: "definition";
+  term: string;
+  definition: string;
+  pseudonyms: string[];
+  keywords: string[];
+  examples?: string[];
+  caveats?: string[];
 }
 
-QUALITY CHECK (perform silently)
-- The returned object still conforms to the full AKO schema.
-- No meaning lost; procedure steps remain executable and in order.
-- No new content introduced; only deduping/merging performed.
-- JSON is valid; double quotes; no trailing commas or comments.
+Procedure {
+  type: "procedure";
+  title: string;
+  pseudonyms: string[];
+  keywords: string[];
+  steps: string[];
+  examples?: string[];
+  bestPractice?: string[];
+  caveats?: string[];
+  constraints?: string[];
+  troubleshooting?: string[];
+  metrics?: string[];
+}
 
-RESPONSE RULE
-Return ONLY the JSON described in OUTPUT.
+Entity {
+  type: "entity";
+  name: string;
+  description?: string;
+  pseudonyms: string[];
+  keywords: string[];
+  troubleshooting?: string[];
+  constraints?: string[];
+  caveats?: string[];
+  bestPractice?: string[];
+}
+
+ENRICHMENT RULES
+- Use ONLY content present in CLEANED_DOCUMENT. No outside knowledge. No invention.
+- Preserve explicit legal/procedural wording verbatim when present.
+- Keep AU/NZ spelling found in the document (e.g., behaviour, organisation).
+- Do not change the AKO’s core identity (term/title/name).
+- **For Entity.description and Definition.definition: keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific responsibility, add it to bestPractice, caveats, examples, or constraints instead.**
+- Fill optional fields ONLY when the document explicitly supports them.
+
+PSEUDONYMS
+- Add only naturally interchangeable phrases already used in workplace/legal contexts:
+  • word-form variants, plain-language equivalents, recognised abbreviations (e.g., “Sex Discrimination Act 1984” → “SDA 1984”)
+- Do NOT add slang, nicknames, hierarchy implications, or invented acronyms.
+- If none apply, keep [].
+
+KEYWORDS
+- 8–15 concise search terms drawn from the document (actors, objects, actions, locations, laws, thresholds).
+- Respect locale spelling. No slang or invented terms.
+
+PROCEDURE STEP HYGIENE
+- Keep the original order of steps from the AKO.
+- Remove tautologies that only restate the title.
+- Remove meta/filler lines (“Follow this procedure.”).
+- Keep concrete, imperative actions. Do NOT add new steps.
+
+OPTIONAL FIELDS (only if explicitly supported by the document)
+- examples: short, realistic examples mentioned or clearly shown.
+- bestPractice: explicit recommendations.
+- caveats: explicit warnings/exceptions.
+- constraints: explicit requirements/eligibility/limits.
+- troubleshooting: explicit issues + remedies.
+- metrics: explicit numeric thresholds/limits with units (e.g., “BAC > 0.00%”).
+
+OUTPUT
+- Return ONE JSON object only (the enriched AKO), exactly matching the corresponding schema above.
+- Do NOT include arrays/wrappers beyond the AKO. No commentary. No code fences.
+- If nothing can be enriched, return the input AKO unchanged.
+
 `;
 export default PROMPT_04_TO_05;
 

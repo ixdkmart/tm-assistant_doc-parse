@@ -1,0 +1,23 @@
+{
+  "type": "entity",
+  "name": "Service Desk",
+  "pseudonyms": [],
+  "keywords": [
+    "Service Desk",
+    "refunds",
+    "exchanges",
+    "Customer Greeter",
+    "P2T",
+    "enquiries",
+    "product locations",
+    "entry",
+    "store",
+    "direct customers"
+  ],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": [
+    "Assist customers with enquiries such as product locations and direct customers for refunds or exchanges to the Service Desk, and alert the team via P2T."
+  ]
+}

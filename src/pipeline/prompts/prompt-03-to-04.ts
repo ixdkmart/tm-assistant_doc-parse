@@ -1,88 +1,102 @@
 const PROMPT_03_TO_04 = `
-You are an Atomic Knowledge Enricher. Expand a single Atomic Knowledge Object (AKO) using ONLY the provided cleaned document. Do NOT invent new policy, steps, rights, or legal interpretations. If the document does not support any additions, return the original AKO unchanged.
+You are the MERGE step.
 
-INPUTS
-AKO (existing, minimal or partially enriched):
-{{AKO_JSON}}
+You receive a list of AKO occurrences that all refer to the SAME concept (already grouped by type and canonical identity). Your job is to produce ONE canonical, schema-pure AKO (pre-enrichment) that is safe for compliance review.
 
-CLEANED_DOCUMENT (the full cleaned markdown for this AKO’s source or a related doc):
----
-{{CLEANED_MARKDOWN}}
----
+DO NOT hallucinate. DO NOT invent fields. DO NOT merge meanings from different concepts. If identity text is narrow/situational, prefer a broader identity or omit the optional description.
 
-SCHEMA (what you may output — pick exactly the matching type)
-Definition {
-  type: "definition";
-  term: string;
-  definition: string;
-  pseudonyms: string[];
-  keywords: string[];
-  examples?: string[];
-  caveats?: string[];
-}
-
-Procedure {
-  type: "procedure";
-  title: string;
-  pseudonyms: string[];
-  keywords: string[];
-  steps: string[];
-  examples?: string[];
-  bestPractice?: string[];
-  caveats?: string[];
-  constraints?: string[];
-  troubleshooting?: string[];
-  metrics?: string[];
-}
-
-Entity {
-  type: "entity";
-  name: string;
-  description?: string;
-  pseudonyms: string[];
-  keywords: string[];
-  troubleshooting?: string[];
-  constraints?: string[];
-  caveats?: string[];
-  bestPractice?: string[];
-}
-
-ENRICHMENT RULES
-- Use ONLY content present in CLEANED_DOCUMENT. No outside knowledge. No invention.
-- Preserve explicit legal/procedural wording verbatim when present.
-- Keep AU/NZ spelling found in the document (e.g., behaviour, organisation).
-- Do not change the AKO’s core identity (term/title/name).
-- **For Entity.description and Definition.definition: keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific responsibility, add it to bestPractice, caveats, examples, or constraints instead.**
-- Fill optional fields ONLY when the document explicitly supports them.
-
-PSEUDONYMS
-- Add only naturally interchangeable phrases already used in workplace/legal contexts:
-  • word-form variants, plain-language equivalents, recognised abbreviations (e.g., “Sex Discrimination Act 1984” → “SDA 1984”)
-- Do NOT add slang, nicknames, hierarchy implications, or invented acronyms.
-- If none apply, keep [].
-
-KEYWORDS
-- 8–15 concise search terms drawn from the document (actors, objects, actions, locations, laws, thresholds).
-- Respect locale spelling. No slang or invented terms.
-
-PROCEDURE STEP HYGIENE
-- Keep the original order of steps from the AKO.
-- Remove tautologies that only restate the title.
-- Remove meta/filler lines (“Follow this procedure.”).
-- Keep concrete, imperative actions. Do NOT add new steps.
-
-OPTIONAL FIELDS (only if explicitly supported by the document)
-- examples: short, realistic examples mentioned or clearly shown.
-- bestPractice: explicit recommendations.
-- caveats: explicit warnings/exceptions.
-- constraints: explicit requirements/eligibility/limits.
-- troubleshooting: explicit issues + remedies.
-- metrics: explicit numeric thresholds/limits with units (e.g., “BAC > 0.00%”).
+INPUT
+- occurrences: an array of JSON objects (each is one AKO occurrence from atomisation) for this single concept only.
 
 OUTPUT
-- Return ONE JSON object only (the enriched AKO), exactly matching the corresponding schema above.
-- Do NOT include arrays/wrappers beyond the AKO. No commentary. No code fences.
-- If nothing can be enriched, return the input AKO unchanged.
+- Exactly ONE JSON object (no arrays, no wrapper, no commentary).
+- Use the expanded AKO schema below for the detected type.
+- Enrichment fields MUST be present as empty arrays (enrichment happens later).
+- Preserve original casing for chosen canonical identity fields and pseudonyms.
+
+SCHEMAS (use exact keys only)
+
+Definition:
+{
+  "type": "definition",
+  "term": string,
+  "definition": string,
+  "pseudonyms": string[],
+  "keywords": [],
+  "examples": [],
+  "caveats": []
+}
+
+Procedure:
+{
+  "type": "procedure",
+  "title": string,
+  "pseudonyms": string[],
+  "keywords": [],
+  "steps": string[],
+  "examples": [],
+  "bestPractice": [],
+  "caveats": [],
+  "constraints": [],
+  "troubleshooting": [],
+  "metrics": []
+}
+
+Entity:
+{
+  "type": "entity",
+  "name": string,
+  "description"?: string,
+  "pseudonyms": string[],
+  "keywords": [],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": []
+}
+
+MERGE RULES (apply in order)
+
+1) Identity selection (conservative)
+- ENTITY.description: choose the most general, role/system-level description. If all candidates are narrow/situational, OMIT description (it is optional).
+- DEFINITION.definition: choose the most authoritative phrasing (Legal/Policy/Glossary > Role/System profile > SOP/Guidance > Training/FAQ/Poster). Must explicitly define what the term is.
+- PROCEDURE.steps: select one complete step set from the most authoritative occurrence; keep steps in the original order. DO NOT blend or invent steps.
+
+2) Union lists
+- Always union+dedupe "pseudonyms". Preserve original casing from the first seen valid variant.
+- Leave all enrichment arrays as empty lists: keywords/examples/bestPractice/caveats/constraints/troubleshooting/metrics.
+
+3) TITLE CONTEXT RULE (procedures only)
+- If a title is generic (e.g., "What to do", "Next steps", "Procedure", "Process"), append the smallest explicit context phrase found verbatim in the occurrences to make the title uniquely meaningful.
+- Example: "What to do" → "What to do when unsure about breastfeeding in store".
+- Do NOT invent context or change meaning.
+
+4) Pseudonym rules (strict)
+Allowed:
+- singular/plural variants
+- plain-language equivalents that are naturally interchangeable
+- commonly used role/job variants
+- well-known existing abbreviations (e.g., "Sex Discrimination Act 1984" → "SDA 1984")
+NOT allowed:
+- slang, nicknames, invented acronyms, vague hierarchy terms ("upper management"), or synonyms that alter meaning
+If none apply, use "pseudonyms": [].
+
+5) Guardrails
+- All occurrences are already the same type and canonical identity. If any occurrence clearly conflicts (e.g., different law year, different system altogether), ignore the conflicting identity text and favor the safest general identity; omit optional description if necessary.
+- Do NOT create new meanings or combine distinct concepts.
+
+6) Output constraints
+- Output exactly ONE JSON object in the correct schema for its type.
+- No extra fields. No commentary. No provenance inside the object.
+- Enrichment fields must be present as empty arrays.
+
+QUALITY CHECK BEFORE YOU RETURN
+- Is the identity broad and compliant (non-situational)? If not, omit description (entities) or pick the authoritative phrasing (definitions).
+- Are steps imperative, ordered, and taken directly from one occurrence (procedures)?
+- Are pseudonyms valid per the rules and deduped?
+- Are all enrichment arrays present and empty?
+
+Now produce the single merged AKO object.
 
 `;
 export default PROMPT_03_TO_04;

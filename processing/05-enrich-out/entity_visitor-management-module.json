@@ -1,0 +1,26 @@
+{
+  "type": "entity",
+  "name": "Visitor management module",
+  "description": "An LMS module that must be completed prior to being rostered in the Customer Greeter role.",
+  "pseudonyms": [],
+  "keywords": [
+    "LMS",
+    "Customer Greeter",
+    "minimum training standards",
+    "Visitor management",
+    "rostering",
+    "replacement Customer Greeter",
+    "Verified QR code",
+    "checkseal",
+    "visitors",
+    "contractors"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "All Team Members rostered in the Customer Greeter role must complete the following training.",
+    "Visitor management module completed in LMS prior to being rostered.",
+    "When a Customer Greeter is on a break, the replacement Customer Greeter must have completed the minimum training standards listed below."
+  ],
+  "caveats": [],
+  "bestPractice": []
+}

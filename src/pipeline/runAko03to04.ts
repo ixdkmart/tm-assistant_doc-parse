@@ -1,8 +1,10 @@
 import path from "node:path";
 import fs from "node:fs/promises";
+import { createReadStream } from "node:fs";
 // @ts-ignore
 import cliProgress from "cli-progress";
-import { getFilesInFolder, readFile as readTextFile, saveFile } from "../lib/fileUtils.js";
+import readline from "node:readline";
+import { saveFile } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
 import type { ProcessResult } from "./processStep.js";
@@ -55,6 +57,116 @@ function isEmptyArray(value: unknown): boolean {
     return !Array.isArray(value) || value.length === 0;
 }
 
+function slugify(input: string): string {
+    return String(input)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+type Namespace = "role" | "system" | "law" | "organisation" | "document" | "program";
+
+function applyCanonicalMap(identity: string): string {
+    const canonMap: Record<string, string> = {
+        "team members": "Team Member",
+        "store managers": "Store Manager",
+        "kmart": "Kmart",
+    };
+    const key = identity.trim().toLowerCase();
+    return canonMap[key] ?? identity.trim();
+}
+
+function detectNamespace(type: AkoType, identity: string, candidate?: AtomicKnowledgeObject): Namespace {
+    const s = identity.toLowerCase();
+    if (type === "entity") {
+        if (/\bact\s*\d{4}\b/.test(s) || /\bregulation\b/.test(s)) return "law";
+        if (/\bmanager\b|\bteam member\b|\bstaff\b|\brole\b/.test(s)) return "role";
+        if (/\bkmart\b|\bpty\b|\binc\b|\bltd\b|\bassociation\b/.test(s)) return "organisation";
+        if (/\bportal\b|\bapp\b|\bsystem\b|\bwallet\b|\bpay\b/.test(s)) return "system";
+    }
+    if (type === "definition") {
+        if (/\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(s)) return "law";
+        return "document";
+    }
+    if (type === "procedure") {
+        return "document";
+    }
+    return "document";
+}
+
+function canonicalIdentity(obj: AtomicKnowledgeObject): { canonical: string; original: string; namespace: Namespace } {
+    if (obj.type === "definition") {
+        const original = String(obj.term ?? "").trim();
+        const canonical = applyCanonicalMap(original).toLowerCase().trim();
+        return { canonical, original, namespace: detectNamespace("definition", original, obj) };
+    }
+    if (obj.type === "entity") {
+        const original = String(obj.name ?? "").trim();
+        const canonical = applyCanonicalMap(original).toLowerCase().trim();
+        return { canonical, original, namespace: detectNamespace("entity", original, obj) };
+    }
+    // procedure
+    const original = String(obj.title ?? "").trim();
+    const canonical = applyCanonicalMap(original).toLowerCase().trim();
+    return { canonical, original, namespace: detectNamespace("procedure", original, obj) };
+}
+
+function makeKey(obj: AtomicKnowledgeObject): { key: string; namespace: Namespace; canonical: string; original: string } {
+    const { canonical, original, namespace } = canonicalIdentity(obj);
+    return { key: `${obj.type}::${namespace}::${canonical}`, namespace, canonical, original };
+}
+
+function dedupePreserveOrder<T extends string>(values: T[]): T[] {
+    const seen = new Set<string>();
+    const out: T[] = [];
+    for (const v of values) {
+        const k = v.trim();
+        if (!k) continue;
+        const lc = k.toLowerCase();
+        if (seen.has(lc)) continue;
+        seen.add(lc);
+        out.push(v);
+    }
+    return out;
+}
+
+function authorityScore(obj: AtomicKnowledgeObject): number {
+    // Higher is more authoritative
+    if (obj.type === "definition") {
+        const d = (obj.definition ?? "").toLowerCase();
+        let score = 0;
+        if (/\bact\s*\d{4}\b/.test(d)) score += 3;
+        if (/\bpolicy\b|\bglossary\b|\bdefined\b/.test(d)) score += 2;
+        if (/\bmust\b|\bshall\b/.test(d)) score += 1;
+        return score;
+    }
+    if (obj.type === "entity") {
+        const n = (obj.name ?? "").toLowerCase();
+        let score = 0;
+        if (/\bmanager\b|\bsystem\b|\bact\s*\d{4}\b/.test(n)) score += 2;
+        return score;
+    }
+    // procedure
+    const t = (obj.title ?? "").toLowerCase();
+    let score = 0;
+    if (/\bpolicy\b|\bsop\b|\bguidance\b/.test(t)) score += 2;
+    return score;
+}
+
+function materiallyDisagree(a?: string, b?: string): boolean {
+    if (!a || !b) return false;
+    const sa = a.trim().toLowerCase();
+    const sb = b.trim().toLowerCase();
+    if (sa === sb) return false;
+    // crude token overlap
+    const toksA = new Set(sa.split(/\W+/).filter(Boolean));
+    const toksB = new Set(sb.split(/\W+/).filter(Boolean));
+    let inter = 0;
+    for (const t of toksA) if (toksB.has(t)) inter += 1;
+    const jaccard = inter / Math.max(1, toksA.size + toksB.size - inter);
+    return jaccard < 0.3;
+}
+
 function extractJsonObjectBlock(text: string): string {
     const trimmed = text.trim();
     const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
@@ -69,181 +181,275 @@ function extractJsonObjectBlock(text: string): string {
     return trimmed;
 }
 
-function parseSingleAkoFromModel(raw: string): any {
-    const jsonBlock = extractJsonObjectBlock(raw);
-    return JSON.parse(jsonBlock);
-}
-
-function normalizeAko(input: any): AtomicKnowledgeObject {
-    const type: AkoType = input?.type;
-    if (type === "definition") {
-        const out: Definition = {
+function coerceSchemaPure(output: any, groupType: AkoType): AtomicKnowledgeObject | null {
+    if (!output || typeof output !== "object") return null;
+    if (output.type !== groupType) return null;
+    if (groupType === "definition") {
+        const obj: Definition = {
             type: "definition",
-            term: String(input?.term ?? ""),
-            definition: String(input?.definition ?? ""),
-            pseudonyms: Array.isArray(input?.pseudonyms) ? input.pseudonyms : [],
-            keywords: Array.isArray(input?.keywords) ? input.keywords : [],
-            examples: Array.isArray(input?.examples) ? input.examples : undefined,
-            caveats: Array.isArray(input?.caveats) ? input.caveats : undefined,
+            term: String(output.term ?? ""),
+            definition: String(output.definition ?? ""),
+            pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
+            keywords: [],
+            examples: [],
+            caveats: [],
         };
-        return out;
+        if (!obj.term || !obj.definition) return null;
+        return obj;
     }
-    if (type === "procedure") {
-        const out: Procedure = {
+    if (groupType === "procedure") {
+        const obj: Procedure = {
             type: "procedure",
-            title: String(input?.title ?? ""),
-            pseudonyms: Array.isArray(input?.pseudonyms) ? input.pseudonyms : [],
-            keywords: Array.isArray(input?.keywords) ? input.keywords : [],
-            steps: Array.isArray(input?.steps) ? input.steps : [],
-            examples: Array.isArray(input?.examples) ? input.examples : undefined,
-            bestPractice: Array.isArray(input?.bestPractice) ? input.bestPractice : undefined,
-            caveats: Array.isArray(input?.caveats) ? input.caveats : undefined,
-            constraints: Array.isArray(input?.constraints) ? input.constraints : undefined,
-            troubleshooting: Array.isArray(input?.troubleshooting) ? input.troubleshooting : undefined,
-            metrics: Array.isArray(input?.metrics) ? input.metrics : undefined,
+            title: String(output.title ?? ""),
+            pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
+            keywords: [],
+            steps: Array.isArray(output.steps) ? output.steps : [],
+            examples: [],
+            bestPractice: [],
+            caveats: [],
+            constraints: [],
+            troubleshooting: [],
+            metrics: [],
         };
-        return out;
+        if (!obj.title) return null;
+        return obj;
     }
-    if (type === "entity") {
-        const out: Entity = {
-            type: "entity",
-            name: String(input?.name ?? ""),
-            description: typeof input?.description === "string" ? input.description : undefined,
-            pseudonyms: Array.isArray(input?.pseudonyms) ? input.pseudonyms : [],
-            keywords: Array.isArray(input?.keywords) ? input.keywords : [],
-            troubleshooting: Array.isArray(input?.troubleshooting) ? input.troubleshooting : undefined,
-            constraints: Array.isArray(input?.constraints) ? input.constraints : undefined,
-            caveats: Array.isArray(input?.caveats) ? input.caveats : undefined,
-            bestPractice: Array.isArray(input?.bestPractice) ? input.bestPractice : undefined,
-        };
-        return out;
-    }
-    throw new Error("Unsupported or missing AKO type");
-}
-
-function mergeAkoKeepExisting(curr: AtomicKnowledgeObject, next: AtomicKnowledgeObject): AtomicKnowledgeObject {
-    if (curr.type !== next.type) return curr;
-    if (curr.type === "definition") {
-        const a = curr as Definition;
-        const b = next as Definition;
-        return {
-            type: "definition",
-            term: isEmptyString(a.term) ? b.term : a.term,
-            definition: isEmptyString(a.definition) ? b.definition : a.definition,
-            pseudonyms: isEmptyArray(a.pseudonyms) ? b.pseudonyms ?? [] : a.pseudonyms,
-            keywords: isEmptyArray(a.keywords) ? b.keywords ?? [] : a.keywords,
-            examples: isEmptyArray(a.examples) ? b.examples : a.examples,
-            caveats: isEmptyArray(a.caveats) ? b.caveats : a.caveats,
-        };
-    }
-    if (curr.type === "procedure") {
-        const a = curr as Procedure;
-        const b = next as Procedure;
-        return {
-            type: "procedure",
-            title: isEmptyString(a.title) ? b.title : a.title,
-            pseudonyms: isEmptyArray(a.pseudonyms) ? b.pseudonyms ?? [] : a.pseudonyms,
-            keywords: isEmptyArray(a.keywords) ? b.keywords ?? [] : a.keywords,
-            steps: isEmptyArray(a.steps) ? b.steps ?? [] : a.steps,
-            examples: isEmptyArray(a.examples) ? b.examples : a.examples,
-            bestPractice: isEmptyArray(a.bestPractice) ? b.bestPractice : a.bestPractice,
-            caveats: isEmptyArray(a.caveats) ? b.caveats : a.caveats,
-            constraints: isEmptyArray(a.constraints) ? b.constraints : a.constraints,
-            troubleshooting: isEmptyArray(a.troubleshooting) ? b.troubleshooting : a.troubleshooting,
-            metrics: isEmptyArray(a.metrics) ? b.metrics : a.metrics,
-        };
-    }
-    if (curr.type === "entity") {
-        const a = curr as Entity;
-        const b = next as Entity;
-        return {
-            type: "entity",
-            name: isEmptyString(a.name) ? b.name : a.name,
-            description: isEmptyString(a.description) ? b.description : a.description,
-            pseudonyms: isEmptyArray(a.pseudonyms) ? b.pseudonyms ?? [] : a.pseudonyms,
-            keywords: isEmptyArray(a.keywords) ? b.keywords ?? [] : a.keywords,
-            troubleshooting: isEmptyArray(a.troubleshooting) ? b.troubleshooting : a.troubleshooting,
-            constraints: isEmptyArray(a.constraints) ? b.constraints : a.constraints,
-            caveats: isEmptyArray(a.caveats) ? b.caveats : a.caveats,
-            bestPractice: isEmptyArray(a.bestPractice) ? b.bestPractice : a.bestPractice,
-        };
-    }
-    return curr;
-}
-
-function fillPrompt(locale: string, akoJson: string, cleanedMarkdown: string): string {
-    return PROMPT_03_TO_04
-        .replaceAll("{{LOCALE_HINT}}", locale)
-        .replaceAll("{{AKO_JSON}}", akoJson)
-        .replaceAll("{{CLEANED_MARKDOWN}}", cleanedMarkdown);
+    // entity
+    const desc = typeof output.description === "string" ? output.description : undefined;
+    const obj: Entity = {
+        type: "entity",
+        name: String(output.name ?? ""),
+        description: desc,
+        pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
+        keywords: [],
+        troubleshooting: [],
+        constraints: [],
+        caveats: [],
+        bestPractice: [],
+    };
+    if (!obj.name) return null;
+    return obj;
 }
 
 export async function runAko03to04(
     akosFolder: string,
-    cleanedDocsFolder: string,
+    _cleanedDocsFolder: string,
     outputFolder: string,
-    localeHint: string = "AU"
+    _localeHint: string = "AU"
 ): Promise<ProcessResult> {
-    const akoFiles = await getFilesInFolder(akosFolder, "**/*.json");
-    const docFiles = await getFilesInFolder(cleanedDocsFolder, "**/*.md");
+    const ndjsonPath = path.join(akosFolder, "akos.ndjson");
+    const outFolder = outputFolder; // now 04-merge-out via pipeline
+    await fs.mkdir(outFolder, { recursive: true });
+    const indexPath = path.join(outFolder, "merge-index.ndjson");
+    await fs.writeFile(indexPath, "", "utf8"); // truncate index
 
-    // Preload documents into memory to avoid re-reading
-    const docs: Array<{ file: string; text: string }> = [];
-    for (const f of docFiles) {
-        try {
-            const t = await readTextFile(f);
-            if (t && t.trim()) {
-                docs.push({ file: f, text: t });
-            }
-        } catch {
-            // ignore unreadable docs
-        }
-    }
+    type GroupItem = { obj: AtomicKnowledgeObject; line: number };
+    const groups = new Map<
+        string,
+        { type: AkoType; namespace: Namespace; canonical: string; originals: string[]; items: GroupItem[] }
+    >();
 
+    // Read NDJSON stream
+    const stream = createReadStream(ndjsonPath, { encoding: "utf8" });
+    const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
+    let inputLines = 0;
     const bar = new cliProgress.SingleBar(
-        { format: "AKO 03→04 {bar} {value}/{total} | ETA: {eta_formatted} | File: {file}", hideCursor: true },
+        { format: "MERGE 03→04 {bar} {value} lines | Group: {groups}", hideCursor: true },
         cliProgress.Presets.shades_classic
     );
-    bar.start(akoFiles.length, 0, { file: "" });
-
-    let processed = 0;
-    let skipped = 0;
-    const errors: Array<{ file: string; error: string }> = [];
-
-    for (const akoPath of akoFiles) {
-        const fileName = path.basename(akoPath);
+    bar.start(0, 0, { groups: 0 });
+    for await (const line of rl) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        inputLines += 1;
         try {
-            bar.update({ file: fileName });
-            const jsonText = await fs.readFile(akoPath, "utf8");
-            const rawAko = JSON.parse(jsonText);
-            let currentAko = normalizeAko(rawAko);
-
-            // Enrich across all cleaned docs
-            for (const doc of docs) {
-                const prompt = fillPrompt(localeHint, JSON.stringify(currentAko), doc.text);
-                const modelOut = await processFileWithOpenAI("", prompt);
-                let parsed: any;
-                try {
-                    parsed = parseSingleAkoFromModel(modelOut);
-                } catch {
-                    // Skip this doc if parse fails; continue with others
-                    continue;
-                }
-                if (!parsed || typeof parsed !== "object") continue;
-                if (parsed.type !== currentAko.type) continue;
-                const normalizedNext = normalizeAko(parsed);
-                currentAko = mergeAkoKeepExisting(currentAko, normalizedNext);
-            }
-
-            await saveFile(outputFolder, fileName, JSON.stringify(currentAko, null, 2));
-            processed += 1;
-        } catch (e: any) {
-            errors.push({ file: fileName, error: e?.message ?? String(e) });
+            const parsed = JSON.parse(trimmed);
+            const type: AkoType = parsed?.type;
+            if (type !== "definition" && type !== "procedure" && type !== "entity") continue;
+            const obj = parsed as AtomicKnowledgeObject;
+            const { key, namespace, canonical, original } = makeKey(obj);
+            const g =
+                groups.get(key) ??
+                { type, namespace, canonical, originals: [], items: [] };
+            g.items.push({ obj, line: inputLines });
+            g.originals.push(original);
+            groups.set(key, g);
+        } catch {
+            // skip invalid line
         }
-        bar.increment();
+        bar.increment(1, { groups: groups.size });
     }
     bar.stop();
-    return { processed, skipped, errors };
+
+    // Guardrails helpers
+    const vetoPairs: Array<[string, string]> = [
+        ["mod", "store manager"],
+        ["apple wallet", "apple pay"],
+    ];
+    function veto(a: string, b: string): boolean {
+        const la = a.toLowerCase(), lb = b.toLowerCase();
+        return vetoPairs.some(([x, y]) => (la.includes(x) && lb.includes(y)) || (la.includes(y) && lb.includes(x)));
+    }
+
+    let outputsWritten = 0;
+    let conflicts = 0;
+    // For each group, merge and write outputs and index
+    for (const [, group] of groups) {
+        const { type, namespace, canonical } = group;
+        // Apply guardrails: ensure no obvious veto within group identities
+        let hasVeto = false;
+        for (let i = 0; i < group.originals.length && !hasVeto; i++) {
+            for (let j = i + 1; j < group.originals.length && !hasVeto; j++) {
+                if (veto(group.originals[i], group.originals[j])) hasVeto = true;
+            }
+        }
+        // Choose identity text and core fields
+        let conflict = false;
+
+        // Attempt LLM-assisted merge using MERGE prompt
+        let merged: AtomicKnowledgeObject | null = null;
+        let signals: string[] = [];
+        try {
+            const occurrences = group.items.map(i => i.obj);
+            const llmOut = await processFileWithOpenAI(JSON.stringify({ occurrences }), PROMPT_03_TO_04);
+            const jsonBlock = extractJsonObjectBlock(llmOut);
+            const parsed = JSON.parse(jsonBlock);
+            const coerced = coerceSchemaPure(parsed, type);
+            if (coerced) {
+                merged = coerced;
+                signals.push("llm-merge");
+            }
+        } catch {
+            // fall through to deterministic merge
+        }
+
+        // If LLM output invalid or failed, deterministic fallback (previous logic)
+        if (!merged) {
+            // Merge pseudonyms/keywords union (if present)
+            const allPseudos: string[] = [];
+            const allKeywords: string[] = [];
+            const sorted = [...group.items].sort((a, b) => authorityScore(b.obj) - authorityScore(a.obj));
+            const representative = sorted[0]?.obj;
+            if (type === "entity") {
+                const descriptions = group.items
+                    .map(i => (i.obj as Entity).description)
+                    .filter((d): d is string => typeof d === "string" && d.trim().length > 0);
+                let chosenDesc: string | undefined = descriptions[0];
+                for (const d of descriptions.slice(1)) {
+                    if (materiallyDisagree(chosenDesc, d)) {
+                        conflict = true;
+                        chosenDesc = (chosenDesc && chosenDesc.length <= d.length) ? chosenDesc : d;
+                    }
+                }
+                for (const gi of group.items) {
+                    const e = gi.obj as Entity;
+                    if (Array.isArray(e.pseudonyms)) allPseudos.push(...e.pseudonyms);
+                    if (Array.isArray(e.keywords)) allKeywords.push(...e.keywords);
+                }
+                merged = {
+                    type: "entity",
+                    name: group.originals[0] ?? representative && (representative as Entity).name ?? canonical,
+                    description: chosenDesc,
+                    pseudonyms: dedupePreserveOrder(allPseudos),
+                    keywords: dedupePreserveOrder(allKeywords),
+                    troubleshooting: [],
+                    constraints: [],
+                    caveats: [],
+                    bestPractice: [],
+                };
+            } else if (type === "procedure") {
+                let chosenSteps: string[] = [];
+                for (const gi of sorted) {
+                    const p = gi.obj as Procedure;
+                    if (Array.isArray(p.steps) && p.steps.length > 0) {
+                        chosenSteps = p.steps;
+                        break;
+                    }
+                }
+                for (const gi of group.items) {
+                    const p = gi.obj as Procedure;
+                    if (Array.isArray(p.pseudonyms)) allPseudos.push(...p.pseudonyms);
+                    if (Array.isArray(p.keywords)) allKeywords.push(...p.keywords);
+                }
+                merged = {
+                    type: "procedure",
+                    title: group.originals[0] ?? representative && (representative as Procedure).title ?? canonical,
+                    pseudonyms: dedupePreserveOrder(allPseudos),
+                    keywords: dedupePreserveOrder(allKeywords),
+                    steps: chosenSteps,
+                    examples: [],
+                    bestPractice: [],
+                    caveats: [],
+                    constraints: [],
+                    troubleshooting: [],
+                    metrics: [],
+                };
+            } else {
+                const defs = group.items.map(i => (i.obj as Definition).definition).filter((d): d is string => !!d);
+                let chosenDef = defs[0] ?? "";
+                for (const d of defs.slice(1)) {
+                    if (materiallyDisagree(chosenDef, d)) {
+                        conflict = true;
+                        const aLaw = /\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(chosenDef.toLowerCase());
+                        const bLaw = /\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(d.toLowerCase());
+                        if (!aLaw && bLaw) chosenDef = d;
+                        else if (aLaw && !bLaw) chosenDef = chosenDef;
+                        else chosenDef = d.length >= chosenDef.length ? d : chosenDef;
+                    }
+                }
+                for (const gi of group.items) {
+                    const d = gi.obj as Definition;
+                    if (Array.isArray(d.pseudonyms)) allPseudos.push(...d.pseudonyms);
+                    if (Array.isArray(d.keywords)) allKeywords.push(...d.keywords);
+                }
+                merged = {
+                    type: "definition",
+                    term: group.originals[0] ?? (representative as Definition | undefined)?.term ?? canonical,
+                    definition: chosenDef,
+                    pseudonyms: dedupePreserveOrder(allPseudos),
+                    keywords: dedupePreserveOrder(allKeywords),
+                    examples: [],
+                    caveats: [],
+                };
+            }
+            signals.push("fallback-deterministic");
+        }
+
+        // Laws must match year: if within group there are multiple years implied, mark conflict
+        if (namespace === "law") {
+            const years = new Set<number>();
+            for (const o of group.originals) {
+                const m = o.match(/\b(\d{4})\b/);
+                if (m) years.add(Number(m[1]));
+            }
+            if (years.size > 1) conflict = true;
+        }
+
+        if (hasVeto) conflict = true;
+        if (conflict) conflicts += 1;
+
+        const id = `${merged.type}_${slugify(group.canonical)}`;
+        const fileName = `${id}.json`;
+        await saveFile(outFolder, fileName, JSON.stringify(merged, null, 2));
+        outputsWritten += 1;
+
+        // provenance index line
+        const indexEntry = {
+            id,
+            type: merged.type,
+            namespace,
+            sources: group.items.map(i => ({ line: i.line })), // use NDJSON line numbers as provenance
+            merged_from_count: group.items.length,
+            merge: { confidence: 1.0, signals, vetoes: hasVeto ? ["do-not-merge-pair"] : [] as string[] },
+            conflict,
+        };
+        await fs.appendFile(indexPath, JSON.stringify(indexEntry) + "\n", "utf8");
+    }
+
+    // Final log
+    console.log(JSON.stringify({ stage: "merge", input_lines: inputLines, groups: groups.size, outputs_written: outputsWritten, conflicts }));
+
+    return { processed: outputsWritten, skipped: 0, errors: [] };
 }
 
 

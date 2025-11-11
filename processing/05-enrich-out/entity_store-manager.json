@@ -1,0 +1,52 @@
+{
+  "type": "entity",
+  "name": "Store Manager",
+  "pseudonyms": [
+    "Store Managers"
+  ],
+  "keywords": [
+    "breastfeeding",
+    "express milk",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discriminate",
+    "women's right",
+    "stores",
+    "fitting rooms",
+    "shop floor",
+    "customer complaint",
+    "team member",
+    "cover themselves",
+    "Health, Safety & Wellbeing",
+    "Customer Greeter",
+    "rostering",
+    "trading hours",
+    "core trading periods",
+    "peak trading periods",
+    "Warm-Ups Poster",
+    "minimum training standards",
+    "Managers on duty",
+    "Profit Protection",
+    "incident report",
+    "EAS gates",
+    "Verified QR code",
+    "checkseal",
+    "P2T"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "A Customer Greeter is rostered during all trading hours in a store.",
+    "2 Customer Greeters are rostered for core and peak trading periods.",
+    "Customer Greeters provide updates relating to product, including new products and out of stock items.",
+    "Customer Greeters provide updates on store layout changes.",
+    "Customer Greeters conduct a lap of the store to visually identify any changes.",
+    "Ensure the Customer Greeter completes a warm-up as per the Warm-Ups Poster prior to their shift.",
+    "Ensure the Customer Greeter regularly walks around the Customer Greeter area to maintain stretching.",
+    "When a Customer Greeter is on a break, the replacement Customer Greeter must have completed the minimum training standards listed below."
+  ],
+  "caveats": [],
+  "bestPractice": [
+    "Managers on duty should make themselves known to the Customer Greeter."
+  ]
+}

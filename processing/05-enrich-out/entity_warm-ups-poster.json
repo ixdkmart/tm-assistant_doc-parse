@@ -1,0 +1,26 @@
+{
+  "type": "entity",
+  "name": "Warm-Ups Poster",
+  "description": "Poster referenced in the Customer Greeter Best Practice Guide for completing a warm-up prior to shift.",
+  "pseudonyms": [],
+  "keywords": [
+    "Customer Greeter",
+    "Warm-Ups Poster",
+    "warm-up",
+    "prior to shift",
+    "Rostering Standards",
+    "managers",
+    "stretching",
+    "Customer Greeter area",
+    "Best Practice Guide",
+    "rostered"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "Ensure the Customer Greeter completes a warm-up as per the Warm-Ups Poster prior to their shift."
+  ],
+  "caveats": [],
+  "bestPractice": [
+    "Ensure the Customer Greeter regularly walks around the Customer Greeter area to maintain stretching."
+  ]
+}

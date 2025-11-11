@@ -93,6 +93,14 @@ export async function processStep(
     let processed = 0;
     let skipped = 0;
     const errors: Array<{ file: string; error: string }> = [];
+    // Prepare NDJSON file if emitting objects mode
+    let ndjsonPath: string | undefined;
+    if (options?.outputMode === "objects") {
+        await fs.mkdir(outputFolder, { recursive: true });
+        ndjsonPath = path.join(outputFolder, "akos.ndjson");
+        // Truncate or create fresh file at start
+        await fs.writeFile(ndjsonPath, "", "utf8");
+    }
 
     for (const file of files) {
         const fileName = path.basename(file);
@@ -166,19 +174,11 @@ export async function processStep(
                 }
                 for (let i = 0; i < objects.length; i++) {
                     const obj = objects[i];
-                    const type = obj?.type;
-                    const nameField =
-                        type === "definition" ? obj?.term :
-                        type === "procedure" ? obj?.title :
-                        type === "entity" ? obj?.name : undefined;
-                    if (!type || !nameField || typeof nameField !== "string") {
-                        errors.push({ file: fileName, error: `Invalid object at index ${i}: missing type or name field.` });
-                        continue;
+                    // Append exact JSON (no pretty print) as single line (NDJSON)
+                    if (!ndjsonPath) {
+                        throw new Error("NDJSON output path not initialized");
                     }
-                    const slug = slugify(nameField);
-                    const desired = `${type}_${slug}.json`;
-                    const finalName = await generateUniqueFileName(outputFolder, desired);
-                    await saveFile(outputFolder, finalName, JSON.stringify(obj, null, 2));
+                    await fs.appendFile(ndjsonPath, JSON.stringify(obj) + "\n", "utf8");
                     processed += 1;
                 }
             } else {

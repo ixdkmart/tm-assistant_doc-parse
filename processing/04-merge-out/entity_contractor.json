@@ -1,0 +1,12 @@
+{
+  "type": "entity",
+  "name": "Contractor",
+  "pseudonyms": [
+    "contractors"
+  ],
+  "keywords": [],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": []
+}

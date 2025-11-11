@@ -1,0 +1,32 @@
+{
+  "type": "entity",
+  "name": "Managing Threatening Situations - 4Ds Poster",
+  "pseudonyms": [
+    "Threatening Situations 4Ds"
+  ],
+  "keywords": [
+    "Managing Threatening Situations",
+    "4Ds",
+    "Customer Greeter",
+    "suspicious behaviour",
+    "P2T",
+    "Push to talk units",
+    "Safety Solvsafety portal",
+    "LMS",
+    "No Apprehension Policy",
+    "Receipt Scanner Process Guide",
+    "report incident",
+    "Kmart Way module",
+    "Visitor management module"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "Customer Greeter has read, understood and complies with the Threatening Situations 4Ds."
+  ],
+  "caveats": [],
+  "bestPractice": [
+    "Report suspicious behaviour discreetly using P2T whilst adhering to the Managing Threatening Situations - 4Ds Poster.",
+    "All threatening situations must be reported via the Safety Solvsafety portal.",
+    "Report the incident to a manager discreetly."
+  ]
+}

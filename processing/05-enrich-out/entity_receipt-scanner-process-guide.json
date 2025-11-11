@@ -1,0 +1,39 @@
+{
+  "type": "entity",
+  "name": "Receipt Scanner Process Guide",
+  "description": "Guide covering the receipt scan process for checking customer receipts and related interactions.",
+  "pseudonyms": [
+    "receipt scan process"
+  ],
+  "keywords": [
+    "Customer Greeter",
+    "receipt scanner",
+    "receipt scan process",
+    "bag checks",
+    "PDT device",
+    "exit",
+    "P2T",
+    "Managing Threatening Situations - 4Ds Poster",
+    "Safety Solvsafety portal",
+    "queue bust",
+    "No Apprehension Policy",
+    "Threatening Situations 4Ds",
+    "Kmart Way"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "Customer Greeter has read, understood and complies with the Receipt Scanner Process Guide.",
+    "PDT device (needed for receipt scanning)."
+  ],
+  "caveats": [
+    "If any of the above Customer Service Standards creates a threatening situation or aggressive behaviour from the customer, always adhere to the 5Ds and threatening situations. Report the incident to a manager discreetly.",
+    "All threatening situations must be reported via the Safety Solvsafety portal."
+  ],
+  "bestPractice": [
+    "Request the receipt to scan as per the receipt scan process and conduct bag checks to ensure the total items on the receipt match what is in their bag, trolley, pram, or box.",
+    "Report suspicious behaviour discreetly using P2T whilst adhering to the Managing Threatening Situations - 4Ds Poster.",
+    "Ask for assistance to queue bust while checking receipts with the receipt scanner.",
+    "For low and medium traffic times, one Customer Greeter stands to the left side where customers exit to check receipts and bags and to farewell customers, and roams the area to greet customers as they enter.",
+    "For high and peak traffic times, roster two Customer Greeters: one at the entry to greet customers and one at the exit to check bags and receipts and to farewell customers as they exit."
+  ]
+}
