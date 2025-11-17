@@ -53,6 +53,18 @@ function extractJsonObjectBlock(text: string): string {
     return trimmed;
 }
 
+function stripMarkdownCodeBlocks(text: string): string {
+    const trimmed = text.trim();
+    // Handle fenced code blocks with markdown/md language identifier or plain ```
+    // Match: ```markdown ... ```, ```md ... ```, or ``` ... ```
+    const fenceMatch = trimmed.match(/```(?:markdown|md)?\s*([\s\S]*?)```/i);
+    if (fenceMatch && fenceMatch[1]) {
+        return fenceMatch[1].trim();
+    }
+    // If no code blocks found, return original
+    return trimmed;
+}
+
 async function generateUniqueFileName(
     folderPath: string,
     baseName: string
@@ -182,7 +194,9 @@ export async function processStep(
                     processed += 1;
                 }
             } else {
-                await saveFile(outputFolder, fileName, result);
+                // Strip markdown code block fences if present
+                const cleanedResult = stripMarkdownCodeBlocks(result);
+                await saveFile(outputFolder, fileName, cleanedResult);
                 processed += 1;
             }
         } catch (e: any) {
