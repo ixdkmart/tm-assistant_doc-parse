@@ -17,6 +17,11 @@ export async function processFileWithOpenAI(
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const model = config.model;
     
+    // Validate model name (common invalid models)
+    if (model === "gpt-5") {
+        console.warn(`[processor] Warning: "gpt-5" is not a valid OpenAI model. Common valid models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo`);
+    }
+    
     // Combine the prompt with the content
     const fullPrompt = `${prompt}\n\n---\n\n${content}`;
     
@@ -40,10 +45,15 @@ export async function processFileWithOpenAI(
             ],
         });
     } catch (err: any) {
+        // Dump full error object for diagnostics
+        console.error('[processor] OpenAI API error:', err);
+        
         const msg = err?.message ?? String(err);
         if (typeof msg === "string" && (msg.includes("Unsupported value") || msg.toLowerCase().includes("temperature"))) {
             throw new Error(`${msg} Hint: This model enforces default sampling and does not accept 'temperature'.`);
         }
+        
+        // Re-throw the original error to preserve all details
         throw err;
     }
     
