@@ -1,0 +1,76 @@
+{
+  "type": "procedure",
+  "title": "Exit - Customer Service Standards",
+  "pseudonyms": [],
+  "keywords": [
+    "breastfeeding",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discrimination",
+    "Store Manager",
+    "complaint",
+    "fitting rooms",
+    "shop floor",
+    "Health, Safety & Wellbeing",
+    "women's right",
+    "Customer Greeter",
+    "Exit",
+    "receipt scan process",
+    "bag checks",
+    "P2T",
+    "Managing Threatening Situations - 4Ds",
+    "5Ds",
+    "Verified QR code",
+    "visitors",
+    "contractors",
+    "checkseal",
+    "receipt scanner",
+    "queue bust",
+    "manager",
+    "threatening situations"
+  ],
+  "steps": [
+    "Farewell each customer and ask if they found everything they were looking for.",
+    "Request the receipt to scan as per the receipt scan process and conduct bag checks to ensure the total items on the receipt match what is in their bag, trolley, pram, or box.",
+    "Report suspicious behaviour discreetly using P2T whilst adhering to the Managing Threatening Situations - 4Ds Poster.",
+    "Manage visitors and contractors who exit the store by informing the management team, ensuring they scan out attendance using the Verified QR code, and checking checkseal on Team Member, visitor, or contractor goods.",
+    "Ask for assistance to queue bust while checking receipts with the receipt scanner."
+  ],
+  "examples": [
+    "Sometimes, other customers will take offence to seeing a mother breastfeeding or expressing in one of our stores."
+  ],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure.",
+    "For low and medium traffic times. One Customer Greeter stands to the left side where customers exit to check receipts and bags and to farewell customers, and roams the area to greet customers as they enter.",
+    "For high and peak traffic times. One Customer Greeter is at the entry to greet customers as they arrive and roams the area to greet customers as they enter or exit. One Customer Greeter is at the exit to check bags and receipts and to farewell customers as they exit and roams the area to greet customers as they enter or exit.",
+    "Ensure EAS gates are tested daily and report to a manager if not working."
+  ],
+  "caveats": [
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor.",
+    "If any of the above Customer Service Standards creates a threatening situation or aggressive behaviour from the customer, always adhere to the 5Ds and threatening situations. Report the incident to a manager discreetly."
+  ],
+  "constraints": [
+    "In Australian Federal Law, breastfeeding is a right, not a privilege.",
+    "Under the federal Sex Discrimination Act 1984 it is illegal in Australia to discriminate against a person either directly or indirectly on the grounds of breastfeeding.",
+    "This means, a woman has the right to breastfeed, or express milk, anywhere she chooses.",
+    "This includes our stores.",
+    "Customer Greeter and bag check module completed in LMS prior to being rostered.",
+    "Managing Threatening Situations - Kmart Way module completed in LMS prior to being rostered.",
+    "Visitor management module completed in LMS prior to being rostered.",
+    "Customer Greeter has read, understood and complies with the No Apprehension Policy.",
+    "Customer Greeter has read, understood and complies with the Threatening Situations 4Ds.",
+    "Customer Greeter has read, understood and complies with the Receipt Scanner Process Guide.",
+    "Every Customer Greeter must have the following equipment: Blue vest; Push to talk units (P2T); PDT device (needed for receipt scanning); Duress watch (where applicable); Safety camera (where applicable); Kmart utility belt holding checkseals, pen, customer service forms, LP incident reporting forms, portable EAS retractable de-tagger.",
+    "Service standards must be adhered to at all times.",
+    "All threatening situations must be reported via the Safety Solvsafety portal.",
+    "Report Profit Protection incidents to a manager who can submit an incident report."
+  ],
+  "troubleshooting": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager.",
+    "If a customer becomes aggressive or a threatening situation arises while performing exit standards, adhere to the 5Ds and report the incident to a manager discreetly."
+  ],
+  "metrics": []
+}

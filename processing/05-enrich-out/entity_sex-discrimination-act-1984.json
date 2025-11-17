@@ -1,0 +1,40 @@
+{
+  "type": "entity",
+  "name": "Sex Discrimination Act 1984",
+  "description": "An Australian Federal law.",
+  "pseudonyms": [
+    "SDA 1984",
+    "federal Sex Discrimination Act 1984"
+  ],
+  "keywords": [
+    "Australian Federal Law",
+    "breastfeeding",
+    "express milk",
+    "discriminate",
+    "directly or indirectly",
+    "grounds of breastfeeding",
+    "stores",
+    "fitting rooms",
+    "shop floor",
+    "Store Manager",
+    "customer complaint",
+    "team member",
+    "women's right",
+    "Health, Safety & Wellbeing"
+  ],
+  "troubleshooting": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ],
+  "constraints": [
+    "Under the federal Sex Discrimination Act 1984 it is illegal in Australia to discriminate against a person either directly or indirectly on the grounds of breastfeeding.",
+    "This means, a woman has the right to breastfeed, or express milk, anywhere she chooses."
+  ],
+  "caveats": [],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure.",
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor.",
+    "This includes our stores."
+  ]
+}

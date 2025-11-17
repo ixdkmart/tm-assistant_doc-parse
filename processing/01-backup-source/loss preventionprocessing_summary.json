@@ -1,0 +1,135 @@
+[
+  {
+    "source_file": "pdf/loss prevention/Counterfeit Note Detection Guide AUS 20250613 v5.0.pdf",
+    "output_file": "pdf-extracted/loss preventionCounterfeit Note Detection Guide AUS 20250613 v5.0.md",
+    "total_pages": 4,
+    "total_characters": 6837,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/IT Equipment PDT  PTT Team Member Responsibilities Team Talk 20240624 v1.3.pdf",
+    "output_file": "pdf-extracted/loss preventionIT Equipment PDT  PTT Team Member Responsibilities Team Talk 20240624 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 1691,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Kmart Profit Protection Store Leadership Guide 20250829 v9.0.pdf",
+    "output_file": "pdf-extracted/loss preventionKmart Profit Protection Store Leadership Guide 20250829 v9.0.md",
+    "total_pages": 57,
+    "total_characters": 106335,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Managing Change Scammers 20241114 v3.0.pdf",
+    "output_file": "pdf-extracted/loss preventionManaging Change Scammers 20241114 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1830,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Merchandise Protection - What Good Looks Like.pdf",
+    "output_file": "pdf-extracted/loss preventionMerchandise Protection - What Good Looks Like.md",
+    "total_pages": 2,
+    "total_characters": 1132,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Profit Protection Everseen SCO Technology 20250402 v1.0.pdf",
+    "output_file": "pdf-extracted/loss preventionProfit Protection Everseen SCO Technology 20250402 v1.0.md",
+    "total_pages": 16,
+    "total_characters": 13012,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Safety Footwear Allocation Process 20240703 v6.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSafety Footwear Allocation Process 20240703 v6.0.md",
+    "total_pages": 5,
+    "total_characters": 65864,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Bag Check Additional Tasmania 20230719 v1.2.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Bag Check Additional Tasmania 20230719 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1497,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Kmart Conditions Of Entry Stores 20230719 v1.3.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Kmart Conditions Of Entry Stores 20230719 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 328,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Profit Protection Awareness - Report Suspicious Behaviour 20250303 v6.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Profit Protection Awareness - Report Suspicious Behaviour 20250303 v6.0.md",
+    "total_pages": 1,
+    "total_characters": 1442,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Profit Protection Awareness - Team Member Bag Checks 20250303 v4.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Profit Protection Awareness - Team Member Bag Checks 20250303 v4.0.md",
+    "total_pages": 1,
+    "total_characters": 1044,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Profit Protection Awareness - Understand the Consequences 20250303 v4.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Profit Protection Awareness - Understand the Consequences 20250303 v4.0.md",
+    "total_pages": 1,
+    "total_characters": 1555,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Signage - Profit Protection Awareness BOH Poster 20240607 v2.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSignage - Profit Protection Awareness BOH Poster 20240607 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 517,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Soiled  Damaged Clearance End Tips 20230907 v3.1.pdf",
+    "output_file": "pdf-extracted/loss preventionSoiled  Damaged Clearance End Tips 20230907 v3.1.md",
+    "total_pages": 1,
+    "total_characters": 2182,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Soiled  Damaged Markdown Tips 20250408 v2.0.pdf",
+    "output_file": "pdf-extracted/loss preventionSoiled  Damaged Markdown Tips 20250408 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1366,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Team Member Bag  Locker Check Process 20250910 v8.0.pdf",
+    "output_file": "pdf-extracted/loss preventionTeam Member Bag  Locker Check Process 20250910 v8.0.md",
+    "total_pages": 2,
+    "total_characters": 5487,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Team Talk - LP Awareness - Its Not Worth It 20240419 v3.5.pdf",
+    "output_file": "pdf-extracted/loss preventionTeam Talk - LP Awareness - Its Not Worth It 20240419 v3.5.md",
+    "total_pages": 1,
+    "total_characters": 2615,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Tips to Reduce Refund Fraud 20240729 v3.0.pdf",
+    "output_file": "pdf-extracted/loss preventionTips to Reduce Refund Fraud 20240729 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1569,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/loss prevention/Tips to Reduce eVoucher Washing 20240610 v1.2.pdf",
+    "output_file": "pdf-extracted/loss preventionTips to Reduce eVoucher Washing 20240610 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1062,
+    "extraction_method": "claude_vision"
+  }
+]

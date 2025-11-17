@@ -1,0 +1,36 @@
+{
+  "type": "procedure",
+  "title": "What to do if you receive a complaint",
+  "pseudonyms": [],
+  "keywords": [
+    "breastfeeding",
+    "expressing milk",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "women's right",
+    "discrimination",
+    "customer complaint",
+    "Store Manager",
+    "fitting rooms",
+    "shop floor",
+    "our stores",
+    "Health, Safety & Wellbeing"
+  ],
+  "steps": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager."
+  ],
+  "examples": [
+    "Sometimes, other customers will take offence to seeing a mother breastfeeding or expressing in one of our stores."
+  ],
+  "bestPractice": [
+    "Seek help from your Store Manager if you are unsure."
+  ],
+  "caveats": [],
+  "constraints": [
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor."
+  ],
+  "troubleshooting": [],
+  "metrics": []
+}

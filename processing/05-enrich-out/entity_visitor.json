@@ -1,0 +1,32 @@
+{
+  "type": "entity",
+  "name": "Visitor",
+  "pseudonyms": [
+    "visitors"
+  ],
+  "keywords": [
+    "Visitor management",
+    "Visitor management module",
+    "Verified QR code",
+    "checkseal",
+    "management team",
+    "contractors",
+    "scan in attendance",
+    "scan out attendance",
+    "store entry",
+    "store exit",
+    "Team Member goods",
+    "Customer Greeter",
+    "Customer Service Standards"
+  ],
+  "troubleshooting": [],
+  "constraints": [
+    "Manage visitors and contractors who arrive at the store by informing the management team, ensuring they scan in attendance using the Verified QR code, and applying checkseal on Team Member, visitor, or contractor goods.",
+    "Manage visitors and contractors who exit the store by informing the management team, ensuring they scan out attendance using the Verified QR code, and checking checkseal on Team Member, visitor, or contractor goods."
+  ],
+  "caveats": [
+    "If any of the above Customer Service Standards creates a threatening situation or aggressive behaviour from the customer, always adhere to the 5Ds and threatening situations.",
+    "Report the incident to a manager discreetly."
+  ],
+  "bestPractice": []
+}

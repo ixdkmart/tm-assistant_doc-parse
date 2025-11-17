@@ -1,0 +1,12 @@
+{
+  "type": "entity",
+  "name": "Team Member",
+  "pseudonyms": [
+    "team members"
+  ],
+  "keywords": [],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": []
+}

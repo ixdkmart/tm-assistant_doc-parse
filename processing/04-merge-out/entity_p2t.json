@@ -1,0 +1,12 @@
+{
+  "type": "entity",
+  "name": "P2T",
+  "pseudonyms": [
+    "Push to talk units"
+  ],
+  "keywords": [],
+  "troubleshooting": [],
+  "constraints": [],
+  "caveats": [],
+  "bestPractice": []
+}

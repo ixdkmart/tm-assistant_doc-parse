@@ -1,0 +1,62 @@
+{
+  "type": "entity",
+  "name": "Manager",
+  "pseudonyms": [
+    "managers",
+    "Store Manager",
+    "store managers",
+    "manager",
+    "Managers on duty"
+  ],
+  "keywords": [
+    "breastfeeding",
+    "express milk",
+    "expressing",
+    "Australian Federal Law",
+    "Sex Discrimination Act 1984",
+    "discriminate",
+    "customer",
+    "complaint",
+    "team member",
+    "fitting rooms",
+    "shop floor",
+    "stores",
+    "Health, Safety & Wellbeing",
+    "Customer Greeter",
+    "rostering",
+    "trading hours"
+  ],
+  "troubleshooting": [
+    "If you receive a complaint from a customer you may advise them that this is a women's right under Australian Federal Law.",
+    "If you are uncomfortable, unsure, or if the complaint escalates seek help from your Store Manager.",
+    "Seek help from your Store Manager if you are unsure."
+  ],
+  "constraints": [
+    "Under the federal Sex Discrimination Act 1984 it is illegal in Australia to discriminate against a person either directly or indirectly on the grounds of breastfeeding.",
+    "This means, a woman has the right to breastfeed, or express milk, anywhere she chooses.",
+    "This includes our stores.",
+    "No one should ever be asked by a team member to cover themselves or stop breastfeeding or expressing anywhere in our stores.",
+    "This includes in fitting rooms or on the shop floor.",
+    "When rostering for the Customer Greeter role, managers must ensure the following.",
+    "A Customer Greeter is rostered during all trading hours in a store.",
+    "2 Customer Greeters are rostered for core and peak trading periods.",
+    "Customer Greeters provide updates relating to product, including new products and out of stock items.",
+    "Customer Greeters provide updates on store layout changes.",
+    "Customer Greeters conduct a lap of the store to visually identify any changes.",
+    "Ensure the Customer Greeter completes a warm-up as per the Warm-Ups Poster prior to their shift.",
+    "Ensure the Customer Greeter regularly walks around the Customer Greeter area to maintain stretching.",
+    "When a Customer Greeter is on a break, the replacement Customer Greeter must have completed the minimum training standards listed below.",
+    "The Customer Greeter role can be overwhelming if tasks outside what is listed above are allocated.",
+    "It is important that tasks such as the below are not allocated to this team member at any time.",
+    "Merchandising such as folding apparel.",
+    "Applying merch protection to products.",
+    "Click and Collect pickup.",
+    "Price markdowns.",
+    "Escort customers to other areas.",
+    "Layby pickup."
+  ],
+  "caveats": [],
+  "bestPractice": [
+    "Managers on duty should make themselves known to the Customer Greeter."
+  ]
+}
