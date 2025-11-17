@@ -34,6 +34,9 @@ export async function runPipeline(basePath: string = "processing"): Promise<Pipe
     );
     stepsBar.start(stepsConfig.length + 2, 0, { step: "" });
 
+
+
+    
     for (const cfg of stepsConfig) {
         const inputFolder = path.resolve(basePath, cfg.input);
         const outputFolder = path.resolve(basePath, cfg.output);
