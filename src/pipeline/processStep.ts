@@ -186,6 +186,8 @@ export async function processStep(
                 processed += 1;
             }
         } catch (e: any) {
+            // Dump full error object for diagnostics
+            console.error('[processStep] Error processing', fileName, ':', e);
             errors.push({ file: fileName, error: e?.message ?? String(e) });
         }
         bar.increment();
