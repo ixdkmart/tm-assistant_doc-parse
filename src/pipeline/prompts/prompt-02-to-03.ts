@@ -74,6 +74,7 @@ Create Entities only for:
 - real organisations (Australian Breastfeeding Association)
 - real laws/standards (Sex Discrimination Act 1984)
 - real named systems/services
+- real names objects/tools/resources
 
 Do NOT create Entities from:
 - section headings
