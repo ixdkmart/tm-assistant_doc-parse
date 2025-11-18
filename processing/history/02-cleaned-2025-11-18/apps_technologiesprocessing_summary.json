@@ -1,0 +1,149 @@
+[
+  {
+    "source_file": "pdf/apps_technologies/Centralized Stores - PDT Softphone User Guide - AUS 20240506 v1.4.pdf",
+    "output_file": "pdf-extracted/apps_technologiesCentralized Stores - PDT Softphone User Guide - AUS 20240506 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 1477,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Centralized System - Troubleshooting Guide  1 20231024 v1.2.pdf",
+    "output_file": "pdf-extracted/apps_technologiesCentralized System - Troubleshooting Guide  1 20231024 v1.2.md",
+    "total_pages": 4,
+    "total_characters": 1916,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Digital Replenishment Backfill Fill Learning Guide v4 20250825 v1.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesDigital Replenishment Backfill Fill Learning Guide v4 20250825 v1.0.md",
+    "total_pages": 8,
+    "total_characters": 5351,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Digital Stores - BAU Troubleshooting Guide 20231030 v1.6.pdf",
+    "output_file": "pdf-extracted/apps_technologiesDigital Stores - BAU Troubleshooting Guide 20231030 v1.6.md",
+    "total_pages": 6,
+    "total_characters": 10859,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Handscan Instructions 20231006 v1.1.pdf",
+    "output_file": "pdf-extracted/apps_technologiesHandscan Instructions 20231006 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 1006,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Push to Talk - Quick Tips Troubleshoot 20231106 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesPush to Talk - Quick Tips Troubleshoot 20231106 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 3934,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - Backfill Tasks 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - Backfill Tasks 20240916 v2.0.md",
+    "total_pages": 3,
+    "total_characters": 3134,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - Hand Scan to Container 20240916 v1.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - Hand Scan to Container 20240916 v1.0.md",
+    "total_pages": 3,
+    "total_characters": 2193,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - Product Lookup 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - Product Lookup 20240916 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 1606,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - RFID App 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - RFID App 20240916 v2.0.md",
+    "total_pages": 3,
+    "total_characters": 2551,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - RFID Printer 20240916 v3.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - RFID Printer 20240916 v3.0.md",
+    "total_pages": 13,
+    "total_characters": 7200,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning Guide - RFID Tagging 20241206 v3.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning Guide - RFID Tagging 20241206 v3.0.md",
+    "total_pages": 4,
+    "total_characters": 3055,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Learning guide - Managing Offsite Storage Bundles 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Learning guide - Managing Offsite Storage Bundles 20240916 v2.0.md",
+    "total_pages": 7,
+    "total_characters": 5595,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Missing Tags - RFID App 20241206 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Missing Tags - RFID App 20241206 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1303,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/RFID Ongoing Tag Management 20241206 v3.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesRFID Ongoing Tag Management 20241206 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1201,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/TORY - BOT Screen Information Guide 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesTORY - BOT Screen Information Guide 20240916 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1115,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/TORY User Guide v1 20240524 v1.5.pdf",
+    "output_file": "pdf-extracted/apps_technologiesTORY User Guide v1 20240524 v1.5.md",
+    "total_pages": 38,
+    "total_characters": 27218,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Task Engine User Guide - Apparel Markdowns 20241015 v3.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesTask Engine User Guide - Apparel Markdowns 20241015 v3.0.md",
+    "total_pages": 10,
+    "total_characters": 9416,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Task Engine User Guide - Online Exceptions 20240916 v2.0.pdf",
+    "output_file": "pdf-extracted/apps_technologiesTask Engine User Guide - Online Exceptions 20240916 v2.0.md",
+    "total_pages": 5,
+    "total_characters": 4779,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Workvivo - Quick Reference Guides 20230829 v1.1.pdf",
+    "output_file": "pdf-extracted/apps_technologiesWorkvivo - Quick Reference Guides 20230829 v1.1.md",
+    "total_pages": 8,
+    "total_characters": 12458,
+    "extraction_method": "claude_vision"
+  },
+  {
+    "source_file": "pdf/apps_technologies/Workvivo AUS 20230829 v1.1.pdf",
+    "output_file": "pdf-extracted/apps_technologiesWorkvivo AUS 20230829 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 54,
+    "extraction_method": "claude_vision"
+  }
+]

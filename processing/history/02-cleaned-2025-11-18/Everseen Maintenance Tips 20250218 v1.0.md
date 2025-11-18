@@ -1,0 +1,3 @@
+# Everseen Maintenance Tips
+
+Items such as stickers and signage can affect Everseen. Everseen cameras detect these, causing false alerts that trigger interventions. To prevent this, ensure each SCO is clean and free from signage and stickers. Remove cardboard signage above the SCO. Remove signage at the top of the POS screen. Remove signage at the front of the SCO scanning bed. Remove stickers on the scanning bed.
