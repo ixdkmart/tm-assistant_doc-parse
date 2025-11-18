@@ -3,3 +3,7 @@ dist/
 **/.DS_Store
 **/.budget.json
 processing/01-source/
+processing/02-clean-out/
+processing/03-atomisation-out/
+processing/04-merge-out/
+processing/05-enrich-out/
