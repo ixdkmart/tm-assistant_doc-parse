@@ -15,9 +15,9 @@ export interface Concept {
     definition: string;
     pseudonyms: string[];
     keywords: string[];
+    additionalInfo?: string[];
     examples?: string[];
     caveats?: string[];
-    additionalInfo?: string[];
 }
 
 export interface Procedure {
@@ -26,13 +26,13 @@ export interface Procedure {
     pseudonyms: string[];
     keywords: string[];
     steps: string[];
+    additionalInfo?: string[];
     examples?: string[];
     bestPractice?: string[];
     caveats?: string[];
     constraints?: string[];
     troubleshooting?: string[];
     metrics?: string[];
-    additionalInfo?: string[];
 }
 
 export interface Entity {
@@ -41,11 +41,11 @@ export interface Entity {
     description?: string;
     pseudonyms: string[];
     keywords: string[];
+    additionalInfo?: string[];
+    bestPractice?: string[];
     troubleshooting?: string[];
     constraints?: string[];
     caveats?: string[];
-    bestPractice?: string[];
-    additionalInfo?: string[];
 }
 
 export type AtomicKnowledgeObject = Concept | Procedure | Entity;
@@ -94,9 +94,9 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
             definition: String(output.definition ?? ""),
             pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
             keywords: Array.isArray(output.keywords) ? output.keywords : [],
+            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
             examples: Array.isArray(output.examples) ? output.examples : [],
             caveats: Array.isArray(output.caveats) ? output.caveats : [],
-            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
         };
         if (!obj.term) return null;
         return obj;
@@ -108,13 +108,13 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
             pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
             keywords: Array.isArray(output.keywords) ? output.keywords : [],
             steps: Array.isArray(output.steps) ? output.steps : [],
+            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
             examples: Array.isArray(output.examples) ? output.examples : [],
             bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
             caveats: Array.isArray(output.caveats) ? output.caveats : [],
             constraints: Array.isArray(output.constraints) ? output.constraints : [],
             troubleshooting: Array.isArray(output.troubleshooting) ? output.troubleshooting : [],
             metrics: Array.isArray(output.metrics) ? output.metrics : [],
-            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
         };
         if (!obj.title) return null;
         return obj;
@@ -126,11 +126,11 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
         description: typeof output.description === "string" ? output.description : undefined,
         pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
         keywords: Array.isArray(output.keywords) ? output.keywords : [],
+        additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
+        bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
         troubleshooting: Array.isArray(output.troubleshooting) ? output.troubleshooting : [],
         constraints: Array.isArray(output.constraints) ? output.constraints : [],
         caveats: Array.isArray(output.caveats) ? output.caveats : [],
-        bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
-        additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
     };
     if (!obj.name) return null;
     return obj;
@@ -147,9 +147,9 @@ function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject
             definition: a.definition && a.definition.trim().length > 0 ? a.definition : b.definition ?? "",
             pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
             keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
+            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
             examples: dedupePreserveOrder([...(a.examples ?? []), ...(b.examples ?? [])]),
             caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
-            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
         };
     }
     if (base.type === "procedure") {
@@ -162,13 +162,13 @@ function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject
             keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
             // Keep original steps; do not blend
             steps: a.steps ?? [],
+            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
             examples: dedupePreserveOrder([...(a.examples ?? []), ...(b.examples ?? [])]),
             bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
             caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
             constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
             troubleshooting: dedupePreserveOrder([...(a.troubleshooting ?? []), ...(b.troubleshooting ?? [])]),
             metrics: dedupePreserveOrder([...(a.metrics ?? []), ...(b.metrics ?? [])]),
-            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
         };
     }
     // entity
@@ -180,11 +180,11 @@ function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject
         description: a.description && a.description.trim().length > 0 ? a.description : b.description,
         pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
         keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
+        additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
+        bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
         troubleshooting: dedupePreserveOrder([...(a.troubleshooting ?? []), ...(b.troubleshooting ?? [])]),
         constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
         caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
-        bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
-        additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
     };
 }
 

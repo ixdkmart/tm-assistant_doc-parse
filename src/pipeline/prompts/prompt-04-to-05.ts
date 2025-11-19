@@ -19,9 +19,9 @@ Concept {
   definition: string;
   pseudonyms: string[];
   keywords: string[];
+  additionalInfo?: string[];
   examples?: string[];
   caveats?: string[];
-  additionalInfo?: string[];
 }
 
 Procedure {
@@ -30,13 +30,13 @@ Procedure {
   pseudonyms: string[];
   keywords: string[];
   steps: string[];
+  additionalInfo?: string[];
   examples?: string[];
   bestPractice?: string[];
   caveats?: string[];
   constraints?: string[];
   troubleshooting?: string[];
   metrics?: string[];
-  additionalInfo?: string[];
 }
 
 Entity {
@@ -45,11 +45,11 @@ Entity {
   description?: string;
   pseudonyms: string[];
   keywords: string[];
+  additionalInfo?: string[];
+  bestPractice?: string[];
   troubleshooting?: string[];
   constraints?: string[];
   caveats?: string[];
-  bestPractice?: string[];
-  additionalInfo?: string[];
 }
 
 ENRICHMENT RULES

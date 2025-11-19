@@ -15,9 +15,9 @@ export interface Concept {
     definition: string;
     pseudonyms: string[];
     keywords: string[];
+    additionalInfo?: string[];
     examples?: string[];
     caveats?: string[];
-    additionalInfo?: string[];
 }
 
 export interface Procedure {
@@ -26,13 +26,13 @@ export interface Procedure {
     pseudonyms: string[];
     keywords: string[];
     steps: string[];
+    additionalInfo?: string[];
     examples?: string[];
     bestPractice?: string[];
     caveats?: string[];
     constraints?: string[];
     troubleshooting?: string[];
     metrics?: string[];
-    additionalInfo?: string[];
 }
 
 export interface Entity {
@@ -41,11 +41,11 @@ export interface Entity {
     description?: string;
     pseudonyms: string[];
     keywords: string[];
+    additionalInfo?: string[];
+    bestPractice?: string[];
     troubleshooting?: string[];
     constraints?: string[];
     caveats?: string[];
-    bestPractice?: string[];
-    additionalInfo?: string[];
 }
 
 export type AtomicKnowledgeObject = Concept | Procedure | Entity;
@@ -81,9 +81,9 @@ function convertToExpandedSchema(obj: any): AtomicKnowledgeObject | null {
             definition: String(obj.definition),
             pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
             keywords: [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
             examples: [],
             caveats: [],
-            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
         };
     }
     
@@ -95,13 +95,13 @@ function convertToExpandedSchema(obj: any): AtomicKnowledgeObject | null {
             pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
             keywords: [],
             steps: Array.isArray(obj.steps) ? obj.steps : [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
             examples: [],
             bestPractice: [],
             caveats: [],
             constraints: [],
             troubleshooting: [],
             metrics: [],
-            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
         };
     }
     
@@ -113,11 +113,11 @@ function convertToExpandedSchema(obj: any): AtomicKnowledgeObject | null {
             description: typeof obj.description === "string" ? obj.description : undefined,
             pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
             keywords: [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
+            bestPractice: [],
             troubleshooting: [],
             constraints: [],
             caveats: [],
-            bestPractice: [],
-            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
         };
     }
     
