@@ -44,7 +44,7 @@ export async function cleanProcessing(options: CleanOptions): Promise<void> {
 }
 
 function parseArgs(argv: string[]) {
-    const args = { basePath: "processing", preserve: ["01-backup-source"], dryRun: false, confirm: false } as CleanOptions;
+    const args = { basePath: "processing", preserve: ["01-backup-source", "history"], dryRun: false, confirm: false } as CleanOptions;
     for (let i = 2; i < argv.length; i++) {
         const a = argv[i];
         if (a === "--dry-run") args.dryRun = true;
