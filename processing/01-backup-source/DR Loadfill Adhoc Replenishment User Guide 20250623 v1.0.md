@@ -17,21 +17,19 @@ In progress
 
 v3.5
 
-[Kmart logo visible in top right corner with tagline "Low prices, for life"]
+[Kmart logo in top right corner with tagline "Low prices, for life"]
 
-[Device shown is a Zebra handheld scanner/mobile device]
+[Image shows a Zebra handheld device displaying the Loadfill interface]
 
 ## Page 2
 
 Loadfill (Adhoc Replenishment) - Accessing Loadfill
 
 1. Select Menu
-
 2. Select the Loadfill under Adhoc replenishment
 
 [Screen elements shown:
-- Store tasks header
-- Kmart 1136 • Friday, 19 Dec
+- Store tasks header with Kmart 1136 • Friday, 19 Dec
 - Menu and Filter buttons
 - Menu options including:
   - Decant
@@ -50,7 +48,7 @@ Loadfill (Adhoc Replenishment) – Completing a cage, rail, pallet
 - Progress: 0/0
 
 2. Select Start loadfill cage
-- Shows scanned location C1
+- Shows "Scanned to C1"
 - H-Code: UN11111111
 - "Edit area" option available
 - "Start loadfill cage" button at bottom
@@ -90,7 +88,7 @@ Loadfill (Adhoc Replenishment) – Completing multiple cages, rails, pallets
 3. Scanned equipment type will be shown, and status will be in progress
 - Progress: 1/2
 - Current time: 1 min
-- C2 In progress
+- C2 (In progress)
 - H-Code: UN22222222
 - C1 Completed in 14 mins (Done)
 - H-Code: UN11111111
@@ -149,12 +147,11 @@ Loadfill (Adhoc Replenishment) - Area not known continued
 
 8. Completed equipment type and area will show as done, pop message will also display done.
 
-[The image shows three mobile app screenshots demonstrating these steps, with interface elements including:
-- Progress indicators (0/1, 1/1)
-- Current time displays
-- H-Code: UN11111111
-- Status indicators ("In progress", "Done")
-- Completion time (14 mins)
+[Screen details shown:
+- Progress tracking from 0/1 to 1/1
+- Current time countdown from 1 min to 0 min
+- Equipment code C1 with H-Code: UN11111111
+- Status changes from "In progress" to "Completed in 14 mins"
 - Confirmation message "Nailed it. C1 cage is done."]
 
 v3.5
@@ -166,32 +163,25 @@ Loadfill (Adhoc Replenishment) – Previous equipment not scanned and done
 Step-by-step process:
 
 1. Scans a new equipment type with previous equipment type in progress
-- Shows Progress: 1/2
-- Current time: 4 min
-- C2 (H-Code: UN2222222) In progress
-- C1 (H-Code: UN1111111) Completed in 14 mins
+- Shows C2 (H-Code: UN2222222) in progress
+- C1 (H-Code: UN1111111) completed in 14 mins
 
 2. Pop up message will ask "Is the previous equipment type done?"
-- H-Code: UN2222222
 - Options: Yes / No, remove it
+- H-Code: UN2222222
 
 3. If previous equipment type was done, select yes and select next
 - H-Code: UN2222222
-- Selected: Yes
-- Next button activated
 
-4. Pop up message to start loadfill cage will appear
+4. Pop up message to start loadfill cage will appear, select "Start loadfill cage"
 - Scanned to C3
 - H-Code: UN3333333
-- "Start loadfill cage" button
 
 5. Previous equipment type will show as done. New equipment type will show as in progress and can now be filled and completed
-- Progress: 2/3
-- Current time: 1 min
-- C3 (H-Code: UN3333333) In progress
-- C2 (H-Code: UN2222222) Completed in 15 mins
-- C1 (H-Code: UN1111111) Completed in 14 mins
-- Message: "Nailed it. C2 cage is done."
+- C3 (H-Code: UN3333333) in progress
+- C2 (H-Code: UN2222222) completed in 15 mins
+- C1 (H-Code: UN1111111) completed in 14 mins
+- "Nailed it. C2 cage is done."
 
 v3.5
 
@@ -227,7 +217,7 @@ Loadfill (Adhoc Replenishment) – Previous equipment not scanned and not done
 - C3 (In progress)
 - H-Code: UN33333333
 - C1 Completed in 14 mins (Done)
-- "Removed C2 cage" message shown
+- Message: "Removed C2 cage"
 
 v3.5
 
@@ -275,9 +265,10 @@ Screen Elements:
 - Equipment completed time:
   * C1: Completed in 14 mins
   * C2: Completed in 15 mins
-- Equipment status: Shows "Done" when completed, "In progress" while active
-- Type in equipment barcode: Input field at top of screen
+- Equipment status: Shows "In progress" or "Done"
+- Type in equipment barcode: Input field available
 - Timer will display 0 min when no cage is in progress
-- All completed equipment types are shown with status
+- All completed equipment types are shown
+- Navigation buttons at bottom of screen
 
 Version: v3.5

@@ -25,17 +25,20 @@ v3.5
 Accessing decant cage scan
 
 1. Select the menu option
-[Screen shows: Store tasks, Kmart 1136 • Friday, 19 Dec, with Menu and Filter buttons]
+Store tasks
+Kmart 1136 • Friday, 19 Dec
+[Menu] [Filter]
 
 2. Select Cage scan
-[Menu shows options:
+Menu
 Decant
-- Cage scan
+[Cage scan icon]
 Ad-hoc replenishment
-- Loadfill]
+[Loadfill icon]
 
 3. You can either create a new decant group or will see decant groups listed
-[Screen shows "Cage scan" header with "Create decant" button]
+[Home icon] Cage scan
+[+ Create decant]
 
 v3.5
 
@@ -56,7 +59,7 @@ Creating a decant group
 v3.5
 
 [The image shows a step-by-step interface for creating a decant group, with screenshots showing:
-- Initial "Create decant" button
+- A "Create decant" button
 - Date and time selection fields
 - Calendar view showing July 2024 with 19th selected
 - Time selection showing 12:00pm
@@ -69,19 +72,19 @@ Decant cage scan - scanning equipment
 Step-by-step instructions:
 
 1. Scan the barcode of the completed equipment using the PDT scan button
-- Initial screen shows: "Decant 19/07 12pm"
+- Initial screen shows: Decant 19/07 12pm
 - Total 0 cages, 0 rails, 0 pallets
 - H-Cage: UN20053373
 
 2. Select the world
-Options:
+Options shown:
 - Home
 - Kids
 - Clothing
 - Event
 
 3. Select the area
-Options:
+Options shown:
 - H1: Kitchen, Dinning, Appliances
 - H2: Laundry & storage, Bath, Bed
 - H3: Pet, Furniture, Home & Auto Care, Decor, Outdoor
@@ -142,20 +145,23 @@ Step-by-step process:
 
 4. Pop up message will show equipment has been removed
 
-Screen details shown:
-- Decant 19/07 7am
+Screen details shown in images:
+- Cage scan interface
+- "Decant 19/07 7am"
 - Total 80 cages, 15 rails, 3 pallets
+- Categories:
+  - Home: 49 cages
+  - Kids: 20 cages, 5 rails
+  - Clothing: 10 cages, 10 rails, 3 plts
+  - Event: 1 cage
+- "Complete count" button at bottom
 
-Categories displayed:
-- Home: 49 cages
-- Kids: 20 cages, 5 rails
-- Clothing: 10 cages, 10 rails, 3 plts
-- Event: 1 cage
+Pop-up messages shown:
+- "Already scanned" message with equipment ID
+- "Remove cage" confirmation dialog
+- "Removed from H1" confirmation message
 
-Bottom button:
-"Complete count"
-
-Version: v3.5
+v3.5
 
 ## Page 7
 
@@ -172,6 +178,7 @@ Completing a decant group
 5. Decant group will show as Completed
 
 Details shown in interface:
+- Cage scan
 - Decant 19/07 7am
 - Total 80 cages, 15 rolls, 3 pallets
 - Categories:
@@ -187,36 +194,34 @@ v3.5
 Decant screen information
 
 Screen 1:
-- Decant group details
-- "Scan or type barcode" input field
-- Decant 19/07 12pm
+- Decant group details showing "Decant 19/07 12pm"
 - Total 0 cages, 0 rolls, 0 pallets
-- "No count for now"
-- "Please start scanning."
+- Message: "No count for now. Please start scanning."
+- Scan or type barcode input field
 
 Screen 2:
 - Type in equipment barcode
-- Numeric keypad layout (0-9)
-- "Type barcode" input field
+- Numeric keypad displayed
 
 Screen 3:
-- "Scan or type barcode" input field
+- Decant equipment total
 - Decant 19/07 7am
 - Total 80 cages, 15 rolls, 3 pallets
-- Home: 49 cages
-- Kids: 20 cages, 5 rolls
-- Clothing: 10 cages, 10 rolls, 3 plts
-- Event: 1 cage
-- "Complete count" button
+- Breakdown:
+  * Home: 49 cages
+  * Kids: 20 cages, 5 rolls
+  * Clothing: 10 cages, 10 rolls, 3 plts
+  * Event: 1 cage
+- "Complete count" button at bottom
 
 Screen 4:
-- Decant status indicators
-- Create decant button
-- Decant entries:
-  - 19/07 7am (Created)
-  - 18/07 7am (In progress)
-  - 17/07 12pm (Completed)
-- Total counts shown for each decant
-- "Decant 16/07 7am closed" notification
+- Create decant option
+- List of decants:
+  * Decant 19/07 7am (Created)
+  * Decant 18/07 7am (In progress)
+    Total 50 cages, 8 rolls, 2 pallets
+  * Decant 17/07 12pm (Completed)
+    Total 80 cages, 15 rolls, 3 pallets
+- Notice: "Decant 16/07 7am closed."
 
-v3.5
+Version: v3.5
