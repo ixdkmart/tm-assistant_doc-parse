@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { config } from "../config.js";
-import { enforceRateAndBudget } from "./rate.js";
+import { enforceRateAndBudget, DailyLimitError, MonthlyBudgetError, handleHardLimitError } from "./rate.js";
 
 /**
  * Process file content through OpenAI with customizable prompt
@@ -28,36 +28,56 @@ export async function processFileWithOpenAI(
     // Estimate tokens for rate limiting (rough estimate)
     const approxTokens = Math.min(6000, Math.max(800, Math.floor(fullPrompt.length / 3)));
     
-    // Enforce rate limiting and budget constraints
-    await enforceRateAndBudget({ approxTokens });
-    
     // Default system prompt if not provided
     const defaultSystemPrompt = systemPrompt ?? "You are a helpful assistant that processes and transforms content according to user instructions.";
     
-    // Call OpenAI API (gpt-5: do not send temperature; defaults are enforced)
-    let resp;
-    try {
-        resp = await client.chat.completions.create({
-            model,
-            messages: [
-                { role: "system", content: defaultSystemPrompt },
-                { role: "user", content: fullPrompt },
-            ],
-        });
-    } catch (err: any) {
-        // Dump full error object for diagnostics
-        console.error('[processor] OpenAI API error:', err);
-        
-        const msg = err?.message ?? String(err);
-        if (typeof msg === "string" && (msg.includes("Unsupported value") || msg.toLowerCase().includes("temperature"))) {
-            throw new Error(`${msg} Hint: This model enforces default sampling and does not accept 'temperature'.`);
+    // Retry loop for LLM errors
+    let lastError: any = null;
+    for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
+        try {
+            // Enforce rate limiting and budget constraints
+            // This may throw DailyLimitError or MonthlyBudgetError which stop the process
+            await enforceRateAndBudget({ approxTokens });
+            
+            // Call OpenAI API (gpt-5: do not send temperature; defaults are enforced)
+            const resp = await client.chat.completions.create({
+                model,
+                messages: [
+                    { role: "system", content: defaultSystemPrompt },
+                    { role: "user", content: fullPrompt },
+                ],
+            });
+            
+            const processedContent = resp.choices[0]?.message?.content ?? "";
+            return processedContent;
+            
+        } catch (err: any) {
+            // Handle hard limits (daily/monthly) - these stop the process
+            if (err instanceof DailyLimitError || err instanceof MonthlyBudgetError) {
+                handleHardLimitError(err);
+            }
+            
+            // Store error for retry or final throw
+            lastError = err;
+            
+            // If this was the last attempt, throw the error
+            if (attempt >= config.maxRetries) {
+                const msg = err?.message ?? String(err);
+                if (typeof msg === "string" && (msg.includes("Unsupported value") || msg.toLowerCase().includes("temperature"))) {
+                    throw new Error(`${msg} Hint: This model enforces default sampling and does not accept 'temperature'.`);
+                }
+                throw err;
+            }
+            
+            // Calculate delay with exponential backoff
+            const delayMs = config.retryDelayMs * Math.pow(config.retryBackoffMultiplier, attempt);
+            console.error(`[processor] OpenAI API error (attempt ${attempt + 1}/${config.maxRetries + 1}):`, err?.message ?? String(err));
+            console.log(`[processor] Retrying in ${delayMs.toFixed(0)}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delayMs));
         }
-        
-        // Re-throw the original error to preserve all details
-        throw err;
     }
     
-    const processedContent = resp.choices[0]?.message?.content ?? "";
-    return processedContent;
+    // This should never be reached, but TypeScript needs it
+    throw lastError;
 }
 

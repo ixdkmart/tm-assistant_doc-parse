@@ -9,5 +9,10 @@ export const config = {
   
     // Rough cost estimation for budget protection
     estCostPerKTokensUSD: Number(process.env.EST_COST_PER_KTOKENS ?? 0.0001),
+  
+    // Retry configuration
+    maxRetries: Number(process.env.MAX_RETRIES ?? 3),
+    retryDelayMs: Number(process.env.RETRY_DELAY_MS ?? 1000),
+    retryBackoffMultiplier: Number(process.env.RETRY_BACKOFF_MULTIPLIER ?? 1.5),
 };
   

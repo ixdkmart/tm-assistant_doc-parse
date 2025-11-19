@@ -6,6 +6,7 @@ import cliProgress from "cli-progress";
 import readline from "node:readline";
 import { saveFile } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
+import { config } from "../config.js";
 import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
 import type { ProcessResult } from "./processStep.js";
 
@@ -240,7 +241,7 @@ export async function runAko03to04(
     const ndjsonPath = path.join(akosFolder, "akos.ndjson");
     const outFolder = outputFolder; // now 04-merge-out via pipeline
     await fs.mkdir(outFolder, { recursive: true });
-    const indexPath = path.join(outFolder, "merge-index.ndjson");
+    const indexPath = path.join(outFolder, "_merge-summary.ndjson");
     await fs.writeFile(indexPath, "", "utf8"); // truncate index
 
     type GroupItem = { obj: AtomicKnowledgeObject; line: number };
@@ -306,21 +307,42 @@ export async function runAko03to04(
         // Choose identity text and core fields
         let conflict = false;
 
-        // Attempt LLM-assisted merge using MERGE prompt
+        // Attempt LLM-assisted merge using MERGE prompt with retries
         let merged: AtomicKnowledgeObject | null = null;
         let signals: string[] = [];
-        try {
-            const occurrences = group.items.map(i => i.obj);
-            const llmOut = await processFileWithOpenAI(JSON.stringify({ occurrences }), PROMPT_03_TO_04);
-            const jsonBlock = extractJsonObjectBlock(llmOut);
-            const parsed = JSON.parse(jsonBlock);
-            const coerced = coerceSchemaPure(parsed, type);
-            if (coerced) {
-                merged = coerced;
-                signals.push("llm-merge");
+        
+        // Retry LLM merge before falling back to deterministic
+        let lastError: any = null;
+        for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
+            try {
+                const occurrences = group.items.map(i => i.obj);
+                const llmOut = await processFileWithOpenAI(JSON.stringify({ occurrences }), PROMPT_03_TO_04);
+                const jsonBlock = extractJsonObjectBlock(llmOut);
+                const parsed = JSON.parse(jsonBlock);
+                const coerced = coerceSchemaPure(parsed, type);
+                if (coerced) {
+                    merged = coerced;
+                    signals.push("llm-merge");
+                    if (attempt > 0) {
+                        console.log(`[runAko03to04] LLM merge succeeded on retry ${attempt + 1} for ${group.canonical}`);
+                    }
+                    break; // Success, exit retry loop
+                } else {
+                    // Schema validation failed, try again
+                    throw new Error("Schema validation failed for LLM merge output");
+                }
+            } catch (err: any) {
+                lastError = err;
+                // If this was the last attempt, fall through to deterministic merge
+                if (attempt >= config.maxRetries) {
+                    console.log(`[runAko03to04] LLM merge failed after ${config.maxRetries + 1} attempts for ${group.canonical}, falling back to deterministic merge`);
+                    break;
+                }
+                // Calculate delay with exponential backoff
+                const delayMs = config.retryDelayMs * Math.pow(config.retryBackoffMultiplier, attempt);
+                console.log(`[runAko03to04] LLM merge attempt ${attempt + 1}/${config.maxRetries + 1} failed for ${group.canonical}, retrying in ${delayMs.toFixed(0)}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delayMs));
             }
-        } catch {
-            // fall through to deterministic merge
         }
 
         // If LLM output invalid or failed, deterministic fallback (previous logic)
@@ -445,6 +467,56 @@ export async function runAko03to04(
         };
         await fs.appendFile(indexPath, JSON.stringify(indexEntry) + "\n", "utf8");
     }
+
+    // Filter summary file into separate files based on signals, conflicts, and vetoes
+    const successEntries: any[] = [];
+    const partialSuccessEntries: any[] = [];
+    const conflictEntries: any[] = [];
+    const vetoEntries: any[] = [];
+
+    const summaryStream = createReadStream(indexPath, { encoding: "utf8" });
+    const summaryRl = readline.createInterface({ input: summaryStream, crlfDelay: Infinity });
+    
+    for await (const line of summaryRl) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        try {
+            const entry = JSON.parse(trimmed);
+            
+            // Check for llm-merge signal
+            if (Array.isArray(entry.merge?.signals) && entry.merge.signals.includes("llm-merge")) {
+                successEntries.push(entry);
+            }
+            
+            // Check for fallback-deterministic signal
+            if (Array.isArray(entry.merge?.signals) && entry.merge.signals.includes("fallback-deterministic")) {
+                partialSuccessEntries.push(entry);
+            }
+            
+            // Check for conflict
+            if (entry.conflict === true) {
+                conflictEntries.push(entry);
+            }
+            
+            // Check for vetoes
+            if (Array.isArray(entry.merge?.vetoes) && entry.merge.vetoes.length > 0) {
+                vetoEntries.push(entry);
+            }
+        } catch {
+            // skip invalid line
+        }
+    }
+
+    // Write filtered files
+    const successPath = path.join(outFolder, "_merge-success.ndjson");
+    const partialSuccessPath = path.join(outFolder, "_merge-partial-success.ndjson");
+    const conflictPath = path.join(outFolder, "_merge-conflicts.ndjson");
+    const vetoPath = path.join(outFolder, "_merge-vetoes.ndjson");
+
+    await fs.writeFile(successPath, successEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
+    await fs.writeFile(partialSuccessPath, partialSuccessEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
+    await fs.writeFile(conflictPath, conflictEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
+    await fs.writeFile(vetoPath, vetoEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
 
     // Final log
     console.log(JSON.stringify({ stage: "merge", input_lines: inputLines, groups: groups.size, outputs_written: outputsWritten, conflicts }));
