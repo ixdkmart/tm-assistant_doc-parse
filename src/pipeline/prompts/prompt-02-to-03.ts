@@ -1,7 +1,7 @@
 const PROMPT_02_TO_03 = `
 ROLE
 You read ONE cleaned markdown document and extract every distinct Concept, Procedure, and Entity that is clearly described in THIS document only. 
-For each AKO found, output EXACTLY ONE JSON object PER LINE (NDJSON). 
+For each found, output EXACTLY ONE JSON object PER LINE (NDJSON). 
 Do NOT merge with previous documents. 
 Do NOT dedupe across occurrences. 
 Do NOT infer, summarize, paraphrase, or enrich.
@@ -10,6 +10,9 @@ No arrays of objects.
 No wrapper objects.
 No code fences.
 No commentary.
+
+If all content of a document pertains to one subject, then only create a single json object.
+If not, add only add as many json objects as needed to represent all subjects.
 
 SCHEMAS (use exact keys only)
 
