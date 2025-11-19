@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 // @ts-ignore
 import cliProgress from "cli-progress";
-import { getFilesInFolder, readFile as readTextFile, saveFile } from "../lib/fileUtils.js";
+import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
 import type { ProcessResult } from "./processStep.js";
@@ -215,6 +215,24 @@ export async function runAko04to05(
         const fileName = path.basename(akoPath);
         try {
             bar.update({ file: fileName });
+            
+            // Checkpoint: Skip already processed AKO files
+            const outputFilePath = path.join(outputFolder, fileName);
+            if (await fileExists(outputFilePath)) {
+                // Check if file has content
+                try {
+                    const existingContent = await fs.readFile(outputFilePath, "utf8");
+                    if (existingContent && existingContent.trim()) {
+                        console.log(`[checkpoint] Skipping already enriched: ${fileName}`);
+                        skipped += 1;
+                        bar.increment();
+                        continue;
+                    }
+                } catch {
+                    // File exists but can't read it, reprocess
+                }
+            }
+            
             const jsonText = await fs.readFile(akoPath, "utf8");
             const base: AtomicKnowledgeObject = JSON.parse(jsonText);
             const baseType: AkoType = base.type;

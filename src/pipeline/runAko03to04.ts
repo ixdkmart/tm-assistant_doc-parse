@@ -4,7 +4,7 @@ import { createReadStream } from "node:fs";
 // @ts-ignore
 import cliProgress from "cli-progress";
 import readline from "node:readline";
-import { saveFile } from "../lib/fileUtils.js";
+import { saveFile, fileExists } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 import { config } from "../config.js";
 import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
@@ -242,7 +242,29 @@ export async function runAko03to04(
     const outFolder = outputFolder; // now 04-merge-out via pipeline
     await fs.mkdir(outFolder, { recursive: true });
     const indexPath = path.join(outFolder, "_merge-summary.ndjson");
-    await fs.writeFile(indexPath, "", "utf8"); // truncate index
+    
+    // Read existing summary to get already-processed groups
+    const processedGroups = new Set<string>();
+    try {
+        if (await fileExists(indexPath)) {
+            const existingSummaryStream = createReadStream(indexPath, { encoding: "utf8" });
+            const existingSummaryRl = readline.createInterface({ input: existingSummaryStream, crlfDelay: Infinity });
+            for await (const line of existingSummaryRl) {
+                const trimmed = line.trim();
+                if (!trimmed) continue;
+                try {
+                    const entry = JSON.parse(trimmed);
+                    if (entry.id) {
+                        processedGroups.add(entry.id);
+                    }
+                } catch {
+                    // skip invalid line
+                }
+            }
+        }
+    } catch {
+        // If can't read existing summary, start fresh
+    }
 
     type GroupItem = { obj: AtomicKnowledgeObject; line: number };
     const groups = new Map<
@@ -293,10 +315,21 @@ export async function runAko03to04(
     }
 
     let outputsWritten = 0;
+    let skipped = 0;
     let conflicts = 0;
     // For each group, merge and write outputs and index
     for (const [, group] of groups) {
         const { type, namespace, canonical } = group;
+        const id = `${type}_${slugify(canonical)}`;
+        const fileName = `${id}.json`;
+        const outputFilePath = path.join(outFolder, fileName);
+        
+        // Checkpoint: Skip already processed groups
+        if (processedGroups.has(id) && await fileExists(outputFilePath)) {
+            console.log(`[checkpoint] Skipping already processed group: ${id}`);
+            skipped += 1;
+            continue;
+        }
         // Apply guardrails: ensure no obvious veto within group identities
         let hasVeto = false;
         for (let i = 0; i < group.originals.length && !hasVeto; i++) {
@@ -450,8 +483,6 @@ export async function runAko03to04(
         if (hasVeto) conflict = true;
         if (conflict) conflicts += 1;
 
-        const id = `${merged.type}_${slugify(group.canonical)}`;
-        const fileName = `${id}.json`;
         await saveFile(outFolder, fileName, JSON.stringify(merged, null, 2));
         outputsWritten += 1;
 
@@ -519,9 +550,9 @@ export async function runAko03to04(
     await fs.writeFile(vetoPath, vetoEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
 
     // Final log
-    console.log(JSON.stringify({ stage: "merge", input_lines: inputLines, groups: groups.size, outputs_written: outputsWritten, conflicts }));
+    console.log(JSON.stringify({ stage: "merge", input_lines: inputLines, groups: groups.size, outputs_written: outputsWritten, skipped, conflicts }));
 
-    return { processed: outputsWritten, skipped: 0, errors: [] };
+    return { processed: outputsWritten, skipped, errors: [] };
 }
 
 

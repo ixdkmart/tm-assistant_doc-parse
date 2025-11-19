@@ -44,3 +44,63 @@ export async function saveFile(
     return filePath;
 }
 
+/**
+ * Check if a file exists
+ * @param filePath - The path to the file to check
+ * @returns Promise that resolves to true if file exists, false otherwise
+ */
+export async function fileExists(filePath: string): Promise<boolean> {
+    try {
+        await fs.access(filePath);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Get checkpoint file path
+ * @param folder - The folder path where checkpoint should be stored
+ * @param name - The checkpoint file name
+ * @returns Full path to checkpoint file
+ */
+export function getCheckpointPath(folder: string, name: string): string {
+    return path.join(folder, name);
+}
+
+/**
+ * Read checkpoint file to get set of processed files
+ * @param checkpointPath - Path to checkpoint file
+ * @returns Promise that resolves to Set of processed file names
+ */
+export async function readCheckpoint(checkpointPath: string): Promise<Set<string>> {
+    try {
+        const content = await fs.readFile(checkpointPath, "utf8");
+        const parsed = JSON.parse(content);
+        if (parsed && Array.isArray(parsed.processedFiles)) {
+            return new Set(parsed.processedFiles);
+        }
+        return new Set();
+    } catch {
+        return new Set();
+    }
+}
+
+/**
+ * Write checkpoint file with processed files
+ * @param checkpointPath - Path to checkpoint file
+ * @param processedFiles - Set of processed file names
+ */
+export async function writeCheckpoint(
+    checkpointPath: string,
+    processedFiles: Set<string>
+): Promise<void> {
+    const folder = path.dirname(checkpointPath);
+    await fs.mkdir(folder, { recursive: true });
+    const content = JSON.stringify({
+        processedFiles: Array.from(processedFiles),
+        lastUpdated: new Date().toISOString(),
+    }, null, 2);
+    await fs.writeFile(checkpointPath, content, "utf8");
+}
+

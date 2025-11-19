@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 // @ts-ignore
 import cliProgress from "cli-progress";
-import { getFilesInFolder, readFile as readTextFile, saveFile } from "../lib/fileUtils.js";
+import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 
 export interface ProcessResult {
@@ -105,19 +105,58 @@ export async function processStep(
     let processed = 0;
     let skipped = 0;
     const errors: Array<{ file: string; error: string }> = [];
+    
+    // Checkpoint tracking for objects mode
+    let processedFiles: Set<string> = new Set();
+    let checkpointPath: string | undefined;
+    if (options?.outputMode === "objects") {
+        await fs.mkdir(outputFolder, { recursive: true });
+        checkpointPath = getCheckpointPath(outputFolder, "_checkpoint.ndjson");
+        processedFiles = await readCheckpoint(checkpointPath);
+    }
+    
     // Prepare NDJSON file if emitting objects mode
     let ndjsonPath: string | undefined;
     if (options?.outputMode === "objects") {
-        await fs.mkdir(outputFolder, { recursive: true });
         ndjsonPath = path.join(outputFolder, "akos.ndjson");
-        // Truncate or create fresh file at start
-        await fs.writeFile(ndjsonPath, "", "utf8");
+        // Only truncate if starting fresh (no checkpoint exists)
+        if (processedFiles.size === 0) {
+            await fs.writeFile(ndjsonPath, "", "utf8");
+        }
     }
 
     for (const file of files) {
         const fileName = path.basename(file);
         try {
             bar.update({ file: fileName });
+            
+            // Checkpoint: Skip already processed files
+            if (options?.outputMode === "objects") {
+                // For objects mode, check checkpoint
+                if (processedFiles.has(fileName)) {
+                    skipped += 1;
+                    bar.increment();
+                    continue;
+                }
+            } else {
+                // For single mode, check if output file exists
+                const outputFilePath = path.join(outputFolder, fileName);
+                if (await fileExists(outputFilePath)) {
+                    // Check if file has content
+                    try {
+                        const existingContent = await readTextFile(outputFilePath);
+                        if (existingContent && existingContent.trim()) {
+                            console.log(`[checkpoint] Skipping already processed: ${fileName}`);
+                            skipped += 1;
+                            bar.increment();
+                            continue;
+                        }
+                    } catch {
+                        // File exists but can't read it, reprocess
+                    }
+                }
+            }
+            
             const content = await readTextFile(file);
             if (!content || !content.trim()) {
                 skipped += 1;
@@ -192,6 +231,11 @@ export async function processStep(
                     }
                     await fs.appendFile(ndjsonPath, JSON.stringify(obj) + "\n", "utf8");
                     processed += 1;
+                }
+                // Mark file as processed in checkpoint
+                processedFiles.add(fileName);
+                if (checkpointPath) {
+                    await writeCheckpoint(checkpointPath, processedFiles);
                 }
             } else {
                 // Strip markdown code block fences if present
