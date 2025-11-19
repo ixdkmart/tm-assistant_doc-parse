@@ -1,5 +1,6 @@
 export const config = {
-    model: process.env.LLM_MODEL ?? "gpt-5",
+    modelSimple: process.env.LLM_MODEL_SIMPLE,
+    modelComplex: process.env.LLM_MODEL_COMPLEX,
     maxWorkers: Number(process.env.MAX_WORKERS ?? 4),
   
     // Budget/Rate Guardrails

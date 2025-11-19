@@ -4,7 +4,8 @@ import fs from "node:fs/promises";
 import cliProgress from "cli-progress";
 import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint, appendErrorEntry } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
-import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
+import { config } from "../config.js";
+import PROMPT_04_TO_05, { FIELD_GUIDANCE } from "./prompts/prompt-04-to-05.js";
 import type { ProcessResult } from "./processStep.js";
 
 type AkoType = "concept" | "procedure" | "entity";
@@ -64,127 +65,126 @@ function dedupePreserveOrder<T extends string>(values: T[]): T[] {
     return out;
 }
 
-function extractJsonObjectBlock(text: string): string {
-    const trimmed = text.trim();
-    const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-    if (fenceMatch && fenceMatch[1]) {
-        return fenceMatch[1].trim();
+function extractJsonArray(text: string): string[] {
+    try {
+        const trimmed = text.trim();
+        // Try to extract from code fences
+        const fenceMatch = trimmed.match(/```(?:json)?\s*(\[[\s\S]*?\])\s*```/i);
+        if (fenceMatch && fenceMatch[1]) {
+            const parsed = JSON.parse(fenceMatch[1]);
+            if (Array.isArray(parsed)) {
+                return parsed.filter((item): item is string => typeof item === "string");
+            }
+        }
+        // Try to find JSON array directly
+        const firstBracket = trimmed.indexOf("[");
+        const lastBracket = trimmed.lastIndexOf("]");
+        if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
+            const jsonStr = trimmed.slice(firstBracket, lastBracket + 1);
+            const parsed = JSON.parse(jsonStr);
+            if (Array.isArray(parsed)) {
+                return parsed.filter((item): item is string => typeof item === "string");
+            }
+        }
+        // Try parsing the whole thing
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) {
+            return parsed.filter((item): item is string => typeof item === "string");
+        }
+    } catch {
+        // If parsing fails, return empty array
     }
-    const first = trimmed.indexOf("{");
-    const last = trimmed.lastIndexOf("}");
-    if (first !== -1 && last !== -1 && last > first) {
-        return trimmed.slice(first, last + 1);
-    }
-    return trimmed;
+    return [];
 }
 
-function fillPrompt(akoJson: string, additionalSource: string): string {
+function fillPrompt(akoJson: string, additionalSource: string, fieldName: string): string {
+    const fieldGuidance = FIELD_GUIDANCE[fieldName] || `Extract relevant information for the "${fieldName}" field.`;
     return PROMPT_04_TO_05
         .replaceAll("{{AKO_JSON}}", akoJson)
-        .replaceAll("{{ADDITIONAL_SOURCE}}", additionalSource);
+        .replaceAll("{{ADDITIONAL_SOURCE}}", additionalSource)
+        .replaceAll("{{FIELD_NAME}}", fieldName)
+        .replaceAll("{{FIELD_GUIDANCE}}", fieldGuidance);
 }
 
-function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | null {
-    if (!output || typeof output !== "object") return null;
-    if (output.type !== baseType) return null;
-    if (baseType === "concept") {
-        const obj: Concept = {
-            type: "concept",
-            term: String(output.term ?? ""),
-            definition: String(output.definition ?? ""),
-            pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
-            keywords: Array.isArray(output.keywords) ? output.keywords : [],
-            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
-            examples: Array.isArray(output.examples) ? output.examples : [],
-            caveats: Array.isArray(output.caveats) ? output.caveats : [],
-        };
-        if (!obj.term) return null;
-        return obj;
-    }
-    if (baseType === "procedure") {
-        const obj: Procedure = {
-            type: "procedure",
-            title: String(output.title ?? ""),
-            pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
-            keywords: Array.isArray(output.keywords) ? output.keywords : [],
-            steps: Array.isArray(output.steps) ? output.steps : [],
-            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
-            examples: Array.isArray(output.examples) ? output.examples : [],
-            bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
-            caveats: Array.isArray(output.caveats) ? output.caveats : [],
-            constraints: Array.isArray(output.constraints) ? output.constraints : [],
-            troubleshooting: Array.isArray(output.troubleshooting) ? output.troubleshooting : [],
-            metrics: Array.isArray(output.metrics) ? output.metrics : [],
-        };
-        if (!obj.title) return null;
-        return obj;
-    }
-    // entity
-    const obj: Entity = {
-        type: "entity",
-        name: String(output.name ?? ""),
-        description: typeof output.description === "string" ? output.description : undefined,
-        pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
-        keywords: Array.isArray(output.keywords) ? output.keywords : [],
-        additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
-        bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
-        troubleshooting: Array.isArray(output.troubleshooting) ? output.troubleshooting : [],
-        constraints: Array.isArray(output.constraints) ? output.constraints : [],
-        caveats: Array.isArray(output.caveats) ? output.caveats : [],
-    };
-    if (!obj.name) return null;
-    return obj;
+// Define enrichable fields per AKO type (exclude type, term, definition, keywords)
+const ENRICHABLE_FIELDS: Record<AkoType, string[]> = {
+    concept: ["pseudonyms", "additionalInfo", "examples", "caveats"],
+    procedure: ["pseudonyms", "additionalInfo", "examples", "bestPractice", "caveats", "constraints", "troubleshooting", "metrics"],
+    entity: ["pseudonyms", "additionalInfo", "bestPractice", "troubleshooting", "constraints", "caveats"],
+};
+
+function mergeFieldArrays(base: string[], newValues: string[]): string[] {
+    return dedupePreserveOrder([...base, ...newValues]);
 }
 
-function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject): AtomicKnowledgeObject {
-    if (base.type !== add.type) return base;
+async function enrichAkoWithDocument(
+    ako: AtomicKnowledgeObject,
+    docText: string,
+    enrichableFields: string[]
+): Promise<Partial<Record<string, string[]>>> {
+    const fieldResults: Record<string, string[]> = {};
+    const akoJson = JSON.stringify(ako, null, 2);
+
+    for (const fieldName of enrichableFields) {
+        try {
+            const prompt = fillPrompt(akoJson, docText, fieldName);
+            const modelOut = await processFileWithOpenAI("", prompt, undefined, config.modelComplex);
+            const snippets = extractJsonArray(modelOut);
+            // Filter out empty strings and trim
+            const filtered = snippets
+                .map(s => s.trim())
+                .filter(s => s.length > 0);
+            fieldResults[fieldName] = filtered;
+        } catch (e) {
+            // On error for a field, just use empty array
+            fieldResults[fieldName] = [];
+        }
+    }
+
+    return fieldResults;
+}
+
+function applyEnrichmentToAko(
+    base: AtomicKnowledgeObject,
+    enrichment: Partial<Record<string, string[]>>
+): AtomicKnowledgeObject {
     if (base.type === "concept") {
-        const a = base as Concept;
-        const b = add as Concept;
+        const ako = base as Concept;
         return {
-            type: "concept",
-            term: a.term, // preserve identity
-            definition: a.definition && a.definition.trim().length > 0 ? a.definition : b.definition ?? "",
-            pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
-            keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
-            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
-            examples: dedupePreserveOrder([...(a.examples ?? []), ...(b.examples ?? [])]),
-            caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
+            ...ako,
+            pseudonyms: mergeFieldArrays(ako.pseudonyms ?? [], enrichment.pseudonyms ?? []),
+            keywords: mergeFieldArrays(ako.keywords ?? [], enrichment.keywords ?? []),
+            additionalInfo: mergeFieldArrays(ako.additionalInfo ?? [], enrichment.additionalInfo ?? []),
+            examples: mergeFieldArrays(ako.examples ?? [], enrichment.examples ?? []),
+            caveats: mergeFieldArrays(ako.caveats ?? [], enrichment.caveats ?? []),
         };
     }
     if (base.type === "procedure") {
-        const a = base as Procedure;
-        const b = add as Procedure;
+        const ako = base as Procedure;
         return {
-            type: "procedure",
-            title: a.title, // preserve identity
-            pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
-            keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
-            // Keep original steps; do not blend
-            steps: a.steps ?? [],
-            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
-            examples: dedupePreserveOrder([...(a.examples ?? []), ...(b.examples ?? [])]),
-            bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
-            caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
-            constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
-            troubleshooting: dedupePreserveOrder([...(a.troubleshooting ?? []), ...(b.troubleshooting ?? [])]),
-            metrics: dedupePreserveOrder([...(a.metrics ?? []), ...(b.metrics ?? [])]),
+            ...ako,
+            pseudonyms: mergeFieldArrays(ako.pseudonyms ?? [], enrichment.pseudonyms ?? []),
+            keywords: mergeFieldArrays(ako.keywords ?? [], enrichment.keywords ?? []),
+            additionalInfo: mergeFieldArrays(ako.additionalInfo ?? [], enrichment.additionalInfo ?? []),
+            examples: mergeFieldArrays(ako.examples ?? [], enrichment.examples ?? []),
+            bestPractice: mergeFieldArrays(ako.bestPractice ?? [], enrichment.bestPractice ?? []),
+            caveats: mergeFieldArrays(ako.caveats ?? [], enrichment.caveats ?? []),
+            constraints: mergeFieldArrays(ako.constraints ?? [], enrichment.constraints ?? []),
+            troubleshooting: mergeFieldArrays(ako.troubleshooting ?? [], enrichment.troubleshooting ?? []),
+            metrics: mergeFieldArrays(ako.metrics ?? [], enrichment.metrics ?? []),
         };
     }
     // entity
-    const a = base as Entity;
-    const b = add as Entity;
+    const ako = base as Entity;
     return {
-        type: "entity",
-        name: a.name, // preserve identity
-        description: a.description && a.description.trim().length > 0 ? a.description : b.description,
-        pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
-        keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
-        additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
-        bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
-        troubleshooting: dedupePreserveOrder([...(a.troubleshooting ?? []), ...(b.troubleshooting ?? [])]),
-        constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
-        caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
+        ...ako,
+        pseudonyms: mergeFieldArrays(ako.pseudonyms ?? [], enrichment.pseudonyms ?? []),
+        keywords: mergeFieldArrays(ako.keywords ?? [], enrichment.keywords ?? []),
+        additionalInfo: mergeFieldArrays(ako.additionalInfo ?? [], enrichment.additionalInfo ?? []),
+        bestPractice: mergeFieldArrays(ako.bestPractice ?? [], enrichment.bestPractice ?? []),
+        troubleshooting: mergeFieldArrays(ako.troubleshooting ?? [], enrichment.troubleshooting ?? []),
+        constraints: mergeFieldArrays(ako.constraints ?? [], enrichment.constraints ?? []),
+        caveats: mergeFieldArrays(ako.caveats ?? [], enrichment.caveats ?? []),
     };
 }
 
@@ -193,6 +193,9 @@ export async function runAko04to05(
     cleanedDocsFolder: string,
     outputFolder: string
 ): Promise<ProcessResult> {
+    if (!config.modelComplex) {
+        throw new Error("LLM_MODEL_COMPLEX environment variable is required for enrichment step.");
+    }
     const akoFiles = await getFilesInFolder(akosFolder, "**/*.json");
     const docFiles = await getFilesInFolder(cleanedDocsFolder, "**/*.md");
 
@@ -261,28 +264,17 @@ export async function runAko04to05(
                 continue;
             }
 
-            let current = coerceSchema(base, baseType)!;
+            // Get enrichable fields for this AKO type
+            const enrichableFields = ENRICHABLE_FIELDS[baseType];
+            let current = base;
 
+            // For each document, enrich all fields
             for (const doc of docs) {
                 try {
-                    const prompt = fillPrompt(JSON.stringify(current), doc.text);
-                    const modelOut = await processFileWithOpenAI("", prompt);
-                    const jsonBlock = extractJsonObjectBlock(modelOut);
-                    const parsed = JSON.parse(jsonBlock);
-                    const coerced = coerceSchema(parsed, baseType);
-                    if (!coerced) continue;
-                    // Preserve identity keys from base (narrow by type)
-                    if (baseType === "concept") {
-                        (coerced as Concept).term = (current as Concept).term;
-                    } else if (baseType === "procedure") {
-                        (coerced as Procedure).title = (current as Procedure).title;
-                    } else {
-                        (coerced as Entity).name = (current as Entity).name;
-                    }
-                    // Merge into current (union arrays, keep identity)
-                    current = mergeEnrichment(current, coerced);
-                } catch {
-                    // skip doc on parse/model error
+                    const fieldResults = await enrichAkoWithDocument(current, doc.text, enrichableFields);
+                    current = applyEnrichmentToAko(current, fieldResults);
+                } catch (e) {
+                    // skip doc on error, continue with next document
                     continue;
                 }
             }
@@ -305,5 +297,3 @@ export async function runAko04to05(
     bar.stop();
     return { processed, skipped, errors };
 }
-
-

@@ -7,18 +7,23 @@ import { enforceRateAndBudget, DailyLimitError, MonthlyBudgetError, handleHardLi
  * @param content - The file content to process
  * @param prompt - The user prompt/instruction for processing
  * @param systemPrompt - Optional system prompt (defaults to a generic instruction)
+ * @param model - Optional model override (defaults to config.model)
  * @returns Processed content as string
  */
 export async function processFileWithOpenAI(
     content: string,
     prompt: string,
-    systemPrompt?: string
+    systemPrompt?: string,
+    model?: string
 ): Promise<string> {
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const model = config.model;
+    const modelToUse = model ?? config.modelSimple;
+    if (!modelToUse) {
+        throw new Error("Model not specified. Set LLM_MODEL_SIMPLE environment variable or pass model parameter.");
+    }
     
     // Validate model name (common invalid models)
-    if (model === "gpt-5") {
+    if (modelToUse === "gpt-5") {
         console.warn(`[processor] Warning: "gpt-5" is not a valid OpenAI model. Common valid models: gpt-4o, gpt-4-turbo, gpt-3.5-turbo`);
     }
     
@@ -41,7 +46,7 @@ export async function processFileWithOpenAI(
             
             // Call OpenAI API (gpt-5: do not send temperature; defaults are enforced)
             const resp = await client.chat.completions.create({
-                model,
+                model: modelToUse,
                 messages: [
                     { role: "system", content: defaultSystemPrompt },
                     { role: "user", content: fullPrompt },
