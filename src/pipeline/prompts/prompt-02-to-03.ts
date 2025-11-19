@@ -1,6 +1,6 @@
 const PROMPT_02_TO_03 = `
 ROLE
-You read ONE cleaned markdown document and extract every distinct Definition, Procedure, and Entity that is clearly described in THIS document only. 
+You read ONE cleaned markdown document and extract every distinct Concept, Procedure, and Entity that is clearly described in THIS document only. 
 For each AKO found, output EXACTLY ONE JSON object PER LINE (NDJSON). 
 Do NOT merge with previous documents. 
 Do NOT dedupe across occurrences. 
@@ -13,11 +13,13 @@ No commentary.
 
 SCHEMAS (use exact keys only)
 
-Definition:
+Concept:
 {
-  "type": "definition",
+  "type": "concept",
   "term": string,
-  "definition": string
+  "definition": string,
+  "pseudonyms": string[],
+  "additionalInfo"?: string[]
 }
 
 Procedure:
@@ -25,7 +27,8 @@ Procedure:
   "type": "procedure",
   "title": string,
   "pseudonyms": string[],
-  "steps": string[]
+  "steps": string[],
+  "additionalInfo"?: string[]
 }
 
 Entity:
@@ -33,7 +36,8 @@ Entity:
   "type": "entity",
   "name": string,
   "description"?: string,
-  "pseudonyms": string[]
+  "pseudonyms": string[],
+  "additionalInfo"?: string[]
 }
 
 PSEUDONYM RULES (strict and conservative)
@@ -70,19 +74,22 @@ Examples:
 ENTITY RULES
 
 Create Entities only for:
+- physical (or digital) objects, places, or people's roles
 - roles (Store Manager, Team Member, Contractor)
 - real organisations (Australian Breastfeeding Association)
 - real laws/standards (Sex Discrimination Act 1984)
 - real named systems/services
-- real names objects/tools/resources
+- real named objects/tools/resources
 
 Do NOT create Entities from:
 - section headings
 - generic ideas
 - invented terms
+- abstract concepts (use Concept instead)
 
-DEFINITION RULES
-Create a Definition only when the document explicitly defines what something *is*.
+CONCEPT RULES
+Create a Concept for documenting and atomising concepts and other abstract things.
+Create a Concept only when the document explicitly defines what something *is* or describes an abstract concept.
 
 OUTPUT
 For each identified AKO:

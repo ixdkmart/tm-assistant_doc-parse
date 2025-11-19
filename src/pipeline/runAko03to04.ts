@@ -10,16 +10,17 @@ import { config } from "../config.js";
 import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
 import type { ProcessResult } from "./processStep.js";
 
-type AkoType = "definition" | "procedure" | "entity";
+type AkoType = "concept" | "procedure" | "entity";
 
-export interface Definition {
-    type: "definition";
+export interface Concept {
+    type: "concept";
     term: string;
     definition: string;
     pseudonyms: string[];
     keywords: string[];
     examples?: string[];
     caveats?: string[];
+    additionalInfo?: string[];
 }
 
 export interface Procedure {
@@ -34,6 +35,7 @@ export interface Procedure {
     constraints?: string[];
     troubleshooting?: string[];
     metrics?: string[];
+    additionalInfo?: string[];
 }
 
 export interface Entity {
@@ -46,9 +48,10 @@ export interface Entity {
     constraints?: string[];
     caveats?: string[];
     bestPractice?: string[];
+    additionalInfo?: string[];
 }
 
-export type AtomicKnowledgeObject = Definition | Procedure | Entity;
+export type AtomicKnowledgeObject = Concept | Procedure | Entity;
 
 function isEmptyString(value: unknown): boolean {
     return typeof value !== "string" || value.trim().length === 0;
@@ -85,7 +88,7 @@ function detectNamespace(type: AkoType, identity: string, candidate?: AtomicKnow
         if (/\bkmart\b|\bpty\b|\binc\b|\bltd\b|\bassociation\b/.test(s)) return "organisation";
         if (/\bportal\b|\bapp\b|\bsystem\b|\bwallet\b|\bpay\b/.test(s)) return "system";
     }
-    if (type === "definition") {
+    if (type === "concept") {
         if (/\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(s)) return "law";
         return "document";
     }
@@ -96,10 +99,10 @@ function detectNamespace(type: AkoType, identity: string, candidate?: AtomicKnow
 }
 
 function canonicalIdentity(obj: AtomicKnowledgeObject): { canonical: string; original: string; namespace: Namespace } {
-    if (obj.type === "definition") {
+    if (obj.type === "concept") {
         const original = String(obj.term ?? "").trim();
         const canonical = applyCanonicalMap(original).toLowerCase().trim();
-        return { canonical, original, namespace: detectNamespace("definition", original, obj) };
+        return { canonical, original, namespace: detectNamespace("concept", original, obj) };
     }
     if (obj.type === "entity") {
         const original = String(obj.name ?? "").trim();
@@ -133,7 +136,7 @@ function dedupePreserveOrder<T extends string>(values: T[]): T[] {
 
 function authorityScore(obj: AtomicKnowledgeObject): number {
     // Higher is more authoritative
-    if (obj.type === "definition") {
+    if (obj.type === "concept") {
         const d = (obj.definition ?? "").toLowerCase();
         let score = 0;
         if (/\bact\s*\d{4}\b/.test(d)) score += 3;
@@ -185,15 +188,16 @@ function extractJsonObjectBlock(text: string): string {
 function coerceSchemaPure(output: any, groupType: AkoType): AtomicKnowledgeObject | null {
     if (!output || typeof output !== "object") return null;
     if (output.type !== groupType) return null;
-    if (groupType === "definition") {
-        const obj: Definition = {
-            type: "definition",
+    if (groupType === "concept") {
+        const obj: Concept = {
+            type: "concept",
             term: String(output.term ?? ""),
             definition: String(output.definition ?? ""),
             pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
             keywords: [],
             examples: [],
             caveats: [],
+            additionalInfo: [],
         };
         if (!obj.term || !obj.definition) return null;
         return obj;
@@ -211,6 +215,7 @@ function coerceSchemaPure(output: any, groupType: AkoType): AtomicKnowledgeObjec
             constraints: [],
             troubleshooting: [],
             metrics: [],
+            additionalInfo: [],
         };
         if (!obj.title) return null;
         return obj;
@@ -227,6 +232,7 @@ function coerceSchemaPure(output: any, groupType: AkoType): AtomicKnowledgeObjec
         constraints: [],
         caveats: [],
         bestPractice: [],
+        additionalInfo: [],
     };
     if (!obj.name) return null;
     return obj;
@@ -288,7 +294,7 @@ export async function runAko03to04(
         try {
             const parsed = JSON.parse(trimmed);
             const type: AkoType = parsed?.type;
-            if (type !== "definition" && type !== "procedure" && type !== "entity") continue;
+            if (type !== "concept" && type !== "procedure" && type !== "entity") continue;
             const obj = parsed as AtomicKnowledgeObject;
             const { key, namespace, canonical, original } = makeKey(obj);
             const g =
@@ -411,6 +417,7 @@ export async function runAko03to04(
                     constraints: [],
                     caveats: [],
                     bestPractice: [],
+                    additionalInfo: [],
                 };
             } else if (type === "procedure") {
                 let chosenSteps: string[] = [];
@@ -438,9 +445,10 @@ export async function runAko03to04(
                     constraints: [],
                     troubleshooting: [],
                     metrics: [],
+                    additionalInfo: [],
                 };
             } else {
-                const defs = group.items.map(i => (i.obj as Definition).definition).filter((d): d is string => !!d);
+                const defs = group.items.map(i => (i.obj as Concept).definition).filter((d): d is string => !!d);
                 let chosenDef = defs[0] ?? "";
                 for (const d of defs.slice(1)) {
                     if (materiallyDisagree(chosenDef, d)) {
@@ -453,18 +461,19 @@ export async function runAko03to04(
                     }
                 }
                 for (const gi of group.items) {
-                    const d = gi.obj as Definition;
+                    const d = gi.obj as Concept;
                     if (Array.isArray(d.pseudonyms)) allPseudos.push(...d.pseudonyms);
                     if (Array.isArray(d.keywords)) allKeywords.push(...d.keywords);
                 }
                 merged = {
-                    type: "definition",
-                    term: group.originals[0] ?? (representative as Definition | undefined)?.term ?? canonical,
+                    type: "concept",
+                    term: group.originals[0] ?? (representative as Concept | undefined)?.term ?? canonical,
                     definition: chosenDef,
                     pseudonyms: dedupePreserveOrder(allPseudos),
                     keywords: dedupePreserveOrder(allKeywords),
                     examples: [],
                     caveats: [],
+                    additionalInfo: [],
                 };
             }
             signals.push("fallback-deterministic");

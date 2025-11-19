@@ -16,15 +16,16 @@ OUTPUT
 
 SCHEMAS (use exact keys only)
 
-Definition:
+Concept:
 {
-  "type": "definition",
+  "type": "concept",
   "term": string,
   "definition": string,
   "pseudonyms": string[],
   "keywords": [],
   "examples": [],
-  "caveats": []
+  "caveats": [],
+  "additionalInfo": []
 }
 
 Procedure:
@@ -39,7 +40,8 @@ Procedure:
   "caveats": [],
   "constraints": [],
   "troubleshooting": [],
-  "metrics": []
+  "metrics": [],
+  "additionalInfo": []
 }
 
 Entity:
@@ -52,19 +54,21 @@ Entity:
   "troubleshooting": [],
   "constraints": [],
   "caveats": [],
-  "bestPractice": []
+  "bestPractice": [],
+  "additionalInfo": []
 }
 
 MERGE RULES (apply in order)
 
 1) Identity selection (conservative)
-- ENTITY.description: choose the most general, role/system-level description. If all candidates are narrow/situational, OMIT description (it is optional).
-- DEFINITION.definition: choose the most authoritative phrasing (Legal/Policy/Glossary > Role/System profile > SOP/Guidance > Training/FAQ/Poster). Must explicitly define what the term is.
+- ENTITY.description: choose the most general, role/system-level description. Entities are for physical (or digital) objects, places, or people's roles. If all candidates are narrow/situational, OMIT description (it is optional).
+- CONCEPT.definition: choose the most authoritative phrasing (Legal/Policy/Glossary > Role/System profile > SOP/Guidance > Training/FAQ/Poster). Concepts are for documenting and atomising concepts and other abstract things. Must explicitly define what the term is.
 - PROCEDURE.steps: select one complete step set from the most authoritative occurrence; keep steps in the original order. DO NOT blend or invent steps.
+- Include context if needed to understand the text.
 
 2) Union lists
 - Always union+dedupe "pseudonyms". Preserve original casing from the first seen valid variant.
-- Leave all enrichment arrays as empty lists: keywords/examples/bestPractice/caveats/constraints/troubleshooting/metrics.
+- Leave all enrichment arrays as empty lists: keywords/examples/bestPractice/caveats/constraints/troubleshooting/metrics/additionalInfo.
 
 3) TITLE CONTEXT RULE (procedures only)
 - If a title is generic (e.g., "What to do", "Next steps", "Procedure", "Process"), append the smallest explicit context phrase found verbatim in the occurrences to make the title uniquely meaningful.
@@ -91,10 +95,10 @@ If none apply, use "pseudonyms": [].
 - Enrichment fields must be present as empty arrays.
 
 QUALITY CHECK BEFORE YOU RETURN
-- Is the identity broad and compliant (non-situational)? If not, omit description (entities) or pick the authoritative phrasing (definitions).
+- Is the identity broad and compliant (non-situational)? If not, omit description (entities) or pick the authoritative phrasing (concepts).
 - Are steps imperative, ordered, and taken directly from one occurrence (procedures)?
 - Are pseudonyms valid per the rules and deduped?
-- Are all enrichment arrays present and empty?
+- Are all enrichment arrays present and empty (including additionalInfo)?
 
 Now produce the single merged AKO object.
 

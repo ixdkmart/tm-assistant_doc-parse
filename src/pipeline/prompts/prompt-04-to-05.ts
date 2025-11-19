@@ -11,14 +11,15 @@ CLEANED_DOCUMENT (the full cleaned markdown for this AKO’s source or a related
 ---
 
 SCHEMA (what you may output — pick exactly the matching type)
-Definition {
-  type: "definition";
+Concept {
+  type: "concept";
   term: string;
   definition: string;
   pseudonyms: string[];
   keywords: string[];
   examples?: string[];
   caveats?: string[];
+  additionalInfo?: string[];
 }
 
 Procedure {
@@ -33,6 +34,7 @@ Procedure {
   constraints?: string[];
   troubleshooting?: string[];
   metrics?: string[];
+  additionalInfo?: string[];
 }
 
 Entity {
@@ -45,15 +47,19 @@ Entity {
   constraints?: string[];
   caveats?: string[];
   bestPractice?: string[];
+  additionalInfo?: string[];
 }
 
 ENRICHMENT RULES
 - Use ONLY content present in CLEANED_DOCUMENT. No outside knowledge. No invention.
 - Preserve explicit legal/procedural wording verbatim when present.
+- Include context if needed to understand the extracted text.
 - Keep AU/NZ spelling found in the document (e.g., behaviour, organisation).
-- Do not change the AKO’s core identity (term/title/name).
-- **For Entity.description and Definition.definition: keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific responsibility, add it to bestPractice, caveats, examples, or constraints instead.**
+- Do not change the AKO's core identity (term/title/name).
+- **For Entity.description: Entities are for physical (or digital) objects, places, or people's roles. Keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific responsibility, add it to bestPractice, caveats, examples, constraints, or additionalInfo instead.**
+- **For Concept.definition: Concepts are for documenting and atomising concepts and other abstract things. Keep meaning at the identity level. Do NOT narrow the meaning to a single context or task. If the document only presents a task-specific detail, add it to examples, caveats, or additionalInfo instead.**
 - Fill optional fields ONLY when the document explicitly supports them.
+- **additionalInfo: Use this field for new information collected that doesn't fit into the other fields.**
 
 PSEUDONYMS
 - Add only naturally interchangeable phrases already used in workplace/legal contexts:
@@ -77,7 +83,8 @@ OPTIONAL FIELDS (only if explicitly supported by the document)
 - caveats: explicit warnings/exceptions.
 - constraints: explicit requirements/eligibility/limits.
 - troubleshooting: explicit issues + remedies.
-- metrics: explicit numeric thresholds/limits with units (e.g., “BAC > 0.00%”).
+- metrics: explicit numeric thresholds/limits with units (e.g., "BAC > 0.00%").
+- additionalInfo: new information that doesn't fit into the other fields.
 
 OUTPUT
 - Return ONE JSON object only (the enriched AKO), exactly matching the corresponding schema above.

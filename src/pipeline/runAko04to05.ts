@@ -7,16 +7,17 @@ import { processFileWithOpenAI } from "../lib/processor.js";
 import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
 import type { ProcessResult } from "./processStep.js";
 
-type AkoType = "definition" | "procedure" | "entity";
+type AkoType = "concept" | "procedure" | "entity";
 
-export interface Definition {
-    type: "definition";
+export interface Concept {
+    type: "concept";
     term: string;
     definition: string;
     pseudonyms: string[];
     keywords: string[];
     examples?: string[];
     caveats?: string[];
+    additionalInfo?: string[];
 }
 
 export interface Procedure {
@@ -31,6 +32,7 @@ export interface Procedure {
     constraints?: string[];
     troubleshooting?: string[];
     metrics?: string[];
+    additionalInfo?: string[];
 }
 
 export interface Entity {
@@ -43,9 +45,10 @@ export interface Entity {
     constraints?: string[];
     caveats?: string[];
     bestPractice?: string[];
+    additionalInfo?: string[];
 }
 
-export type AtomicKnowledgeObject = Definition | Procedure | Entity;
+export type AtomicKnowledgeObject = Concept | Procedure | Entity;
 
 function dedupePreserveOrder<T extends string>(values: T[]): T[] {
     const seen = new Set<string>();
@@ -84,15 +87,16 @@ function fillPrompt(akoJson: string, cleanedMarkdown: string): string {
 function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | null {
     if (!output || typeof output !== "object") return null;
     if (output.type !== baseType) return null;
-    if (baseType === "definition") {
-        const obj: Definition = {
-            type: "definition",
+    if (baseType === "concept") {
+        const obj: Concept = {
+            type: "concept",
             term: String(output.term ?? ""),
             definition: String(output.definition ?? ""),
             pseudonyms: Array.isArray(output.pseudonyms) ? output.pseudonyms : [],
             keywords: Array.isArray(output.keywords) ? output.keywords : [],
             examples: Array.isArray(output.examples) ? output.examples : [],
             caveats: Array.isArray(output.caveats) ? output.caveats : [],
+            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
         };
         if (!obj.term) return null;
         return obj;
@@ -110,6 +114,7 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
             constraints: Array.isArray(output.constraints) ? output.constraints : [],
             troubleshooting: Array.isArray(output.troubleshooting) ? output.troubleshooting : [],
             metrics: Array.isArray(output.metrics) ? output.metrics : [],
+            additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
         };
         if (!obj.title) return null;
         return obj;
@@ -125,6 +130,7 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
         constraints: Array.isArray(output.constraints) ? output.constraints : [],
         caveats: Array.isArray(output.caveats) ? output.caveats : [],
         bestPractice: Array.isArray(output.bestPractice) ? output.bestPractice : [],
+        additionalInfo: Array.isArray(output.additionalInfo) ? output.additionalInfo : [],
     };
     if (!obj.name) return null;
     return obj;
@@ -132,17 +138,18 @@ function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | n
 
 function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject): AtomicKnowledgeObject {
     if (base.type !== add.type) return base;
-    if (base.type === "definition") {
-        const a = base as Definition;
-        const b = add as Definition;
+    if (base.type === "concept") {
+        const a = base as Concept;
+        const b = add as Concept;
         return {
-            type: "definition",
+            type: "concept",
             term: a.term, // preserve identity
             definition: a.definition && a.definition.trim().length > 0 ? a.definition : b.definition ?? "",
             pseudonyms: dedupePreserveOrder([...(a.pseudonyms ?? []), ...(b.pseudonyms ?? [])]),
             keywords: dedupePreserveOrder([...(a.keywords ?? []), ...(b.keywords ?? [])]),
             examples: dedupePreserveOrder([...(a.examples ?? []), ...(b.examples ?? [])]),
             caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
+            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
         };
     }
     if (base.type === "procedure") {
@@ -161,6 +168,7 @@ function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject
             constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
             troubleshooting: dedupePreserveOrder([...(a.troubleshooting ?? []), ...(b.troubleshooting ?? [])]),
             metrics: dedupePreserveOrder([...(a.metrics ?? []), ...(b.metrics ?? [])]),
+            additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
         };
     }
     // entity
@@ -176,6 +184,7 @@ function mergeEnrichment(base: AtomicKnowledgeObject, add: AtomicKnowledgeObject
         constraints: dedupePreserveOrder([...(a.constraints ?? []), ...(b.constraints ?? [])]),
         caveats: dedupePreserveOrder([...(a.caveats ?? []), ...(b.caveats ?? [])]),
         bestPractice: dedupePreserveOrder([...(a.bestPractice ?? []), ...(b.bestPractice ?? [])]),
+        additionalInfo: dedupePreserveOrder([...(a.additionalInfo ?? []), ...(b.additionalInfo ?? [])]),
     };
 }
 
@@ -236,7 +245,7 @@ export async function runAko04to05(
             const jsonText = await fs.readFile(akoPath, "utf8");
             const base: AtomicKnowledgeObject = JSON.parse(jsonText);
             const baseType: AkoType = base.type;
-            if (baseType !== "definition" && baseType !== "procedure" && baseType !== "entity") {
+            if (baseType !== "concept" && baseType !== "procedure" && baseType !== "entity") {
                 skipped += 1;
                 bar.increment();
                 continue;
@@ -253,8 +262,8 @@ export async function runAko04to05(
                     const coerced = coerceSchema(parsed, baseType);
                     if (!coerced) continue;
                     // Preserve identity keys from base (narrow by type)
-                    if (baseType === "definition") {
-                        (coerced as Definition).term = (current as Definition).term;
+                    if (baseType === "concept") {
+                        (coerced as Concept).term = (current as Concept).term;
                     } else if (baseType === "procedure") {
                         (coerced as Procedure).title = (current as Procedure).title;
                     } else {
