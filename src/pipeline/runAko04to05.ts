@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 // @ts-ignore
 import cliProgress from "cli-progress";
-import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists } from "../lib/fileUtils.js";
+import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint, appendErrorEntry } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 import PROMPT_04_TO_05 from "./prompts/prompt-04-to-05.js";
 import type { ProcessResult } from "./processStep.js";
@@ -78,10 +78,10 @@ function extractJsonObjectBlock(text: string): string {
     return trimmed;
 }
 
-function fillPrompt(akoJson: string, cleanedMarkdown: string): string {
+function fillPrompt(akoJson: string, additionalSource: string): string {
     return PROMPT_04_TO_05
         .replaceAll("{{AKO_JSON}}", akoJson)
-        .replaceAll("{{CLEANED_MARKDOWN}}", cleanedMarkdown);
+        .replaceAll("{{ADDITIONAL_SOURCE}}", additionalSource);
 }
 
 function coerceSchema(output: any, baseType: AkoType): AtomicKnowledgeObject | null {
@@ -210,6 +210,14 @@ export async function runAko04to05(
     }
 
     await fs.mkdir(outputFolder, { recursive: true });
+    
+    // Checkpoint tracking
+    const checkpointPath = getCheckpointPath(outputFolder, "_processed-summary.ndjson");
+    let processedFiles: Set<string> = await readCheckpoint(checkpointPath);
+    
+    // Error summary file path
+    const errorSummaryPath = path.join(outputFolder, "_error-summary.ndjson");
+    
     const bar = new cliProgress.SingleBar(
         { format: "ENRICH 04→05 {bar} {value}/{total} | ETA: {eta_formatted} | File: {file}", hideCursor: true },
         cliProgress.Presets.shades_classic
@@ -226,19 +234,21 @@ export async function runAko04to05(
             bar.update({ file: fileName });
             
             // Checkpoint: Skip already processed AKO files
-            const outputFilePath = path.join(outputFolder, fileName);
-            if (await fileExists(outputFilePath)) {
-                // Check if file has content
-                try {
-                    const existingContent = await fs.readFile(outputFilePath, "utf8");
-                    if (existingContent && existingContent.trim()) {
-                        console.log(`[checkpoint] Skipping already enriched: ${fileName}`);
-                        skipped += 1;
-                        bar.increment();
-                        continue;
+            if (processedFiles.has(fileName)) {
+                const outputFilePath = path.join(outputFolder, fileName);
+                if (await fileExists(outputFilePath)) {
+                    // Check if file has content
+                    try {
+                        const existingContent = await fs.readFile(outputFilePath, "utf8");
+                        if (existingContent && existingContent.trim()) {
+                            console.log(`[checkpoint] Skipping already enriched: ${fileName}`);
+                            skipped += 1;
+                            bar.increment();
+                            continue;
+                        }
+                    } catch {
+                        // File exists but can't read it, reprocess
                     }
-                } catch {
-                    // File exists but can't read it, reprocess
                 }
             }
             
@@ -279,8 +289,16 @@ export async function runAko04to05(
 
             await saveFile(outputFolder, fileName, JSON.stringify(current, null, 2));
             processed += 1;
+            // Mark file as processed in checkpoint
+            processedFiles.add(fileName);
+            await writeCheckpoint(checkpointPath, processedFiles);
         } catch (e: any) {
-            errors.push({ file: fileName, error: e?.message ?? String(e) });
+            // Dump full error object for diagnostics
+            console.error('[runAko04to05] Error processing', fileName, ':', e);
+            const errorMessage = e?.message ?? String(e);
+            errors.push({ file: fileName, error: errorMessage });
+            // Write error to error summary file
+            await appendErrorEntry(errorSummaryPath, fileName, errorMessage);
         }
         bar.increment();
     }
