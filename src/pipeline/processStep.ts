@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 // @ts-ignore
 import cliProgress from "cli-progress";
-import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint } from "../lib/fileUtils.js";
+import { getFilesInFolder, readFile as readTextFile, saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint, appendErrorEntry } from "../lib/fileUtils.js";
 import { processFileWithOpenAI } from "../lib/processor.js";
 
 export interface ProcessResult {
@@ -106,14 +106,13 @@ export async function processStep(
     let skipped = 0;
     const errors: Array<{ file: string; error: string }> = [];
     
-    // Checkpoint tracking for objects mode
-    let processedFiles: Set<string> = new Set();
-    let checkpointPath: string | undefined;
-    if (options?.outputMode === "objects") {
-        await fs.mkdir(outputFolder, { recursive: true });
-        checkpointPath = getCheckpointPath(outputFolder, "_checkpoint.ndjson");
-        processedFiles = await readCheckpoint(checkpointPath);
-    }
+    // Checkpoint tracking for both modes
+    await fs.mkdir(outputFolder, { recursive: true });
+    const checkpointPath = getCheckpointPath(outputFolder, "_processed-summary.ndjson");
+    let processedFiles: Set<string> = await readCheckpoint(checkpointPath);
+    
+    // Error summary file path
+    const errorSummaryPath = path.join(outputFolder, "_error-summary.ndjson");
     
     // Prepare NDJSON file if emitting objects mode
     let ndjsonPath: string | undefined;
@@ -131,29 +130,28 @@ export async function processStep(
             bar.update({ file: fileName });
             
             // Checkpoint: Skip already processed files
-            if (options?.outputMode === "objects") {
-                // For objects mode, check checkpoint
-                if (processedFiles.has(fileName)) {
+            if (processedFiles.has(fileName)) {
+                // Check if output file exists and has content (for single mode)
+                if (options?.outputMode === "single") {
+                    const outputFilePath = path.join(outputFolder, fileName);
+                    if (await fileExists(outputFilePath)) {
+                        try {
+                            const existingContent = await readTextFile(outputFilePath);
+                            if (existingContent && existingContent.trim()) {
+                                console.log(`[checkpoint] Skipping already processed: ${fileName}`);
+                                skipped += 1;
+                                bar.increment();
+                                continue;
+                            }
+                        } catch {
+                            // File exists but can't read it, reprocess
+                        }
+                    }
+                } else {
+                    // For objects mode, if in checkpoint, skip
                     skipped += 1;
                     bar.increment();
                     continue;
-                }
-            } else {
-                // For single mode, check if output file exists
-                const outputFilePath = path.join(outputFolder, fileName);
-                if (await fileExists(outputFilePath)) {
-                    // Check if file has content
-                    try {
-                        const existingContent = await readTextFile(outputFilePath);
-                        if (existingContent && existingContent.trim()) {
-                            console.log(`[checkpoint] Skipping already processed: ${fileName}`);
-                            skipped += 1;
-                            bar.increment();
-                            continue;
-                        }
-                    } catch {
-                        // File exists but can't read it, reprocess
-                    }
                 }
             }
             
@@ -234,19 +232,23 @@ export async function processStep(
                 }
                 // Mark file as processed in checkpoint
                 processedFiles.add(fileName);
-                if (checkpointPath) {
-                    await writeCheckpoint(checkpointPath, processedFiles);
-                }
+                await writeCheckpoint(checkpointPath, processedFiles);
             } else {
                 // Strip markdown code block fences if present
                 const cleanedResult = stripMarkdownCodeBlocks(result);
                 await saveFile(outputFolder, fileName, cleanedResult);
                 processed += 1;
+                // Mark file as processed in checkpoint
+                processedFiles.add(fileName);
+                await writeCheckpoint(checkpointPath, processedFiles);
             }
         } catch (e: any) {
             // Dump full error object for diagnostics
             console.error('[processStep] Error processing', fileName, ':', e);
-            errors.push({ file: fileName, error: e?.message ?? String(e) });
+            const errorMessage = e?.message ?? String(e);
+            errors.push({ file: fileName, error: errorMessage });
+            // Write error to error summary file
+            await appendErrorEntry(errorSummaryPath, fileName, errorMessage);
         }
         bar.increment();
     }

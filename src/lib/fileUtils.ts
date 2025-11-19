@@ -69,25 +69,51 @@ export function getCheckpointPath(folder: string, name: string): string {
 }
 
 /**
- * Read checkpoint file to get set of processed files
+ * Read checkpoint file to get set of processed files (NDJSON format)
  * @param checkpointPath - Path to checkpoint file
  * @returns Promise that resolves to Set of processed file names
  */
 export async function readCheckpoint(checkpointPath: string): Promise<Set<string>> {
     try {
         const content = await fs.readFile(checkpointPath, "utf8");
-        const parsed = JSON.parse(content);
-        if (parsed && Array.isArray(parsed.processedFiles)) {
-            return new Set(parsed.processedFiles);
+        const lines = content.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.length > 0);
+        const processedFiles = new Set<string>();
+        for (const line of lines) {
+            try {
+                const entry = JSON.parse(line);
+                if (entry && typeof entry === "object" && entry.file) {
+                    processedFiles.add(entry.file);
+                }
+            } catch {
+                // Skip invalid lines
+            }
         }
-        return new Set();
+        return processedFiles;
     } catch {
         return new Set();
     }
 }
 
 /**
- * Write checkpoint file with processed files
+ * Append a processed file entry to checkpoint file (NDJSON format)
+ * @param checkpointPath - Path to checkpoint file
+ * @param fileName - Name of the processed file
+ */
+export async function appendCheckpointEntry(
+    checkpointPath: string,
+    fileName: string
+): Promise<void> {
+    const folder = path.dirname(checkpointPath);
+    await fs.mkdir(folder, { recursive: true });
+    const entry = {
+        file: fileName,
+        processedAt: new Date().toISOString(),
+    };
+    await fs.appendFile(checkpointPath, JSON.stringify(entry) + "\n", "utf8");
+}
+
+/**
+ * Write checkpoint file with processed files (NDJSON format)
  * @param checkpointPath - Path to checkpoint file
  * @param processedFiles - Set of processed file names
  */
@@ -97,10 +123,60 @@ export async function writeCheckpoint(
 ): Promise<void> {
     const folder = path.dirname(checkpointPath);
     await fs.mkdir(folder, { recursive: true });
-    const content = JSON.stringify({
-        processedFiles: Array.from(processedFiles),
-        lastUpdated: new Date().toISOString(),
-    }, null, 2);
-    await fs.writeFile(checkpointPath, content, "utf8");
+    
+    // Read existing entries to preserve timestamps
+    const existingEntries = new Map<string, string>();
+    try {
+        const content = await fs.readFile(checkpointPath, "utf8");
+        const lines = content.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.length > 0);
+        for (const line of lines) {
+            try {
+                const entry = JSON.parse(line);
+                if (entry && typeof entry === "object" && entry.file) {
+                    existingEntries.set(entry.file, entry.processedAt || new Date().toISOString());
+                }
+            } catch {
+                // Skip invalid lines
+            }
+        }
+    } catch {
+        // File doesn't exist or can't be read, start fresh
+    }
+    
+    // Update timestamps for newly processed files
+    const now = new Date().toISOString();
+    for (const fileName of processedFiles) {
+        if (!existingEntries.has(fileName)) {
+            existingEntries.set(fileName, now);
+        }
+    }
+    
+    // Write all entries as NDJSON
+    const lines: string[] = [];
+    for (const [fileName, processedAt] of existingEntries.entries()) {
+        lines.push(JSON.stringify({ file: fileName, processedAt }));
+    }
+    await fs.writeFile(checkpointPath, lines.join("\n") + "\n", "utf8");
+}
+
+/**
+ * Append an error entry to error summary file (NDJSON format)
+ * @param errorSummaryPath - Path to error summary file
+ * @param fileName - Name of the file that had an error
+ * @param errorMessage - Error message
+ */
+export async function appendErrorEntry(
+    errorSummaryPath: string,
+    fileName: string,
+    errorMessage: string
+): Promise<void> {
+    const folder = path.dirname(errorSummaryPath);
+    await fs.mkdir(folder, { recursive: true });
+    const entry = {
+        file: fileName,
+        error: errorMessage,
+        timestamp: new Date().toISOString(),
+    };
+    await fs.appendFile(errorSummaryPath, JSON.stringify(entry) + "\n", "utf8");
 }
 
