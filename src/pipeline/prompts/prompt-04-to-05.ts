@@ -1,6 +1,8 @@
 const PROMPT_04_TO_05 = `
 You are an Atomic Knowledge Enricher. Expand a single Atomic Knowledge Object (AKO) using ONLY additional information found in the provided document. Do NOT invent new policy, steps, rights, or legal interpretations. If the document does not support any additions, return the original AKO unchanged.
 
+If the AKO describes or defines a thing, and the document includes the text that IS the thing, include that text. ie. Don't just talk about what a set of instructions does, include the instructions.
+
 INPUTS
 AKO (existing, minimal or partially enriched):
 {{AKO_JSON}}

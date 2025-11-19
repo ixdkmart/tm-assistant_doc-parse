@@ -4,10 +4,7 @@ import { createReadStream } from "node:fs";
 // @ts-ignore
 import cliProgress from "cli-progress";
 import readline from "node:readline";
-import { saveFile, fileExists } from "../lib/fileUtils.js";
-import { processFileWithOpenAI } from "../lib/processor.js";
-import { config } from "../config.js";
-import PROMPT_03_TO_04 from "./prompts/prompt-03-to-04.js";
+import { saveFile, fileExists, getCheckpointPath, readCheckpoint, writeCheckpoint, appendErrorEntry } from "../lib/fileUtils.js";
 import type { ProcessResult } from "./processStep.js";
 
 type AkoType = "concept" | "procedure" | "entity";
@@ -53,14 +50,6 @@ export interface Entity {
 
 export type AtomicKnowledgeObject = Concept | Procedure | Entity;
 
-function isEmptyString(value: unknown): boolean {
-    return typeof value !== "string" || value.trim().length === 0;
-}
-
-function isEmptyArray(value: unknown): boolean {
-    return !Array.isArray(value) || value.length === 0;
-}
-
 function slugify(input: string): string {
     return String(input)
         .toLowerCase()
@@ -68,174 +57,92 @@ function slugify(input: string): string {
         .replace(/^-+|-+$/g, "");
 }
 
-type Namespace = "role" | "system" | "law" | "organisation" | "document" | "program";
-
-function applyCanonicalMap(identity: string): string {
-    const canonMap: Record<string, string> = {
-        "team members": "Team Member",
-        "store managers": "Store Manager",
-        "kmart": "Kmart",
-    };
-    const key = identity.trim().toLowerCase();
-    return canonMap[key] ?? identity.trim();
+function canonicalIdentity(obj: AtomicKnowledgeObject): string {
+    if (obj.type === "concept") {
+        return String(obj.term ?? "").trim().toLowerCase();
+    }
+    if (obj.type === "entity") {
+        return String(obj.name ?? "").trim().toLowerCase();
+    }
+    // procedure
+    return String(obj.title ?? "").trim().toLowerCase();
 }
 
-function detectNamespace(type: AkoType, identity: string, candidate?: AtomicKnowledgeObject): Namespace {
-    const s = identity.toLowerCase();
-    if (type === "entity") {
-        if (/\bact\s*\d{4}\b/.test(s) || /\bregulation\b/.test(s)) return "law";
-        if (/\bmanager\b|\bteam member\b|\bstaff\b|\brole\b/.test(s)) return "role";
-        if (/\bkmart\b|\bpty\b|\binc\b|\bltd\b|\bassociation\b/.test(s)) return "organisation";
-        if (/\bportal\b|\bapp\b|\bsystem\b|\bwallet\b|\bpay\b/.test(s)) return "system";
-    }
+function convertToExpandedSchema(obj: any): AtomicKnowledgeObject | null {
+    if (!obj || typeof obj !== "object" || !obj.type) return null;
+    
+    const type = obj.type;
+    
     if (type === "concept") {
-        if (/\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(s)) return "law";
-        return "document";
-    }
-    if (type === "procedure") {
-        return "document";
-    }
-    return "document";
-}
-
-function canonicalIdentity(obj: AtomicKnowledgeObject): { canonical: string; original: string; namespace: Namespace } {
-    if (obj.type === "concept") {
-        const original = String(obj.term ?? "").trim();
-        const canonical = applyCanonicalMap(original).toLowerCase().trim();
-        return { canonical, original, namespace: detectNamespace("concept", original, obj) };
-    }
-    if (obj.type === "entity") {
-        const original = String(obj.name ?? "").trim();
-        const canonical = applyCanonicalMap(original).toLowerCase().trim();
-        return { canonical, original, namespace: detectNamespace("entity", original, obj) };
-    }
-    // procedure
-    const original = String(obj.title ?? "").trim();
-    const canonical = applyCanonicalMap(original).toLowerCase().trim();
-    return { canonical, original, namespace: detectNamespace("procedure", original, obj) };
-}
-
-function makeKey(obj: AtomicKnowledgeObject): { key: string; namespace: Namespace; canonical: string; original: string } {
-    const { canonical, original, namespace } = canonicalIdentity(obj);
-    return { key: `${obj.type}::${namespace}::${canonical}`, namespace, canonical, original };
-}
-
-function dedupePreserveOrder<T extends string>(values: T[]): T[] {
-    const seen = new Set<string>();
-    const out: T[] = [];
-    for (const v of values) {
-        const k = v.trim();
-        if (!k) continue;
-        const lc = k.toLowerCase();
-        if (seen.has(lc)) continue;
-        seen.add(lc);
-        out.push(v);
-    }
-    return out;
-}
-
-function authorityScore(obj: AtomicKnowledgeObject): number {
-    // Higher is more authoritative
-    if (obj.type === "concept") {
-        const d = (obj.definition ?? "").toLowerCase();
-        let score = 0;
-        if (/\bact\s*\d{4}\b/.test(d)) score += 3;
-        if (/\bpolicy\b|\bglossary\b|\bdefined\b/.test(d)) score += 2;
-        if (/\bmust\b|\bshall\b/.test(d)) score += 1;
-        return score;
-    }
-    if (obj.type === "entity") {
-        const n = (obj.name ?? "").toLowerCase();
-        let score = 0;
-        if (/\bmanager\b|\bsystem\b|\bact\s*\d{4}\b/.test(n)) score += 2;
-        return score;
-    }
-    // procedure
-    const t = (obj.title ?? "").toLowerCase();
-    let score = 0;
-    if (/\bpolicy\b|\bsop\b|\bguidance\b/.test(t)) score += 2;
-    return score;
-}
-
-function materiallyDisagree(a?: string, b?: string): boolean {
-    if (!a || !b) return false;
-    const sa = a.trim().toLowerCase();
-    const sb = b.trim().toLowerCase();
-    if (sa === sb) return false;
-    // crude token overlap
-    const toksA = new Set(sa.split(/\W+/).filter(Boolean));
-    const toksB = new Set(sb.split(/\W+/).filter(Boolean));
-    let inter = 0;
-    for (const t of toksA) if (toksB.has(t)) inter += 1;
-    const jaccard = inter / Math.max(1, toksA.size + toksB.size - inter);
-    return jaccard < 0.3;
-}
-
-function extractJsonObjectBlock(text: string): string {
-    const trimmed = text.trim();
-    const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-    if (fenceMatch && fenceMatch[1]) {
-        return fenceMatch[1].trim();
-    }
-    const first = trimmed.indexOf("{");
-    const last = trimmed.lastIndexOf("}");
-    if (first !== -1 && last !== -1 && last > first) {
-        return trimmed.slice(first, last + 1);
-    }
-    return trimmed;
-}
-
-function coerceSchemaPure(output: any, groupType: AkoType): AtomicKnowledgeObject | null {
-    if (!output || typeof output !== "object") return null;
-    if (output.type !== groupType) return null;
-    if (groupType === "concept") {
-        const obj: Concept = {
+        if (!obj.term || !obj.definition) return null;
+        return {
             type: "concept",
-            term: String(output.term ?? ""),
-            definition: String(output.definition ?? ""),
-            pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
+            term: String(obj.term),
+            definition: String(obj.definition),
+            pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
             keywords: [],
             examples: [],
             caveats: [],
-            additionalInfo: [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
         };
-        if (!obj.term || !obj.definition) return null;
-        return obj;
     }
-    if (groupType === "procedure") {
-        const obj: Procedure = {
+    
+    if (type === "procedure") {
+        if (!obj.title) return null;
+        return {
             type: "procedure",
-            title: String(output.title ?? ""),
-            pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
+            title: String(obj.title),
+            pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
             keywords: [],
-            steps: Array.isArray(output.steps) ? output.steps : [],
+            steps: Array.isArray(obj.steps) ? obj.steps : [],
             examples: [],
             bestPractice: [],
             caveats: [],
             constraints: [],
             troubleshooting: [],
             metrics: [],
-            additionalInfo: [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
         };
-        if (!obj.title) return null;
-        return obj;
     }
-    // entity
-    const desc = typeof output.description === "string" ? output.description : undefined;
-    const obj: Entity = {
-        type: "entity",
-        name: String(output.name ?? ""),
-        description: desc,
-        pseudonyms: Array.isArray(output.pseudonyms) ? dedupePreserveOrder(output.pseudonyms) : [],
-        keywords: [],
-        troubleshooting: [],
-        constraints: [],
-        caveats: [],
-        bestPractice: [],
-        additionalInfo: [],
-    };
-    if (!obj.name) return null;
-    return obj;
+    
+    if (type === "entity") {
+        if (!obj.name) return null;
+        return {
+            type: "entity",
+            name: String(obj.name),
+            description: typeof obj.description === "string" ? obj.description : undefined,
+            pseudonyms: Array.isArray(obj.pseudonyms) ? obj.pseudonyms : [],
+            keywords: [],
+            troubleshooting: [],
+            constraints: [],
+            caveats: [],
+            bestPractice: [],
+            additionalInfo: Array.isArray(obj.additionalInfo) ? obj.additionalInfo : [],
+        };
+    }
+    
+    return null;
+}
+
+async function generateUniqueFileName(
+    folderPath: string,
+    baseName: string
+): Promise<string> {
+    let name = baseName;
+    let counter = 2;
+    while (true) {
+        try {
+            await fs.access(path.join(folderPath, name));
+            // exists → try next suffix
+            const parts = baseName.split(".json");
+            const stem = parts[0] ?? baseName.replace(/\.json$/i, "");
+            name = `${stem}-${counter}.json`;
+            counter += 1;
+        } catch {
+            // does not exist → good to use
+            return name;
+        }
+    }
 }
 
 export async function runAko03to04(
@@ -245,323 +152,95 @@ export async function runAko03to04(
     _localeHint: string = "AU"
 ): Promise<ProcessResult> {
     const ndjsonPath = path.join(akosFolder, "akos.ndjson");
-    const outFolder = outputFolder; // now 04-merge-out via pipeline
+    const outFolder = outputFolder;
     await fs.mkdir(outFolder, { recursive: true });
-    const indexPath = path.join(outFolder, "_merge-summary.ndjson");
     
-    // Read existing summary to get already-processed groups
-    const processedGroups = new Set<string>();
-    try {
-        if (await fileExists(indexPath)) {
-            const existingSummaryStream = createReadStream(indexPath, { encoding: "utf8" });
-            const existingSummaryRl = readline.createInterface({ input: existingSummaryStream, crlfDelay: Infinity });
-            for await (const line of existingSummaryRl) {
-                const trimmed = line.trim();
-                if (!trimmed) continue;
-                try {
-                    const entry = JSON.parse(trimmed);
-                    if (entry.id) {
-                        processedGroups.add(entry.id);
-                    }
-                } catch {
-                    // skip invalid line
-                }
-            }
-        }
-    } catch {
-        // If can't read existing summary, start fresh
-    }
-
-    type GroupItem = { obj: AtomicKnowledgeObject; line: number };
-    const groups = new Map<
-        string,
-        { type: AkoType; namespace: Namespace; canonical: string; originals: string[]; items: GroupItem[] }
-    >();
-
+    // Checkpoint tracking
+    const checkpointPath = getCheckpointPath(outFolder, "_processed-summary.ndjson");
+    let processedFiles: Set<string> = await readCheckpoint(checkpointPath);
+    
+    // Error summary file path
+    const errorSummaryPath = path.join(outFolder, "_error-summary.ndjson");
+    
     // Read NDJSON stream
     const stream = createReadStream(ndjsonPath, { encoding: "utf8" });
     const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
-    let inputLines = 0;
+    
+    let processed = 0;
+    let skipped = 0;
+    const errors: Array<{ file: string; error: string }> = [];
+    
     const bar = new cliProgress.SingleBar(
-        { format: "MERGE 03→04 {bar} {value} lines | Group: {groups}", hideCursor: true },
+        { format: "FORMAT 03→04 {bar} {value} lines | ETA: {eta_formatted}", hideCursor: true },
         cliProgress.Presets.shades_classic
     );
-    bar.start(0, 0, { groups: 0 });
+    bar.start(0, 0);
+    
+    let lineNumber = 0;
     for await (const line of rl) {
         const trimmed = line.trim();
-        if (!trimmed) continue;
-        inputLines += 1;
-        try {
-            const parsed = JSON.parse(trimmed);
-            const type: AkoType = parsed?.type;
-            if (type !== "concept" && type !== "procedure" && type !== "entity") continue;
-            const obj = parsed as AtomicKnowledgeObject;
-            const { key, namespace, canonical, original } = makeKey(obj);
-            const g =
-                groups.get(key) ??
-                { type, namespace, canonical, originals: [], items: [] };
-            g.items.push({ obj, line: inputLines });
-            g.originals.push(original);
-            groups.set(key, g);
-        } catch {
-            // skip invalid line
-        }
-        bar.increment(1, { groups: groups.size });
-    }
-    bar.stop();
-
-    // Guardrails helpers
-    const vetoPairs: Array<[string, string]> = [
-        ["mod", "store manager"],
-        ["apple wallet", "apple pay"],
-    ];
-    function veto(a: string, b: string): boolean {
-        const la = a.toLowerCase(), lb = b.toLowerCase();
-        return vetoPairs.some(([x, y]) => (la.includes(x) && lb.includes(y)) || (la.includes(y) && lb.includes(x)));
-    }
-
-    let outputsWritten = 0;
-    let skipped = 0;
-    let conflicts = 0;
-    // For each group, merge and write outputs and index
-    for (const [, group] of groups) {
-        const { type, namespace, canonical } = group;
-        const id = `${type}_${slugify(canonical)}`;
-        const fileName = `${id}.json`;
-        const outputFilePath = path.join(outFolder, fileName);
-        
-        // Checkpoint: Skip already processed groups
-        if (processedGroups.has(id) && await fileExists(outputFilePath)) {
-            console.log(`[checkpoint] Skipping already processed group: ${id}`);
-            skipped += 1;
+        if (!trimmed) {
+            bar.increment();
             continue;
         }
-        // Apply guardrails: ensure no obvious veto within group identities
-        let hasVeto = false;
-        for (let i = 0; i < group.originals.length && !hasVeto; i++) {
-            for (let j = i + 1; j < group.originals.length && !hasVeto; j++) {
-                if (veto(group.originals[i], group.originals[j])) hasVeto = true;
-            }
-        }
-        // Choose identity text and core fields
-        let conflict = false;
-
-        // Attempt LLM-assisted merge using MERGE prompt with retries
-        let merged: AtomicKnowledgeObject | null = null;
-        let signals: string[] = [];
+        lineNumber += 1;
         
-        // Retry LLM merge before falling back to deterministic
-        let lastError: any = null;
-        for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
-            try {
-                const occurrences = group.items.map(i => i.obj);
-                const llmOut = await processFileWithOpenAI(JSON.stringify({ occurrences }), PROMPT_03_TO_04);
-                const jsonBlock = extractJsonObjectBlock(llmOut);
-                const parsed = JSON.parse(jsonBlock);
-                const coerced = coerceSchemaPure(parsed, type);
-                if (coerced) {
-                    merged = coerced;
-                    signals.push("llm-merge");
-                    if (attempt > 0) {
-                        console.log(`[runAko03to04] LLM merge succeeded on retry ${attempt + 1} for ${group.canonical}`);
-                    }
-                    break; // Success, exit retry loop
-                } else {
-                    // Schema validation failed, try again
-                    throw new Error("Schema validation failed for LLM merge output");
-                }
-            } catch (err: any) {
-                lastError = err;
-                // If this was the last attempt, fall through to deterministic merge
-                if (attempt >= config.maxRetries) {
-                    console.log(`[runAko03to04] LLM merge failed after ${config.maxRetries + 1} attempts for ${group.canonical}, falling back to deterministic merge`);
-                    break;
-                }
-                // Calculate delay with exponential backoff
-                const delayMs = config.retryDelayMs * Math.pow(config.retryBackoffMultiplier, attempt);
-                console.log(`[runAko03to04] LLM merge attempt ${attempt + 1}/${config.maxRetries + 1} failed for ${group.canonical}, retrying in ${delayMs.toFixed(0)}ms...`);
-                await new Promise(resolve => setTimeout(resolve, delayMs));
-            }
-        }
-
-        // If LLM output invalid or failed, deterministic fallback (previous logic)
-        if (!merged) {
-            // Merge pseudonyms/keywords union (if present)
-            const allPseudos: string[] = [];
-            const allKeywords: string[] = [];
-            const sorted = [...group.items].sort((a, b) => authorityScore(b.obj) - authorityScore(a.obj));
-            const representative = sorted[0]?.obj;
-            if (type === "entity") {
-                const descriptions = group.items
-                    .map(i => (i.obj as Entity).description)
-                    .filter((d): d is string => typeof d === "string" && d.trim().length > 0);
-                let chosenDesc: string | undefined = descriptions[0];
-                for (const d of descriptions.slice(1)) {
-                    if (materiallyDisagree(chosenDesc, d)) {
-                        conflict = true;
-                        chosenDesc = (chosenDesc && chosenDesc.length <= d.length) ? chosenDesc : d;
-                    }
-                }
-                for (const gi of group.items) {
-                    const e = gi.obj as Entity;
-                    if (Array.isArray(e.pseudonyms)) allPseudos.push(...e.pseudonyms);
-                    if (Array.isArray(e.keywords)) allKeywords.push(...e.keywords);
-                }
-                merged = {
-                    type: "entity",
-                    name: group.originals[0] ?? representative && (representative as Entity).name ?? canonical,
-                    description: chosenDesc,
-                    pseudonyms: dedupePreserveOrder(allPseudos),
-                    keywords: dedupePreserveOrder(allKeywords),
-                    troubleshooting: [],
-                    constraints: [],
-                    caveats: [],
-                    bestPractice: [],
-                    additionalInfo: [],
-                };
-            } else if (type === "procedure") {
-                let chosenSteps: string[] = [];
-                for (const gi of sorted) {
-                    const p = gi.obj as Procedure;
-                    if (Array.isArray(p.steps) && p.steps.length > 0) {
-                        chosenSteps = p.steps;
-                        break;
-                    }
-                }
-                for (const gi of group.items) {
-                    const p = gi.obj as Procedure;
-                    if (Array.isArray(p.pseudonyms)) allPseudos.push(...p.pseudonyms);
-                    if (Array.isArray(p.keywords)) allKeywords.push(...p.keywords);
-                }
-                merged = {
-                    type: "procedure",
-                    title: group.originals[0] ?? representative && (representative as Procedure).title ?? canonical,
-                    pseudonyms: dedupePreserveOrder(allPseudos),
-                    keywords: dedupePreserveOrder(allKeywords),
-                    steps: chosenSteps,
-                    examples: [],
-                    bestPractice: [],
-                    caveats: [],
-                    constraints: [],
-                    troubleshooting: [],
-                    metrics: [],
-                    additionalInfo: [],
-                };
-            } else {
-                const defs = group.items.map(i => (i.obj as Concept).definition).filter((d): d is string => !!d);
-                let chosenDef = defs[0] ?? "";
-                for (const d of defs.slice(1)) {
-                    if (materiallyDisagree(chosenDef, d)) {
-                        conflict = true;
-                        const aLaw = /\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(chosenDef.toLowerCase());
-                        const bLaw = /\bact\s*\d{4}\b|\bpolicy\b|\bglossary\b/.test(d.toLowerCase());
-                        if (!aLaw && bLaw) chosenDef = d;
-                        else if (aLaw && !bLaw) chosenDef = chosenDef;
-                        else chosenDef = d.length >= chosenDef.length ? d : chosenDef;
-                    }
-                }
-                for (const gi of group.items) {
-                    const d = gi.obj as Concept;
-                    if (Array.isArray(d.pseudonyms)) allPseudos.push(...d.pseudonyms);
-                    if (Array.isArray(d.keywords)) allKeywords.push(...d.keywords);
-                }
-                merged = {
-                    type: "concept",
-                    term: group.originals[0] ?? (representative as Concept | undefined)?.term ?? canonical,
-                    definition: chosenDef,
-                    pseudonyms: dedupePreserveOrder(allPseudos),
-                    keywords: dedupePreserveOrder(allKeywords),
-                    examples: [],
-                    caveats: [],
-                    additionalInfo: [],
-                };
-            }
-            signals.push("fallback-deterministic");
-        }
-
-        // Laws must match year: if within group there are multiple years implied, mark conflict
-        if (namespace === "law") {
-            const years = new Set<number>();
-            for (const o of group.originals) {
-                const m = o.match(/\b(\d{4})\b/);
-                if (m) years.add(Number(m[1]));
-            }
-            if (years.size > 1) conflict = true;
-        }
-
-        if (hasVeto) conflict = true;
-        if (conflict) conflicts += 1;
-
-        await saveFile(outFolder, fileName, JSON.stringify(merged, null, 2));
-        outputsWritten += 1;
-
-        // provenance index line
-        const indexEntry = {
-            id,
-            type: merged.type,
-            namespace,
-            sources: group.items.map(i => ({ line: i.line })), // use NDJSON line numbers as provenance
-            merged_from_count: group.items.length,
-            merge: { confidence: 1.0, signals, vetoes: hasVeto ? ["do-not-merge-pair"] : [] as string[] },
-            conflict,
-        };
-        await fs.appendFile(indexPath, JSON.stringify(indexEntry) + "\n", "utf8");
-    }
-
-    // Filter summary file into separate files based on signals, conflicts, and vetoes
-    const successEntries: any[] = [];
-    const partialSuccessEntries: any[] = [];
-    const conflictEntries: any[] = [];
-    const vetoEntries: any[] = [];
-
-    const summaryStream = createReadStream(indexPath, { encoding: "utf8" });
-    const summaryRl = readline.createInterface({ input: summaryStream, crlfDelay: Infinity });
-    
-    for await (const line of summaryRl) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
         try {
-            const entry = JSON.parse(trimmed);
+            const parsed = JSON.parse(trimmed);
+            const converted = convertToExpandedSchema(parsed);
             
-            // Check for llm-merge signal
-            if (Array.isArray(entry.merge?.signals) && entry.merge.signals.includes("llm-merge")) {
-                successEntries.push(entry);
+            if (!converted) {
+                skipped += 1;
+                bar.increment();
+                continue;
             }
             
-            // Check for fallback-deterministic signal
-            if (Array.isArray(entry.merge?.signals) && entry.merge.signals.includes("fallback-deterministic")) {
-                partialSuccessEntries.push(entry);
+            // Generate filename based on type and canonical identity
+            const canonical = canonicalIdentity(converted);
+            const baseFileName = `${converted.type}_${slugify(canonical)}.json`;
+            const fileName = await generateUniqueFileName(outFolder, baseFileName);
+            
+            // Checkpoint: Skip already processed files
+            if (processedFiles.has(fileName)) {
+                const outputFilePath = path.join(outFolder, fileName);
+                if (await fileExists(outputFilePath)) {
+                    try {
+                        const existingContent = await fs.readFile(outputFilePath, "utf8");
+                        if (existingContent && existingContent.trim()) {
+                            skipped += 1;
+                            bar.increment();
+                            continue;
+                        }
+                    } catch {
+                        // File exists but can't read it, reprocess
+                    }
+                }
             }
             
-            // Check for conflict
-            if (entry.conflict === true) {
-                conflictEntries.push(entry);
-            }
+            // Save the converted AKO
+            await saveFile(outFolder, fileName, JSON.stringify(converted, null, 2));
+            processed += 1;
             
-            // Check for vetoes
-            if (Array.isArray(entry.merge?.vetoes) && entry.merge.vetoes.length > 0) {
-                vetoEntries.push(entry);
-            }
-        } catch {
-            // skip invalid line
+            // Mark file as processed in checkpoint
+            processedFiles.add(fileName);
+            await writeCheckpoint(checkpointPath, processedFiles);
+            
+        } catch (e: any) {
+            // Dump full error object for diagnostics
+            console.error('[runAko03to04] Error processing line', lineNumber, ':', e);
+            const errorMessage = e?.message ?? String(e);
+            errors.push({ file: `line-${lineNumber}`, error: errorMessage });
+            // Write error to error summary file
+            await appendErrorEntry(errorSummaryPath, `line-${lineNumber}`, errorMessage);
         }
+        
+        bar.increment();
     }
-
-    // Write filtered files
-    const successPath = path.join(outFolder, "_merge-success.ndjson");
-    const partialSuccessPath = path.join(outFolder, "_merge-partial-success.ndjson");
-    const conflictPath = path.join(outFolder, "_merge-conflicts.ndjson");
-    const vetoPath = path.join(outFolder, "_merge-vetoes.ndjson");
-
-    await fs.writeFile(successPath, successEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
-    await fs.writeFile(partialSuccessPath, partialSuccessEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
-    await fs.writeFile(conflictPath, conflictEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
-    await fs.writeFile(vetoPath, vetoEntries.map(e => JSON.stringify(e)).join("\n") + "\n", "utf8");
-
+    
+    bar.stop();
+    
     // Final log
-    console.log(JSON.stringify({ stage: "merge", input_lines: inputLines, groups: groups.size, outputs_written: outputsWritten, skipped, conflicts }));
-
-    return { processed: outputsWritten, skipped, errors: [] };
+    console.log(JSON.stringify({ stage: "format", input_lines: lineNumber, outputs_written: processed, skipped, errors: errors.length }));
+    
+    return { processed, skipped, errors };
 }
-
-
