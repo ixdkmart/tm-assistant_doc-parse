@@ -1,0 +1,87 @@
+## Page 1
+
+Range
+Product Location: Completing a Location Refresh
+
+Why
+Refreshing the data for our shop floor provides ensures:
+• Products on show are full and available for customers
+• Products are linked to locations so are easy to find
+
+Who
+All team members as required.
+
+When
+A location refresh must be completed:
+• For all locations as advised by National Office
+• For locations changed as part of layouts/room resets.
+
+How
+• Find a PDT
+• Follow the steps below.
+
+Safety
+• Rotate hand/trigger finger regularly when using PDT
+• Use a safety step when working above shoulder height or below waist height.
+
+GETTING STARTED
+WE NEED TO SCAN ALL PRODUCTS ON THE SHOP FLOOR PERIODICALLY.
+
+A Location Refresh:
+• Gives every product a location in our system
+• Supports backfill, helping to keep the shop floor full
+• Replaces missing labels so that every product has a price.
+
+WHEN COMPLETING A LOCATION REFRESH, REMEMBER TO SCAN EVERY SHELF-EDGE LABEL.
+
+THIS INCLUDES RED & YELLOW SHELF TALKERS, OUT OF STOCK (OOS) LABELS.
+
+...A EACH LABEL FOR ANY ITEMS DUPLICATED OVER MULTIPLE SHELVES OR PEGS.
+
+MAKE SURE YOU WORK FROM LEFT TO RIGHT...
+[Numbered rows 1-4 with arrows showing left-to-right direction]
+...TOP TO BOTTOM, SO YOU DON'T MISS ANY.
+
+PROCESS
+
+1. YOUR MANAGER WILL TELL YOU WHICH SIDES OR ENDS TO REFRESH.
+
+2. ACCESS THE 'RANGE' MENU AND SELECT 2 LOCN REFRESH.
+
+3. ENTER A NAME FOR THE GROUP (FOR EXAMPLE: "JOHN'S LABELS")
+
+4. SCAN THE LOCATION LABEL FOR THE END OR SIDE YOU ARE REFRESHING.
+
+IF THE LOCATION HAS ALREADY BEEN REFRESHED THIS WEEK A WARNING WILL BE DISPLAYED.
+
+Kmart Process Library - Product Location: Completing a Location Refresh. Last updated: 12 July 2017
+
+## Page 2
+
+Kmart Process Library - Product Location: Completing a Location Refresh
+Last updated: 12 July 2017
+
+5. PRESS 'Y' OR 'N' TO CONFIRM YOU HAVE SCANNED THE CORRECT LOCATION
+SELECTING 'Y' DELETES ALL KEYCODES IN THE LOCATION, READY FOR YOU TO SCAN.
+
+6. SCAN THE SHELF EDGE LABEL OR SHELF TALKER.
+
+7. THIS AUTOMATICALLY ADDS IT TO YOUR MISSING LABEL GROUP.
+
+8. IF THE PDT BEEPS ONCE, NO ACTION IS NEEDED. RETURN TO STEP 6 & CONTINUE SCANNING.
+COUNT THE NUMBER OF UNITS YOU WILL NEED TO FILL THE ITEM & ENTER THE COUNT INTO THE QTY FIELD.
+"I'LL NEED 8 UNITS TO FILL THIS"
+
+9. SCAN THE NEXT LOCATION LABEL OR PRESS 'FUNC' THEN 'QUIT' TO FINISH THE CURRENT ONE.
+THE PDT WILL PROMPT YOU TO CONFIRM THAT YOU HAVE FINISHED SCANNING ALL ITEMS.
+
+10. ENTER 'Y' TO CONFIRM OR 'N' IF YOU NEED TO SCAN ANY MISSED LABELS.
+
+11. IF YOU SCANNED A NEW LOCATION, REPEAT STEPS 6 TO 9.
+ALTERNATIVELY, PRESS 'FUNC' THEN 'QUIT' AGAIN TO FINISH THE PROCESS.
+
+12. IF ANY MISSING LABELS WERE CAPTURED DURING SCANNING, YOU'LL BE ASKED IF YOU WANT TO PRINT THEM NOW.
+LABELS ARE PRINTED ON THE BACK OFFICE PRINTER. ENTER 'Y' TO PRINT THEM NOW OR 'N' TO PRINT LATER.
+
+13. COLLECT ANY PRINTED LABELS FROM THE BACK OFFICE PRINTER.
+& ADD THESE TO THE NEXT DAY'S PRICING & TICKETING.

@@ -1,0 +1,1431 @@
+[
+  {
+    "source_file": "pdf_V2/source_pdf/4x8 Desk Calendar - Binding Instructions 20240312 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/4x8 Desk Calendar - Binding Instructions 20240312 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/5S Standards 20230913 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/5S Standards 20230913 v1.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/A Great Place to Shop - Master Manual 20240229 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/A Great Place to Shop - Master Manual 20240229 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Adjusting the Kodak Apex monitor contrast 20250325 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Adjusting the Kodak Apex monitor contrast 20250325 v1.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Afterpay FAQs - AUS 20211209 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Afterpay FAQs - AUS 20211209 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Air Tile Instruction Guide - Nov 2023 20231129 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Air Tile Instruction Guide - Nov 2023 20231129 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Alcohol and Oral Drug Testing in Supply Chain Process and Application document Nov 22 20230628 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Alcohol and Oral Drug Testing in Supply Chain Process and Application document Nov 22 20230628 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Apple Referb Alegre Warranty 20240826 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Apple Referb Alegre Warranty 20240826 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Automatic Clearance and Kmart Resources Policy 2 20230524 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Automatic Clearance and Kmart Resources Policy 2 20230524 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Back Office - Recall Notices Guide 20240228 v2.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Back Office - Recall Notices Guide 20240228 v2.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Bicycle Assembly - Registers Process AUS 20250701 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Bicycle Assembly - Registers Process AUS 20250701 v1.4.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Bicycle Assembly - Selling Floor Process AUS 20250701 v1.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Bicycle Assembly - Selling Floor Process AUS 20250701 v1.5.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Breastfeeding Poster 20240403 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Breastfeeding Poster 20240403 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Buddy guide - The role of a buddy V3 20240822 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Buddy guide - The role of a buddy V3 20240822 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Canvas Framing Instructions 20230831 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Canvas Framing Instructions 20230831 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Centralized Stores - PDT Softphone User Guide - AUS 20240506 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Centralized Stores - PDT Softphone User Guide - AUS 20240506 v1.4.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Centralized System - Troubleshooting Guide  1 20231024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Centralized System - Troubleshooting Guide  1 20231024 v1.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Change Manager Name On Receipt kmart 20241022 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Change Manager Name On Receipt kmart 20241022 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Circle In Resources Poster 20250317 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Circle In Resources Poster 20250317 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Contaminants In Product Store Guide 20240830 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Contaminants In Product Store Guide 20240830 v1.4.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Counterfeit Note Detection Guide AUS 20250613 v5.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Counterfeit Note Detection Guide AUS 20250613 v5.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Customer Account - Review Process 20240717 v2.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Customer Account - Review Process 20240717 v2.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Customer Account Guide 20240621 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Customer Account Guide 20240621 v2.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Customer Greeter Best Practice Guide 20250617 v13.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Customer Greeter Best Practice Guide 20250617 v13.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Customer Returns and Refunds Practical Activity Guide 20231127 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Customer Returns and Refunds Practical Activity Guide 20231127 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Customer Service Tools Practice Guide 20230809 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Customer Service Tools Practice Guide 20230809 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Cyclic Gap Scan Process 20250917 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Cyclic Gap Scan Process 20250917 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DC Rush Guidelines Document 20230904 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DC Rush Guidelines Document 20230904 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DR Barcode Printing User Guide 20250623 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DR Barcode Printing User Guide 20250623 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DR Decant User Guide 20250623 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DR Decant User Guide 20250623 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DR Loadfill Adhoc Replenishment User Guide 20250623 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DR Loadfill Adhoc Replenishment User Guide 20250623 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DR Loadfill User Guide 20250623 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DR Loadfill User Guide 20250623 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/DR Pallet Barcode User Guide 20250623 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/DR Pallet Barcode User Guide 20250623 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Date Coded Merchandise Process 20241205 v9.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Date Coded Merchandise Process 20241205 v9.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Demand Driven Backfill - Power Bi 20250411 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Demand Driven Backfill - Power Bi 20250411 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Demand Driven Backfill GM Presentation 20250411 v1.0 2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Demand Driven Backfill GM Presentation 20250411 v1.0 2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Demand Driven Backfill GM Presentation 20250411 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Demand Driven Backfill GM Presentation 20250411 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital And Gift Receipts Guide 20241118 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital And Gift Receipts Guide 20241118 v3.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Receipt Tea Room Poster 20241111 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Receipt Tea Room Poster 20241111 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Receipts Comp Pocketcard 20241111 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Receipts Comp Pocketcard 20241111 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Replenishment Backfill Fill Learning Guide v4 20250825 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Replenishment Backfill Fill Learning Guide v4 20250825 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Stores - BAU Troubleshooting Guide 20231030 v1.6.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Stores - BAU Troubleshooting Guide 20231030 v1.6.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Stores - Empty Packets 20240111 v1.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Stores - Empty Packets 20240111 v1.5.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Stores - Empty Packets poster 20240111 v1.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Stores - Empty Packets poster 20240111 v1.5.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Digital Wallet Refunds Guide 20230627 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Digital Wallet Refunds Guide 20230627 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Diversity  Inclusion Overview 20230418 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Diversity  Inclusion Overview 20230418 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Duress Button User Guide 20250428 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Duress Button User Guide 20250428 v4.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/EAS Hard Tag Reuse - Store Return Instruction 20230912 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/EAS Hard Tag Reuse - Store Return Instruction 20230912 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Empty Packets  Glass Breakage Process 20250408 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Empty Packets  Glass Breakage Process 20250408 v3.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Escape System - Electronic Journal User Guide 20231221 v3.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Escape System - Electronic Journal User Guide 20231221 v3.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen FAQs 20231122 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen FAQs 20231122 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen Maintenance Tips 20250218 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen Maintenance Tips 20250218 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen SCO Technology Guide 20250715 v7.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen SCO Technology Guide 20250715 v7.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen SCO Technology Usage Tips 20240805 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen SCO Technology Usage Tips 20240805 v2.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen Scenario  Guidelines 20241023 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen Scenario  Guidelines 20241023 v2.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen Top Product Switch Keycodes August 2025 20250728 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen Top Product Switch Keycodes August 2025 20250728 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Everseen Top Product Switch Keycodes Sep 2025 20250829 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Everseen Top Product Switch Keycodes Sep 2025 20250829 v1.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/FAQ for Kmart Parental Leave New Zealand 20240123 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/FAQ for Kmart Parental Leave New Zealand 20240123 v1.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Family and Domestic Violence Leave Policy 20250901 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Family and Domestic Violence Leave Policy 20250901 v3.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Film Processing Price List 20240226 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Film Processing Price List 20240226 v3.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Film Processing Service 20250409 v5.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Film Processing Service 20250409 v5.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Fitting Room Attendant Best Practice Guide 20241114 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Fitting Room Attendant Best Practice Guide 20241114 v4.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/FlexiPOS Airpay Tap TC52 User Guide 20231128 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/FlexiPOS Airpay Tap TC52 User Guide 20231128 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/GM  Apparel Pricing Guidelines 20230809 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/GM  Apparel Pricing Guidelines 20230809 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Gap Management - Completing a Gap Scan 20241024 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Gap Management - Completing a Gap Scan 20241024 v2.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Gap Management - Reviewing  Addressing Gaps 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Gap Management - Reviewing  Addressing Gaps 20241024 v1.2.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Handling Package Foods Manual 20241024 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Handling Package Foods Manual 20241024 v1.3.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Handscan Instructions 20231006 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Handscan Instructions 20231006 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Hanger Return Manager Sign Off 20240722 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Hanger Return Manager Sign Off 20240722 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Hanger Returns Guidelines 20250306 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Hanger Returns Guidelines 20250306 v2.0.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Hanging Canvas  Photo Strips - Instructions 20240312 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Hanging Canvas  Photo Strips - Instructions 20240312 v1.1.md",
+    "status": "skipped"
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Hard Tag Recirculation Process 20220307 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Hard Tag Recirculation Process 20220307 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 2041
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/How to Refer a Friend 20250409 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/How to Refer a Friend 20250409 v2.0.md",
+    "total_pages": 8,
+    "total_characters": 8621
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/IT Equipment PDT  PTT Team Member Responsibilities Team Talk 20240624 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/IT Equipment PDT  PTT Team Member Responsibilities Team Talk 20240624 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 1691
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Image Centre - Look Book Instructions 20221108 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Image Centre - Look Book Instructions 20221108 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 1501
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Incorrect Price Guide - Markdowns 20250411 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Incorrect Price Guide - Markdowns 20250411 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 3731
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/KAwards Criteria 20230802 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/KAwards Criteria 20230802 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 3353
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart  CGM Gift Card Order Process 20241001 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart  CGM Gift Card Order Process 20241001 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 776
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart - Failure to Attend Work Policy 20250702 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart - Failure to Attend Work Policy 20250702 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 3187
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart AU FY26 Brighter Bonus - Store Bonus Program 20250919 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart AU FY26 Brighter Bonus - Store Bonus Program 20250919 v1.0.md",
+    "total_pages": 4,
+    "total_characters": 5079
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Assistant Supervisor Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Assistant Supervisor Position Description 2025 20250731 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 6492
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Decant Master Manual v1 20250306 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Decant Master Manual v1 20250306 v1.0.md",
+    "total_pages": 24,
+    "total_characters": 27528
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Department Manager Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Department Manager Position Description 2025 20250731 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 8439
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Dictionary 20220603 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Dictionary 20220603 v1.1.md",
+    "total_pages": 15,
+    "total_characters": 17765
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Gender Affirmation Guidelines 20211217 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Gender Affirmation Guidelines 20211217 v1.0.md",
+    "total_pages": 9,
+    "total_characters": 11899
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Group - Acceptable Use of IT Systems Policy 20250909 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Group - Acceptable Use of IT Systems Policy 20250909 v1.2.md",
+    "total_pages": 10,
+    "total_characters": 25993
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Group Customer Greeter Position Description 20250318 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Group Customer Greeter Position Description 20250318 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 7018
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Licence to Greet Competency Checklist 20250331 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Licence to Greet Competency Checklist 20250331 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 5444
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart MyApps Guide 20230424 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart MyApps Guide 20230424 v1.1.md",
+    "total_pages": 16,
+    "total_characters": 13680
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Department Manager Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Department Manager Position Description 2025 20250731 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 8384
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Duty Manager Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Duty Manager Position Description 2025 20250731 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 5679
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Sales Assistant Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Sales Assistant Position Description 2025 20250731 v1.1.md",
+    "total_pages": 3,
+    "total_characters": 7157
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Store Inventory Manager Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Store Inventory Manager Position Description 2025 20250731 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 8022
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Store Manager Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Store Manager Position Description 2025 20250731 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 8171
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart NZ Store Operations Manager Position Description 2025 20250731 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart NZ Store Operations Manager Position Description 2025 20250731 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 7935
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart No Apprehension Policy 20250331 v5.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart No Apprehension Policy 20250331 v5.0.md",
+    "total_pages": 2,
+    "total_characters": 4665
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Policy - Stores Team Wear - July 2025 - Final 20250819 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Policy - Stores Team Wear - July 2025 - Final 20250819 v1.0.md",
+    "total_pages": 6,
+    "total_characters": 12478
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Profit Protection Store Leadership Guide 20250829 v9.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Profit Protection Store Leadership Guide 20250829 v9.0.md",
+    "total_pages": 57,
+    "total_characters": 106519
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Sequence Master Manual v1 20250306 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Sequence Master Manual v1 20250306 v1.0.md",
+    "total_pages": 26,
+    "total_characters": 37792
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Store Inventory Manager Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Store Inventory Manager Position Description 2025 20250731 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 8068
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Store Manager Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Store Manager Position Description 2025 20250731 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 8010
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Store Operations Manager Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Store Operations Manager Position Description 2025 20250731 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 7880
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Team Member Position Description 2025 20250731 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Team Member Position Description 2025 20250731 v1.0.md",
+    "total_pages": 3,
+    "total_characters": 7195
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Team Member Purchasing Guidelines 20250522 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Team Member Purchasing Guidelines 20250522 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 3331
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart Whistleblower Policy 20250527 v2.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart Whistleblower Policy 20250527 v2.2.md",
+    "total_pages": 12,
+    "total_characters": 27893
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Kmart and Target Code of Conduct 20240304 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Kmart and Target Code of Conduct 20240304 v1.0.md",
+    "total_pages": 14,
+    "total_characters": 24208
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - Daily Report Process 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - Daily Report Process 20230522 v1.3.md",
+    "total_pages": 3,
+    "total_characters": 3066
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - No Payment or Deposit over 35 Days Check 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - No Payment or Deposit over 35 Days Check 20230522 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 882
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - Overdue Report Process 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - Overdue Report Process 20230522 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 1012
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - Refund Authorisation Check 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - Refund Authorisation Check 20230522 v1.3.md",
+    "total_pages": 2,
+    "total_characters": 2222
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - Team Members Creating own Check 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - Team Members Creating own Check 20230522 v1.3.md",
+    "total_pages": 2,
+    "total_characters": 1365
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby - Voided Charge Reconciliation Check 20230522 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby - Voided Charge Reconciliation Check 20230522 v1.3.md",
+    "total_pages": 3,
+    "total_characters": 2178
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Layby Parcel Check Guide 20230711 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Layby Parcel Check Guide 20230711 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 1452
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Living Desk Guiding Principles 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Living Desk Guiding Principles 20241024 v1.2.md",
+    "total_pages": 10,
+    "total_characters": 14351
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Lost Property Guideline 20250501 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Lost Property Guideline 20250501 v2.0.md",
+    "total_pages": 6,
+    "total_characters": 16341
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Magazine Pay on Scan Process 20211202 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Magazine Pay on Scan Process 20211202 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 2774
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Managing Change Scammers 20241114 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Managing Change Scammers 20241114 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1830
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Managing Contaminated or Toxic Stock 20220406 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Managing Contaminated or Toxic Stock 20220406 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 6146
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Managing Insect and Foreign Species Quick Guide 20241119 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Managing Insect and Foreign Species Quick Guide 20241119 v2.0.md",
+    "total_pages": 6,
+    "total_characters": 7660
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Merchandise Protection - What Good Looks Like 20250904 v15.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Merchandise Protection - What Good Looks Like 20250904 v15.0.md",
+    "total_pages": 3,
+    "total_characters": 3683
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/New Starter Induction Pack 20250819 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/New Starter Induction Pack 20250819 v3.0.md",
+    "total_pages": 10,
+    "total_characters": 10537
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/OnePass Express CC 20240830 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/OnePass Express CC 20240830 v1.2.md",
+    "total_pages": 17,
+    "total_characters": 10518
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/OnePass Team Member 365 Day Pocket Card 20240913 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/OnePass Team Member 365 Day Pocket Card 20240913 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 3228
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Our Values 20250909 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Our Values 20250909 v1.4.md",
+    "total_pages": 1,
+    "total_characters": 375
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/PDT ITC Interstore transfer and direct supplier receiving guide 20240619 v1.6.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/PDT ITC Interstore transfer and direct supplier receiving guide 20240619 v1.6.md",
+    "total_pages": 9,
+    "total_characters": 10334
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/PDT Store Markdown Labels 20240408 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/PDT Store Markdown Labels 20240408 v1.4.md",
+    "total_pages": 6,
+    "total_characters": 3745
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Parcel Send Mail Bag  Film Bag Guide previously startrack 20250117 v6.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Parcel Send Mail Bag  Film Bag Guide previously startrack 20250117 v6.0.md",
+    "total_pages": 6,
+    "total_characters": 6577
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Parental Leave toolkit Australia 20250305 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Parental Leave toolkit Australia 20250305 v1.2.md",
+    "total_pages": 20,
+    "total_characters": 35602
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Pensioner Discount Day Cards 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Pensioner Discount Day Cards 20241024 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 655
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Petty Cash Gift Card  Community Donations Policy 20250625 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Petty Cash Gift Card  Community Donations Policy 20250625 v1.0.md",
+    "total_pages": 6,
+    "total_characters": 16464
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Air Tile - Instruction Guide - Nov 2023 20231129 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Air Tile - Instruction Guide - Nov 2023 20231129 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 1450
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Block Assembly 20230831 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Block Assembly 20230831 v2.1.md",
+    "total_pages": 2,
+    "total_characters": 3297
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Centre - Support Hotlines 20240513 v9.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Centre - Support Hotlines 20240513 v9.0.md",
+    "total_pages": 1,
+    "total_characters": 1984
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Centre Online Orders 20231129 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Centre Online Orders 20231129 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 3482
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Centre Retail Pricing 20230803 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Centre Retail Pricing 20230803 v2.1.md",
+    "total_pages": 10,
+    "total_characters": 22083
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Image Centre - KODAK Consumables Listing 20250402 v9.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Image Centre - KODAK Consumables Listing 20250402 v9.0.md",
+    "total_pages": 1,
+    "total_characters": 1245
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Image Centre - PHOTO DIRECT Consumables Listing 20240527 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Image Centre - PHOTO DIRECT Consumables Listing 20240527 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 2712
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Photo Wall Tiles 43208401 - Framing Instructions 20220608 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Photo Wall Tiles 43208401 - Framing Instructions 20220608 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 1064
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy -  Kmart and Target Workplace Behaviour 20250728 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy -  Kmart and Target Workplace Behaviour 20250728 v2.0.md",
+    "total_pages": 17,
+    "total_characters": 38717
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Alcohol  Other Drugs 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Alcohol  Other Drugs 20241024 v1.2.md",
+    "total_pages": 2,
+    "total_characters": 2611
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Annual Leave 20240320 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Annual Leave 20240320 v2.0.md",
+    "total_pages": 4,
+    "total_characters": 6348
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Continuity of Service 20250717 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Continuity of Service 20250717 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 2650
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Employment Records Access 20180613 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Employment Records Access 20180613 v1.0.md",
+    "total_pages": 4,
+    "total_characters": 7077
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Failure to Attend Work 20180605 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Failure to Attend Work 20180605 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 2538
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Kmart Customer Trolley Management 20200813 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Kmart Customer Trolley Management 20200813 v2.0.md",
+    "total_pages": 7,
+    "total_characters": 13834
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Natural Disaster Leave 20210331 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Natural Disaster Leave 20210331 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 3217
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - PCI Compliance 20190815 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - PCI Compliance 20190815 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 3658
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Personal Presentation 20180613 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Personal Presentation 20180613 v1.0.md",
+    "total_pages": 3,
+    "total_characters": 5761
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Privacy 20221108 v7.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Privacy 20221108 v7.1.md",
+    "total_pages": 5,
+    "total_characters": 10905
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Requests for Flexible Working Arrangements 20230606 v2.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Requests for Flexible Working Arrangements 20230606 v2.3.md",
+    "total_pages": 3,
+    "total_characters": 6413
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Rights to work in Australia 20180829 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Rights to work in Australia 20180829 v1.1.md",
+    "total_pages": 6,
+    "total_characters": 13502
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Social media 20180613 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Social media 20180613 v1.0.md",
+    "total_pages": 6,
+    "total_characters": 12195
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Store Accessibility 20200813 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Store Accessibility 20200813 v2.1.md",
+    "total_pages": 3,
+    "total_characters": 5243
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Stores Teamwear 20250813 v3.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Stores Teamwear 20250813 v3.3.md",
+    "total_pages": 6,
+    "total_characters": 12478
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Team Member Discount Card 20250627 v10 20250709.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Team Member Discount Card 20250627 v10 20250709.md",
+    "total_pages": 4,
+    "total_characters": 9236
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Team Member Performance and Behaviour 20180613 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Team Member Performance and Behaviour 20180613 v1.0.md",
+    "total_pages": 4,
+    "total_characters": 5663
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Team Member Workwear Clothing Discount AUS - eff 27Feb24 20240124 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Team Member Workwear Clothing Discount AUS - eff 27Feb24 20240124 v1.1.md",
+    "total_pages": 6,
+    "total_characters": 11487
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy - Team Member Workwear Clothing Discount AUS - eff 27Feb24 20240125 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy - Team Member Workwear Clothing Discount AUS - eff 27Feb24 20240125 v1.1.md",
+    "total_pages": 6,
+    "total_characters": 11849
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Policy- Parental Leave Australia 20250305 v11.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Policy- Parental Leave Australia 20250305 v11.1.md",
+    "total_pages": 8,
+    "total_characters": 20920
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Prepare  Send RLO Pallets Guide 20240520 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Prepare  Send RLO Pallets Guide 20240520 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1886
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Price Matching Process 20250602 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Price Matching Process 20250602 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 2160
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Pricing Standards Kmart 20250218 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Pricing Standards Kmart 20250218 v1.1.md",
+    "total_pages": 26,
+    "total_characters": 14918
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Product Location - Completing A Location Refresh 20241024 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Product Location - Completing A Location Refresh 20241024 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 2936
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Profit Protection Everseen SCO Technology 20250402 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Profit Protection Everseen SCO Technology 20250402 v1.0.md",
+    "total_pages": 16,
+    "total_characters": 13060
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Push to Talk - Quick Tips Troubleshoot 20231106 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Push to Talk - Quick Tips Troubleshoot 20231106 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 3934
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - Backfill Tasks 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - Backfill Tasks 20240916 v2.0.md",
+    "total_pages": 3,
+    "total_characters": 3164
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - Hand Scan to Container 20240916 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - Hand Scan to Container 20240916 v1.0.md",
+    "total_pages": 3,
+    "total_characters": 2209
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - Product Lookup 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - Product Lookup 20240916 v2.0.md",
+    "total_pages": 2,
+    "total_characters": 1583
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - RFID App 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - RFID App 20240916 v2.0.md",
+    "total_pages": 3,
+    "total_characters": 2558
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - RFID Printer 20240916 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - RFID Printer 20240916 v3.0.md",
+    "total_pages": 13,
+    "total_characters": 7212
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning Guide - RFID Tagging 20241206 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning Guide - RFID Tagging 20241206 v3.0.md",
+    "total_pages": 4,
+    "total_characters": 3056
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Learning guide - Managing Offsite Storage Bundles 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Learning guide - Managing Offsite Storage Bundles 20240916 v2.0.md",
+    "total_pages": 7,
+    "total_characters": 5810
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Missing Tags - RFID App 20241206 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Missing Tags - RFID App 20241206 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1558
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RFID Ongoing Tag Management 20241206 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RFID Ongoing Tag Management 20241206 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1219
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RLO Process Guide 20250429 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RLO Process Guide 20250429 v4.0.md",
+    "total_pages": 7,
+    "total_characters": 16509
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RLO Processing on PDT With Markdowns 20231027 v5.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RLO Processing on PDT With Markdowns 20231027 v5.1.md",
+    "total_pages": 22,
+    "total_characters": 26563
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/RLO Send Withdrawal Item Guide 20240918 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/RLO Send Withdrawal Item Guide 20240918 v2.0.md",
+    "total_pages": 3,
+    "total_characters": 2052
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Receipt Scanner Process Guide 20241114 v6.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Receipt Scanner Process Guide 20241114 v6.0.md",
+    "total_pages": 5,
+    "total_characters": 11191
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Receiving  Outstanding DC Manifest Guide 20231121 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Receiving  Outstanding DC Manifest Guide 20231121 v1.3.md",
+    "total_pages": 2,
+    "total_characters": 3391
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Recording Conversion 20220323 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Recording Conversion 20220323 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 1961
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Refund Approval Guide 20240729 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Refund Approval Guide 20240729 v4.0.md",
+    "total_pages": 2,
+    "total_characters": 1680
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Refund Tip Sheet 20250414 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Refund Tip Sheet 20250414 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 552
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Refunds  Returns Guidelines 20250417 v14.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Refunds  Returns Guidelines 20250417 v14.0.md",
+    "total_pages": 4,
+    "total_characters": 9672
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Register Bags SOH Check 20250904 v3.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Register Bags SOH Check 20250904 v3.1.md",
+    "total_pages": 1,
+    "total_characters": 1141
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Register- Click  Collect Photo Orders display 20240523 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Register- Click  Collect Photo Orders display 20240523 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 932
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers - Correcting Voids Not Actioned Guide 20230522 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers - Correcting Voids Not Actioned Guide 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 2650
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers - Deleted Suspended Transactions Guide 20230522 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers - Deleted Suspended Transactions Guide 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 904
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers - Error Checklist 20230522 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers - Error Checklist 20230522 v1.2.md",
+    "total_pages": 3,
+    "total_characters": 4835
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers - Flybuys Manual 20230522 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers - Flybuys Manual 20230522 v1.2.md",
+    "total_pages": 5,
+    "total_characters": 5310
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers - Original Receipt Scanned for Refunds without Barcode Tip 20230522 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers - Original Receipt Scanned for Refunds without Barcode Tip 20230522 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 807
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Registers Practice Guide 20231127 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Registers Practice Guide 20231127 v1.1.md",
+    "total_pages": 13,
+    "total_characters": 8424
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Returns - Mobile Phones Quick Reference Card 20240506 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Returns - Mobile Phones Quick Reference Card 20240506 v2.1.md",
+    "total_pages": 2,
+    "total_characters": 2891
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Returns Policy A4 - AUS 20241203 v15.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Returns Policy A4 - AUS 20241203 v15.0.md",
+    "total_pages": 2,
+    "total_characters": 9988
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/SCO Alerts Guide Reusable Bags  Soda Stream 20230901 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/SCO Alerts Guide Reusable Bags  Soda Stream 20230901 v1.2.md",
+    "total_pages": 5,
+    "total_characters": 4408
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/SCO Team Member Best Practice Guide 20250918 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/SCO Team Member Best Practice Guide 20250918 v4.0.md",
+    "total_pages": 3,
+    "total_characters": 7714
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/SRS - Mills  Boon Books Process 20240314 v2.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/SRS - Mills  Boon Books Process 20240314 v2.2.md",
+    "total_pages": 2,
+    "total_characters": 2816
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Safe Travel Home Guidelines - 12 June 20230522 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Safe Travel Home Guidelines - 12 June 20230522 v1.1.md",
+    "total_pages": 2,
+    "total_characters": 3175
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Safety Footwear Allocation Process 20240703 v6.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Safety Footwear Allocation Process 20240703 v6.0.md",
+    "total_pages": 5,
+    "total_characters": 66153
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Same day receipt look up 20231025 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Same day receipt look up 20231025 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 522
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Sigange - Privacy 20230719 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Sigange - Privacy 20230719 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 651
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Bag Check Additional Tasmania 20230719 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Bag Check Additional Tasmania 20230719 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1497
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Glass Breakages 20240619 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Glass Breakages 20240619 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 493
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Kmart Change of Mind Refund AUS 20240729 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Kmart Change of Mind Refund AUS 20240729 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 1415
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Kmart Conditions Of Entry Stores 20230719 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Kmart Conditions Of Entry Stores 20230719 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 328
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Managing Broken Easter Eggs 20250326 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Managing Broken Easter Eggs 20250326 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1259
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Profit Protection Awareness - Report Suspicious Behaviour 20250303 v6.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Profit Protection Awareness - Report Suspicious Behaviour 20250303 v6.0.md",
+    "total_pages": 1,
+    "total_characters": 1535
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Profit Protection Awareness - Team Member Bag Checks 20250303 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Profit Protection Awareness - Team Member Bag Checks 20250303 v4.0.md",
+    "total_pages": 1,
+    "total_characters": 1044
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Profit Protection Awareness - Understand the Consequences 20250303 v4.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Profit Protection Awareness - Understand the Consequences 20250303 v4.0.md",
+    "total_pages": 1,
+    "total_characters": 1555
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Signage - Profit Protection Awareness BOH Poster 20240607 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Signage - Profit Protection Awareness BOH Poster 20240607 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 517
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Silent Salesman Orders 20250904 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Silent Salesman Orders 20250904 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 1398
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Smart Apparel Clearance Guide 20240325 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Smart Apparel Clearance Guide 20240325 v1.0.md",
+    "total_pages": 13,
+    "total_characters": 24824
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Social Q  Virtual Queue Quick Reference Guide 20240312 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Social Q  Virtual Queue Quick Reference Guide 20240312 v1.3.md",
+    "total_pages": 2,
+    "total_characters": 2732
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/SocialQ - Customer Check In 20211205 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/SocialQ - Customer Check In 20211205 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 1270
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/SodaStream Process Guide 20240523 v2.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/SodaStream Process Guide 20240523 v2.3.md",
+    "total_pages": 2,
+    "total_characters": 2105
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Sodastream - Cylinder Return Form 20240523 v1.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Sodastream - Cylinder Return Form 20240523 v1.5.md",
+    "total_pages": 5,
+    "total_characters": 7505
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Sodastream - Empty Cylinder Return Request for Non Automartic Collection Stores 20240523 v1.6.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Sodastream - Empty Cylinder Return Request for Non Automartic Collection Stores 20240523 v1.6.md",
+    "total_pages": 5,
+    "total_characters": 7586
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Soiled  Damaged Clearance End Tips 20230907 v3.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Soiled  Damaged Clearance End Tips 20230907 v3.1.md",
+    "total_pages": 1,
+    "total_characters": 2182
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Soiled  Damaged Markdown Tips 20250408 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Soiled  Damaged Markdown Tips 20250408 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1366
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Soiled  Damaged Process Guide 20250828 v8.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Soiled  Damaged Process Guide 20250828 v8.0.md",
+    "total_pages": 6,
+    "total_characters": 14726
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Spare Parts 20210211 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Spare Parts 20210211 v1.0.md",
+    "total_pages": 4,
+    "total_characters": 5015
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Stock Adjustment Code Guide 20250912 v13.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Stock Adjustment Code Guide 20250912 v13.0.md",
+    "total_pages": 63,
+    "total_characters": 54991
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Store Discovery - Induction Team Member Guide 20250917 v9.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Store Discovery - Induction Team Member Guide 20250917 v9.1.md",
+    "total_pages": 19,
+    "total_characters": 24704
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Store Presentation - Clothing World Core Principles 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Store Presentation - Clothing World Core Principles 20241024 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1743
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Store Presentation - Home World Core Principles 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Store Presentation - Home World Core Principles 20241024 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1653
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Store Presentation - Kids World Core Principles 20241024 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Store Presentation - Kids World Core Principles 20241024 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1761
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/TORY - BOT Screen Information Guide 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/TORY - BOT Screen Information Guide 20240916 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1140
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/TORY User Guide v1 20240524 v1.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/TORY User Guide v1 20240524 v1.5.md",
+    "total_pages": 38,
+    "total_characters": 27377
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Take Care Talk - Fitness Weights - Stores  K hubs 20250811 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Take Care Talk - Fitness Weights - Stores  K hubs 20250811 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 3798
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Task Engine GM Backfill Pick - Learning Guide 20250411 v1.0 2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Task Engine GM Backfill Pick - Learning Guide 20250411 v1.0 2.md",
+    "total_pages": 7,
+    "total_characters": 6650
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Task Engine GM Backfill Pick - Learning Guide 20250411 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Task Engine GM Backfill Pick - Learning Guide 20250411 v1.0.md",
+    "total_pages": 7,
+    "total_characters": 6758
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Task Engine User Guide - Apparel Markdowns 20241015 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Task Engine User Guide - Apparel Markdowns 20241015 v3.0.md",
+    "total_pages": 10,
+    "total_characters": 9556
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Task Engine User Guide - Online Exceptions 20240916 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Task Engine User Guide - Online Exceptions 20240916 v2.0.md",
+    "total_pages": 5,
+    "total_characters": 4714
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Team Member Bag  Locker Check Process 20250910 v8.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Team Member Bag  Locker Check Process 20250910 v8.0.md",
+    "total_pages": 2,
+    "total_characters": 5472
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Team Member Discount Card Policy - eff 27Feb24 20240223 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Team Member Discount Card Policy - eff 27Feb24 20240223 v2.0.md",
+    "total_pages": 4,
+    "total_characters": 8060
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Team Talk - LP Awareness - Its Not Worth It 20240419 v3.5.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Team Talk - LP Awareness - Its Not Worth It 20240419 v3.5.md",
+    "total_pages": 1,
+    "total_characters": 2615
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Teamwear Recycling Guide 20240830 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Teamwear Recycling Guide 20240830 v2.0.md",
+    "total_pages": 1,
+    "total_characters": 1697
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/TelstraBoost Warranty Assessment Summary 20240826 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/TelstraBoost Warranty Assessment Summary 20240826 v1.0.md",
+    "total_pages": 5,
+    "total_characters": 15467
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Thin Black Block - Instruction Guide - Oct 2024 20241023 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Thin Black Block - Instruction Guide - Oct 2024 20241023 v1.0.md",
+    "total_pages": 2,
+    "total_characters": 1413
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Tips to Reduce Refund Fraud 20240729 v3.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Tips to Reduce Refund Fraud 20240729 v3.0.md",
+    "total_pages": 1,
+    "total_characters": 1564
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Tips to Reduce eVoucher Washing 20240610 v1.2.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Tips to Reduce eVoucher Washing 20240610 v1.2.md",
+    "total_pages": 1,
+    "total_characters": 1062
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Update Phone Returns 20240829 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Update Phone Returns 20240829 v1.0.md",
+    "total_pages": 1,
+    "total_characters": 1943
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Wesfarmers Anti-bribery Policy 20250519 v2.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Wesfarmers Anti-bribery Policy 20250519 v2.0.md",
+    "total_pages": 10,
+    "total_characters": 29566
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Workplace Adjustment Policy Kmart and Target 20240930 v2.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Workplace Adjustment Policy Kmart and Target 20240930 v2.1.md",
+    "total_pages": 4,
+    "total_characters": 10171
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Workvivo - Quick Reference Guides 20230829 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Workvivo - Quick Reference Guides 20230829 v1.1.md",
+    "total_pages": 8,
+    "total_characters": 12460
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Workvivo AUS 20230829 v1.1.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Workvivo AUS 20230829 v1.1.md",
+    "total_pages": 1,
+    "total_characters": 54
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/Xiaomi Phones Returns Policy 20210111 v1.0.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/Xiaomi Phones Returns Policy 20210111 v1.0.md",
+    "total_pages": 4,
+    "total_characters": 6475
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/e-Voucher - Offline Process Guide 20240705 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/e-Voucher - Offline Process Guide 20240705 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 1959
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/e-Voucher - Registers Quick Reference Guide 20240219 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/e-Voucher - Registers Quick Reference Guide 20240219 v1.4.md",
+    "total_pages": 2,
+    "total_characters": 3760
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/e-Voucher - Voiding Transactions Registers Guide 20240219 v1.4.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/e-Voucher - Voiding Transactions Registers Guide 20240219 v1.4.md",
+    "total_pages": 1,
+    "total_characters": 1306
+  },
+  {
+    "source_file": "pdf_V2/source_pdf/e-Voucher - Voiding Transactions Service Desk Guide 20240219 v1.3.pdf",
+    "output_file": "pdf_extracted_v2/source_pdf/e-Voucher - Voiding Transactions Service Desk Guide 20240219 v1.3.md",
+    "total_pages": 1,
+    "total_characters": 1604
+  }
+]

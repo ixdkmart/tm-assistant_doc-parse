@@ -9,11 +9,12 @@ OUTPUT RULES:
 3. Maintain the meaning and sequencing of the original document. Do not reorder sections.
 4. Keep legally or operationally critical wording exactly as written (e.g., “No one should ever…”, defined thresholds, disciplinary outcomes, names of roles, names of laws, standards, and policy titles).
 5. Remove all noise:
-   - Logos, branding lines, marketing slogans, page numbers, decorative headers/footers.
+   - Remove logos, branding lines, marketing slogans, page numbers, decorative headers/footers.
    - Remove corporate *mission*, *vision*, *values*, inspirational messaging, or cultural positioning **unless it directly describes a required action or workplace expectation.**
    - Remove filler “we love families”, “we are committed to…” statements that do not instruct behaviour.
-   - URLs unless required as a referenced resource.
-6. Use plain sentences instead of bullet points. Only use numbered steps when the source clearly describes a sequence of actions.
+   - Remove URLs unless top level domain names.
+   - Remove binary, base64, and other images.
+6. Only use numbered steps when the source clearly describes a sequence of actions.
 7. If the same statement repeats, keep the clearest one and remove duplicates.
 8. Do not add interpretation, new claims, or examples not found in the source.
 9. Output only the cleaned markdown, in one single code block, no explanation.
