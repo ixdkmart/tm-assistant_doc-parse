@@ -23,11 +23,21 @@ REJECT information that:
 - Only mentions the AKO's subject in passing or tangentially
 - Is about similar but different concepts/procedures/entities
 - Would require significant interpretation to connect to the AKO's core identity
+- Describes a process/procedure/concept where the AKO is only an actor or participant, not the core subject
+  • Example: If the AKO is "canvas framing" but the document describes "art gallery setup" where canvas framing is just one step, REJECT the gallery setup information
+  • Example: If the AKO is "buddy program" but the document describes "employee onboarding" where buddy program is just one component, REJECT the onboarding process information
+  • Only include information if the AKO's subject IS the main topic being described, not just mentioned as part of something else
 
 ONLY INCLUDE information that:
 - Directly expands, clarifies, or provides context for the AKO's core identity
 - Is explicitly about the same specific subject as the AKO
 - Would be immediately recognizable as relevant to someone reading the AKO's term/definition, title/steps, or name/description
+- Has the AKO's subject as the PRIMARY focus of the information, not just as a supporting element or actor in a different process
+
+CORE SUBJECT TEST
+Ask yourself: "Is this information primarily ABOUT the AKO's subject, or is the AKO's subject just mentioned/used within information about something else?"
+- If the information is primarily about the AKO's subject → INCLUDE it
+- If the information is primarily about something else, and the AKO's subject is just mentioned or used → REJECT it
 
 RULES
 - Use ONLY content present in ADDITIONAL_SOURCE. No outside knowledge. No invention.
